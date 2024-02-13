@@ -68,3 +68,4 @@ CREATE TABLE IF NOT EXISTS exercises_purposes (
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id),
 	FOREIGN KEY (purpose_id) REFERENCES purposes (id)
 );
+
