@@ -32,26 +32,26 @@ CREATE TABLE IF NOT EXISTS exercises (
 	name VARCHAR(50) NOT NULL,
 	image_name VARCHAR(255) NOT NULL,
 	explanation VARCHAR(255) NOT NULL,
-	number_of_sets VARCHAR(50) NOT NULL,
+	set_number VARCHAR(50) NOT NULL,
 	time_required INT NOT NULL,
 	type VARCHAR(50) NOT NULL,
 	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS body_parts (
+CREATE TABLE IF NOT EXISTS bodyparts (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS exercises_body_parts (
+CREATE TABLE IF NOT EXISTS exercise_bodyparts (
 	exercise_id INT NOT NULL,
-	body_part_id INT NOT NULL,
-	PRIMARY KEY (exercise_id, body_part_id),
+	bodypart_id INT NOT NULL,
+	PRIMARY KEY (exercise_id, bodypart_id),
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id),
-	FOREIGN KEY (body_part_id) REFERENCES body_parts (id)
+	FOREIGN KEY (bodypart_id) REFERENCES bodyparts (id)
 );
 
 CREATE TABLE IF NOT EXISTS purposes (
@@ -61,11 +61,12 @@ CREATE TABLE IF NOT EXISTS purposes (
 	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS exercises_purposes (
+CREATE TABLE IF NOT EXISTS exercise_purposes (
 	exercise_id INT NOT NULL,
 	purpose_id INT NOT NULL,
 	PRIMARY KEY (exercise_id, purpose_id),
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id),
 	FOREIGN KEY (purpose_id) REFERENCES purposes (id)
 );
+
 
