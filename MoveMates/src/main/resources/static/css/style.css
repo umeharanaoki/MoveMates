@@ -1,8 +1,31 @@
+html {
+	font-size: 14px;
+}
+
+body {
+	font-family: 'Noto Sans JP', sans-serif;
+}
+
+h1 {
+	font-size: 1.5rem;
+}
+
+p {
+	white-space: pre-wrap;  /* 改行を保存 */
+}
+
 .wrapper {
 	min-height: 100vh;
 	position: relative;
 	padding-bottom: 60px;
 	box-sizing: border-box;
+}
+
+.movemates-btn {
+	color: white;
+	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+	background-color: #4D4399 !important;
+	transition: 0.1s;
 }
 
 /*

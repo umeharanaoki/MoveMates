@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>エクササイズ登録</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+			<!-- container -->
+				<div>
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+							<!-- パンくずリスト -->
+							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+	                             <ol class="breadcrumb mb-0">                        
+	                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises}">（管理者用）アクティビティ一覧</a></li>
+	                                 <li class="breadcrumb-item active" aria-current="page">アクティビティ登録</li>
+	                             </ol>
+	                        </nav>
+	                        
+	                        <h1 class="mb-4 text-center">アクティビティ登録</h1>
+	                        
+	                        <form method="post" th:action="@{/admin/exercises/create}" th:object="${exerciseRegisterForm}" enctype="multipart/form-data">
+								<!-- アクティビティ名 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="name" class="col-form-label text-md-left fw-bold">アクティビティ名</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>
+										<input type="text" th:field="*{name}" class="form-control" placeholder="スクワット">
+									</div>
+								</div>
+								
+								<!-- 画像 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="imageFile" class="col-form-label text-md-left fw-bold">アクティビティ画像</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('imageFile')}" class="text-danger small mb-2" th:errors="*{imageFile}"></div>
+										<input type="file" th:field="*{imageFile}" class="form-control">
+									</div>
+								</div>
+								<!-- 選択された画像の表示場所 -->
+								<div class="row" id="imagePreview"></div>
+								
+								<!-- 筋トレかストレッチか -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+	        							<label class="col-form-label text-md-left fw-bold">タイプ</label>
+	    							</div>
+	    							<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('type')}" class="text-danger small mb-2" th:errors="*{type}"></div>
+	        							<div class="form-check form-check-inline">
+	            							<input class="form-check-input" type="radio" th:field="*{type}" value="トレーニング">
+	            							<label class="form-check-label" for="type">トレーニング</label>
+	        							</div>
+	        							<div class="form-check form-check-inline">
+	            							<input class="form-check-input" type="radio" th:field="*{type}" value="ストレッチ">
+	            							<label class="form-check-label" for="type">ストレッチ</label>
+	        							</div>
+	    							</div>
+								</div>
+								
+								<!-- 目的 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="purposes" class="col-form-label text-md-left fw-bold">目的</label> 
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('purposes')}" class="text-danger small mb-2" th:errors="*{purposes}"></div>
+										<div class="d-flex flex-wrap">
+											<!-- 選択肢を繰り返しで表示 -->
+											<div th:each="purpose : ${purposes}" class="form-check form-check-inline mr-3 mb-2">
+												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}">
+												<label class="form-check-label" for="purposes" th:text="${purpose.getName()}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- 部位 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="bodyParts" class="col-form-label text-md-left fw-bold">体の部位</label> 
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('bodyParts')}" class="text-danger small mb-2" th:errors="*{bodyParts}"></div>
+										<div class="d-flex flex-wrap">
+											<!-- 選択肢を繰り返しで表示 -->
+											<div th:each="bodyPart : ${bodyParts}" class="form-check form-check-inline mr-3 mb-2">
+												<input class="form-check-input" type="checkbox" th:field="*{bodyParts}" th:value="${bodyPart.getId()}">
+												<label class="form-check-label" for="bodyParts" th:text="${bodyPart.getName()}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- 説明 -->
+								<div class="form-group row mb-3">
+	                                <div class="col-md-5">
+	                                    <label for="explanation" class="col-form-label text-md-left fw-bold">やり方</label>
+	                                </div>
+	                                <div class="col-md-7">                            
+	                                    <div th:if="${#fields.hasErrors('explanation')}" class="text-danger small mb-2" th:errors="*{explanation}"></div>                                        
+	                                    <textarea class="form-control" th:field="*{explanation}" cols="30" rows="5"></textarea>
+	                                </div>
+	                            </div>
+								
+								<!-- セット回数 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="setNumber" class="col-form-label text-md-left fw-bold">セット回数（目安）</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('setNumber')}" class="text-danger small mb-2" th:errors="*{setNumber}"></div>
+										<input type="text" th:field="*{setNumber}" class="form-control" placeholder="15～20回">
+									</div>
+								</div>
+								
+								<!-- 所要時間 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="timeRequired" class="col-form-label text-md-left fw-bold">所要時間（目安）（1セット/秒）</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('timeRequired')}" class="text-danger small mb-2" th:errors="*{timeRequired}"></div>
+										<input type="number" th:field="*{timeRequired}" class="form-control" placeholder="30秒">
+									</div>
+								</div>
+								<!-- 送信ボタン -->
+								<div class="form-group d-flex justify-content-center my-4">
+									<button type="submit" class="btn movemates-btn w-50">登録</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<div th:replace="~{fragment :: footer}"></div>
+			
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:src="@{/js/preview.js}"></script>
+	</body>
+</html>
