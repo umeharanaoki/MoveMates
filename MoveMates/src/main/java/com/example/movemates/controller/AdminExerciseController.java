@@ -113,7 +113,16 @@ public class AdminExerciseController {
 		}
 		
 		exerciseService.update(exerciseEditForm);
-		redirectAttributes.addFlashAttribute("successMessage", "アクティビティを登録しました。");
+		redirectAttributes.addFlashAttribute("successMessage", "アクティビティを更新しました。");
+		
+		return "redirect:/admin/exercises";
+	}
+	
+	// 削除機能
+	@PostMapping("/{exerciseId}/delete")
+	public String delete(@PathVariable(name = "exerciseId") Integer exerciseId, RedirectAttributes redirectAttributes) {
+		exerciseRepository.deleteById(exerciseId);
+		redirectAttributes.addFlashAttribute("successMessage", "アクティビティを削除しました。");
 		
 		return "redirect:/admin/exercises";
 	}

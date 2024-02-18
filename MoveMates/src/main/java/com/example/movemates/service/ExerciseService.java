@@ -1,5 +1,7 @@
 package com.example.movemates.service;
 
+import static com.example.movemates.specification.ExerciseSpecification.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,6 +9,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -94,5 +101,14 @@ public class ExerciseService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// 管理者用エクササイズ一覧の検索機能
+	public Page<Exercise> findAdminExercises(String keyword, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
+		Specification<Exercise> spec = Specification
+			.where(nameContains(keyword));
+//			.or(bodyPartEqual(keyword));
+		Page<Exercise> adminRestaurantPage = exerciseRepository.findAll(spec, pageable);
+		return adminRestaurantPage;
 	}
 }

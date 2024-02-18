@@ -26,7 +26,15 @@
 	<body>
         <!-- ヘッダーの部品化 -->
         <div th:fragment="header" th:remove="tag">
-            
+            <nav class="navbar navbar-expand-md movemates-navbar">
+                 <div class="container">
+					 <div>
+                         <img class="movemates-logo me-1" th:src="@{/images/logo.png}" alt="MoveMates">                        
+					 </div>
+					 <a th:href="@{/auth/login}">ログイン</a>
+					 <a th:href="@{/auth/signup}">会員登録</a>                                                     
+                 </div>
+             </nav>
         </div>
          
          
@@ -34,7 +42,7 @@
         <div th:fragment="footer" th:remove="tag">
             <footer>
                 <div class="d-flex justify-content-center align-items-center h-100">
-                    <p class="text-center text-muted small mb-0">&copy; MoveMates All rights reserved.</p>      
+                    <p class="text-center small mb-0">&copy; MoveMates All rights reserved.</p>      
                 </div>                 
             </footer>
         </div>

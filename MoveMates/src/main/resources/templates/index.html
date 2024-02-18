@@ -8,7 +8,14 @@
 		<title>トップページ</title>
 	</head>
 	<body>
-		<img th:src="@{/images/movemates_top.jpg}"></img>
+		<div>
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<img th:src="@{/images/movemates_top.jpg}"></img>
+				
+			</main>
+		</div>
 		
 	</body>
 </html>
