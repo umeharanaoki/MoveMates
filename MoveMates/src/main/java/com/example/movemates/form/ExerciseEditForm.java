@@ -9,10 +9,15 @@ import com.example.movemates.entity.Purpose;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class ExerciseRegisterForm {
+@AllArgsConstructor
+public class ExerciseEditForm {
+	@NotNull
+	private Integer id;
+	
 	@NotBlank(message = "アクティビティ名を入力してください。")
 	private String name;
 	

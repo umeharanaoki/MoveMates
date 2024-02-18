@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.movemates.entity.BodyPart;
 import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.Purpose;
+import com.example.movemates.form.ExerciseEditForm;
 import com.example.movemates.form.ExerciseRegisterForm;
 import com.example.movemates.repository.ExerciseRepository;
 
@@ -25,6 +26,7 @@ public class ExerciseService {
 		this.exerciseRepository = exerciseRepository;
 	}
 	
+	// 登録処理
 	@Transactional
 	public void create(ExerciseRegisterForm exerciseRegisterForm) {
 		Exercise exercise = new Exercise();
@@ -47,6 +49,30 @@ public class ExerciseService {
 		exercise.setExplanation(exerciseRegisterForm.getExplanation());
 		exercise.setSetNumber(exerciseRegisterForm.getSetNumber());
 		exercise.setTimeRequired(exerciseRegisterForm.getTimeRequired());
+		
+		exerciseRepository.save(exercise);
+	}
+	
+	// 更新処理
+	public void update(ExerciseEditForm exerciseEditForm) {
+		Exercise exercise = exerciseRepository.getReferenceById(exerciseEditForm.getId());
+		MultipartFile imageFile = exerciseEditForm.getImageFile();
+		
+		if(!imageFile.isEmpty()) {
+			String imageName = imageFile.getOriginalFilename();
+			String hashedImageName = generateNewFileName(imageName);
+			Path filePath = Paths.get("src/main/resources/static/storage/exercise/" + hashedImageName);
+			copyImageFile(imageFile, filePath);
+			exercise.setImageName(hashedImageName);
+		}
+		
+		exercise.setName(exerciseEditForm.getName());
+		exercise.setType(exerciseEditForm.getType());
+		exercise.setPurposes(exerciseEditForm.getPurposes());
+		exercise.setBodyParts(exerciseEditForm.getBodyParts());
+		exercise.setExplanation(exerciseEditForm.getExplanation());
+		exercise.setSetNumber(exerciseEditForm.getSetNumber());
+		exercise.setTimeRequired(exerciseEditForm.getTimeRequired());
 		
 		exerciseRepository.save(exercise);
 	}

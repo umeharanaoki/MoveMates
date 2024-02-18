@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.movemates.entity.BodyPart;
 import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.Purpose;
+import com.example.movemates.form.ExerciseEditForm;
 import com.example.movemates.form.ExerciseRegisterForm;
 import com.example.movemates.repository.BodyPartRepository;
 import com.example.movemates.repository.ExerciseRepository;
@@ -84,4 +85,36 @@ public class AdminExerciseController {
 		return "redirect:/admin/exercises";
 	}
 	
+	// アクティビティ編集ページ
+	@GetMapping("/{exerciseId}/edit")
+	public String edit(Model model, @PathVariable(name = "exerciseId") Integer exerciseId) {
+		// 選択肢を一覧表示するためのリスト
+		List<Purpose> purposes = purposeRepository.findAll();
+		List<BodyPart> bodyParts = bodyPartRepository.findAll();
+		
+		Exercise exercise = exerciseRepository.getReferenceById(exerciseId);
+		String imageName = exercise.getImageName();
+		
+		ExerciseEditForm exerciseEditForm = new ExerciseEditForm(exercise.getId(), exercise.getName(), null, exercise.getType(), exercise.getPurposes(), exercise.getBodyParts(), exercise.getExplanation(), exercise.getSetNumber(), exercise.getTimeRequired());
+		
+		model.addAttribute("exerciseEditForm", exerciseEditForm);
+		model.addAttribute("imageName", imageName);
+		model.addAttribute("purposes", purposes);
+		model.addAttribute("bodyParts", bodyParts);
+		
+		return "admin/exercises/edit";
+	}
+	
+	// 更新機能
+	@PostMapping("/update")
+	public String update(@ModelAttribute @Validated ExerciseEditForm exerciseEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			return "admin/exercises/register";
+		}
+		
+		exerciseService.update(exerciseEditForm);
+		redirectAttributes.addFlashAttribute("successMessage", "アクティビティを登録しました。");
+		
+		return "redirect:/admin/exercises";
+	}
 }
