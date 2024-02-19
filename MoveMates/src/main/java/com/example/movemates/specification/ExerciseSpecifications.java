@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 import com.example.movemates.entity.BodyPart;
 import com.example.movemates.entity.Exercise;
 
-public class ExerciseSpecification {
+public class ExerciseSpecifications {
 	// 名前で部分検索
 	public static Specification<Exercise> nameContains(String name) {
 	    return StringUtils.hasLength(name) ? (root, query, cb) -> {

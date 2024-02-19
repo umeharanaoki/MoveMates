@@ -5,17 +5,25 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>トップページ</title>
+		<title>ユーザー登録</title>
 	</head>
 	<body>
-		<div>
+		<div class="wrapper">
 			<div th:replace="~{fragment :: header}"></div>
 			
 			<main>
-				<img th:src="@{/images/movemates_top.jpg}"></img>
-				
+			<!-- container -->
+				<div>
+					<!-- カレンダー -->
+					<div id="calendar">
+						
+					</div>
+				</div>
 			</main>
+			
+			<div th:replace="~{fragment :: footer}"></div>
+			
 		</div>
-		
+		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
 </html>

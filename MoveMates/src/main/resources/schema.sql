@@ -69,4 +69,30 @@ CREATE TABLE IF NOT EXISTS exercise_purposes (
 	FOREIGN KEY (purpose_id) REFERENCES purposes (id)
 );
 
+CREATE TABLE IF NOT EXISTS favorites (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id VARCHAR(50) NOT NULL,
+	exercise_id INT NOT NULL,
+	status INT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,    
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (exercise_id) REFERENCES exercises (id)
+); 
 
+CREATE TABLE IF NOT EXISTS mymenus (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	user_id VARCHAR(50) NOT NULL,
+	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,    
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+CREATE TABLE IF NOT EXISTS exercise_mymenus (
+	exercise_id INT NOT NULL,
+	mymenu_id INT NOT NULL,
+	PRIMARY KEY (exercise_id, mymenu_id),
+	FOREIGN KEY (exercise_id) REFERENCES exercises (id),
+	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id)
+);

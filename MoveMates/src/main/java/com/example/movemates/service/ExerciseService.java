@@ -1,6 +1,6 @@
 package com.example.movemates.service;
 
-import static com.example.movemates.specification.ExerciseSpecification.*;
+import static com.example.movemates.specification.ExerciseSpecifications.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
