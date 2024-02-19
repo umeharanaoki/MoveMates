@@ -89,10 +89,20 @@ CREATE TABLE IF NOT EXISTS mymenus (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS exercise_mymenus (
-	exercise_id INT NOT NULL,
+CREATE TABLE IF NOT EXISTS mymenu_exercises (
 	mymenu_id INT NOT NULL,
-	PRIMARY KEY (exercise_id, mymenu_id),
-	FOREIGN KEY (exercise_id) REFERENCES exercises (id),
+	exercise_id INT NOT NULL,
+	PRIMARY KEY (mymenu_id, exercise_id),
+	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id),
+	FOREIGN KEY (exercise_id) REFERENCES exercises (id)
+);
+
+CREATE TABLE IF NOT EXISTS exercise_logs (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id VARCHAR(50) NOT NULL,
+	mymenu_id INT NOT NULL,
+	exercise_day DATE NOT NULL,
+	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES users (id),
 	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id)
 );
