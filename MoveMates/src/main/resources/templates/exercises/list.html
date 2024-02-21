@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>アクティビティ一覧</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			
+			<div th:replace="~{fragment :: header}"></div>
+      
+			<main>
+				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<h1 class="mb-4 text-center" th:text="${title}"></h1>
+
+							<div>
+								<!-- 目的のリンクを踏んだ時のみ表示 -->
+								<div class="row mb-4" th:if="${purpose != null}">
+                 					<!-- エクササイズのデータがあるか判定 -->
+									<div th:if="${not #lists.isEmpty(purpose.exercises)}" th:each="exercise : ${purpose.getExercises()}">
+					                  	<div>
+					                        <h3 th:text="${exercise.getName()}"></h3>
+									           	<p th:text="${exercise.getExplanation()}"></p>
+									           	<p>セット数: <span th:text="${exercise.getSetNumber()}"></span></p>
+									           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 分</p>
+									           	<!-- その他の運動情報を表示 -->
+									       	</div>
+									    </div>
+					                <div th:unless="${not #lists.isEmpty(purpose.exercises)}">
+					                    <p th:text="${purpose.getName() + 'に関するアクティビティは登録されていません。'}"></p>
+					                </div>
+								</div>
+								
+								<!-- 部位のリンクを踏んだ時のみ表示 -->
+								<div class="row mb-4" th:if="${bodyPart != null}">
+                 					<!-- エクササイズのデータがあるか判定 -->
+									<div th:if="${not #lists.isEmpty(bodyPart.exercises)}" th:each="exercise : ${bodyPart.getExercises()}">
+					                  	<div>
+					                        <h3 th:text="${exercise.getName()}"></h3>
+									           	<p th:text="${exercise.getExplanation()}"></p>
+									           	<p>セット数: <span th:text="${exercise.getSetNumber()}"></span></p>
+									           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 分</p>
+									           	<!-- その他の運動情報を表示 -->
+									       	</div>
+									    </div>
+					                <div th:unless="${not #lists.isEmpty(bodyPart.exercises)}">
+					                    <p th:text="${bodyPart.getName() + 'に関するアクティビティは登録されていません。'}"></p>
+					                </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

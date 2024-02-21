@@ -5,32 +5,27 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>管理者用エクササイズ詳細</title>
+		<title>アクティビティ詳細</title>
 	</head>
 	<body>
 		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
 			
+			<div th:replace="~{fragment :: header}"></div>
+      
 			<main>
 				<div class="row justify-content-center">
 					<div class="col-xl-5 col-lg-6 col-md-8">
 						<!-- パンくずリスト -->
 						<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                              <ol class="breadcrumb mb-0">                        
-                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises}">（管理者用）アクティビティ一覧</a></li>
-                                 <li class="breadcrumb-item active" aria-current="page">（管理者用）アクティビティ詳細</li>
+                                 <li class="breadcrumb-item"><a th:href="@{/exercises}">アクティビティ検索</a></li>
+                                 <th:block th:utext="${breadcrumbLink}"></th:block> <!-- パンくずリストの動的な部分 -->
+                                 <li class="breadcrumb-item active" aria-current="page" th:text="${exercise.getName()}"></li>
                              </ol>
                         </nav>
                         
                         <h1 class="mb-4 text-center" th:text="${exercise.getName()}"></h1>
                         
-                        <!-- 編集リンクを右端に寄せるためのflexコンテナ -->
-                        <div class="d-flex justify-content-end align-items-end mb-3">
-							<div>
-								<a th:href="@{/admin/exercises/__${exercise.getId()}__/edit}">編集</a>
-							</div>
-						</div>
-						
 						<!-- 画像の表示場所 -->
 						<div class="mb-3">
 							<img th:if="${exercise.getImageName()}" th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="w-100" alt="トレーニング画像">

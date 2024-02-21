@@ -1,12 +1,15 @@
 package com.example.movemates.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -22,6 +25,10 @@ public class BodyPart {
 	
 	@Column(name = "name")
 	private String name;
+	
+	// テーブル名はbodypartsだが、ExerciseエンティティでbodyPartsを参照している
+	@ManyToMany(mappedBy = "bodyParts")
+	private List<Exercise> exercises = new ArrayList<>();
 	
 	@Column(name = "created_at", insertable = false, updatable = false)
 	private Timestamp createdAt;

@@ -54,13 +54,6 @@ public class Exercise {
     inverseJoinColumns = @JoinColumn(name="bodypart_id", referencedColumnName="id"))
 	private List<BodyPart> bodyParts = new ArrayList<>();
 	
-	// 中間テーブルのリスト
-//	@OneToMany(mappedBy = "exercise")
-//    private List<ExercisePurpose> exercisePurposes;
-//	
-//	@OneToMany(mappedBy = "exercise")
-//    private List<ExerciseBodyPart> exerciseBodyParts;
-	
 	@Column(name = "created_at", insertable = false, updatable = false)
 	private Timestamp createdAt;
 	

@@ -19,7 +19,7 @@ import com.example.movemates.security.UserDetailsImpl;
 import com.example.movemates.service.UserService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
@@ -29,6 +29,7 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	// マイページ
 	@GetMapping
 	public String index(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
@@ -38,6 +39,17 @@ public class UserController {
 		return "user/index";
 	}
 	
+	// ユーザー情報確認
+	@GetMapping("/show")
+	public String show(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+		
+		model.addAttribute("user", user);
+		
+		return "user/index";
+	}
+	
+	// ユーザー情報編集ページ
 	@GetMapping("/edit")
 	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
@@ -46,6 +58,7 @@ public class UserController {
 		return "user/edit";
 	}
 	
+	// ユーザー情報更新
 	@PostMapping("/update")
     public String update(@ModelAttribute @Validated UserEditForm userEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // メールアドレスが変更されており、かつ登録済みであれば、BindingResultオブジェクトにエラー内容を追加する
