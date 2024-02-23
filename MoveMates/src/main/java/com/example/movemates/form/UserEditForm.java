@@ -1,7 +1,5 @@
 package com.example.movemates.form;
 
-import java.util.Date;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
@@ -21,11 +19,12 @@ public class UserEditForm {
 	
 	@NotBlank(message = "メールアドレスを入力してください。")
 	private String email;
-	    
-	private Date birthday;
 	
-	private String gender;
+//	@DateTimeFormat(pattern = "yyyy/MM/dd")
+//	private Date birthday;
+//	
+//	private String gender;
 
-	@NotBlank(message = "パスワードを入力してください。")
-	private String password;  
+//	@NotBlank(message = "パスワードを入力してください。")
+//	private String password;
 }

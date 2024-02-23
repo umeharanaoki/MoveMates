@@ -12,12 +12,12 @@
 			<div th:replace="~{fragment :: header}"></div>
 			
 			<main>
-				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
-					<div class="row justify-content-center">
-						<div class="col-xxl-9 col-xl-10 col-lg-11">
-							<img th:src="@{/images/movemates_top2.jpg}" class="w-100"></img>
-						</div>
-					</div>
+				<div class="movemates-back-color">
+					
+				<picture>
+					<source th:srcset="@{/images/movemates-top-sp.png}" media="(max-width: 430px)" class="w-100">
+					<img th:src="@{/images/movemates-top-pc.png}" class="img-fluid">
+				</picture>
 				</div>
 				
 			</main>

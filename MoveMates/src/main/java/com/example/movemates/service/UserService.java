@@ -50,7 +50,7 @@ public class UserService {
         if (!imageFile.isEmpty()) {
             String imageName = imageFile.getOriginalFilename(); 
             String hashedImageName = generateNewFileName(imageName);
-            Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
+            Path filePath = Paths.get("src/main/resources/static/storage/user/icons" + hashedImageName);
             copyImageFile(imageFile, filePath);
             user.setImageName(hashedImageName);
         }
@@ -73,12 +73,11 @@ public class UserService {
   	// 編集用なので元の情報をIdから検索して格納する
     	User user = userRepository.getReferenceById(userEditForm.getId());
     	MultipartFile imageFile = userEditForm.getImageFile();
-    	Date birthday = (userEditForm.getBirthday() == null) ? null : userEditForm.getBirthday();
         
         if (!imageFile.isEmpty()) {
             String imageName = imageFile.getOriginalFilename(); 
             String hashedImageName = generateNewFileName(imageName);
-            Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
+            Path filePath = Paths.get("src/main/resources/static/storage/user/icons" + hashedImageName);
             copyImageFile(imageFile, filePath);
             user.setImageName(hashedImageName);
         }
@@ -86,8 +85,6 @@ public class UserService {
         user.setId(userEditForm.getId());
         user.setName(userEditForm.getName());
         user.setEmail(userEditForm.getEmail());
-        user.setGender(userEditForm.getGender());
-        user.setBirthday(birthday);  
         
         userRepository.save(user);
     }

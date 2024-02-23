@@ -19,7 +19,7 @@ import com.example.movemates.security.UserDetailsImpl;
 import com.example.movemates.service.UserService;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
@@ -46,14 +46,14 @@ public class UserController {
 		
 		model.addAttribute("user", user);
 		
-		return "user/index";
+		return "user/show";
 	}
 	
 	// ユーザー情報編集ページ
 	@GetMapping("/edit")
 	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
-		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(), null, user.getEmail(), user.getBirthday(), user.getGender(), user.getPassword());
+		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(), null, user.getEmail());
 		model.addAttribute("userEditForm", userEditForm);
 		return "user/edit";
 	}
@@ -62,18 +62,18 @@ public class UserController {
 	@PostMapping("/update")
     public String update(@ModelAttribute @Validated UserEditForm userEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // メールアドレスが変更されており、かつ登録済みであれば、BindingResultオブジェクトにエラー内容を追加する
-        if (userService.isEmailChanged(userEditForm) && userService.isEmailRegistered(userEditForm.getEmail())) {
+        if(userService.isEmailChanged(userEditForm) && userService.isEmailRegistered(userEditForm.getEmail())) {
             FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
             bindingResult.addError(fieldError);                       
         }
         
-        if (bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors()) {
             return "user/edit";
         }
         
         userService.update(userEditForm);
         redirectAttributes.addFlashAttribute("successMessage", "会員情報を編集しました。");
         
-        return "redirect:/user";
+        return "redirect:/user/show";
     }    
 }

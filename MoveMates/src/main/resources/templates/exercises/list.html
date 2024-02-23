@@ -23,14 +23,26 @@
 								<div class="row mb-4" th:if="${purpose != null}">
                  					<!-- エクササイズのデータがあるか判定 -->
 									<div th:if="${not #lists.isEmpty(purpose.exercises)}" th:each="exercise : ${purpose.getExercises()}">
-					                  	<div>
-					                        <h3 th:text="${exercise.getName()}"></h3>
-									           	<p th:text="${exercise.getExplanation()}"></p>
-									           	<p>セット数: <span th:text="${exercise.getSetNumber()}"></span></p>
-									           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 分</p>
-									           	<!-- その他の運動情報を表示 -->
-									       	</div>
-									    </div>
+					                  	<a th:href="@{/exercises/__${exercise.getId()}__}" class="link-dark" data-add-origin-url>
+											<div class="card"> <!-- 高さ指定する？ -->
+												<div class="row"> <!-- g-0付けるか確認 -->
+													<!-- カード左の画像 -->
+													<div class="col-4"> <!-- md付けるか確認 -->
+														<img th:if="${exercise.getImageName()}" th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="w-100" alt="トレーニング画像">
+														<img th:unless="${exercise.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+													</div>
+													<div class="col-8">
+														<div class="card-body">
+					           				            	<h3 th:text="${exercise.getName()}"></h3>
+															<p>ターゲット部位: 
+																<span th:each="bodyPart : ${exercise.bodyParts}" th:text="${bodyPart.getName()}"></span>
+															</p>
+												           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 秒</p>
+														</div>
+													</div>
+												</div>
+											</div>
+									    </a>
 					                <div th:unless="${not #lists.isEmpty(purpose.exercises)}">
 					                    <p th:text="${purpose.getName() + 'に関するアクティビティは登録されていません。'}"></p>
 					                </div>
@@ -60,5 +72,6 @@
 			<div th:replace="~{fragment :: footer}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:src="@{/js/get-url.js}"></script>
 	</body>
 </html>

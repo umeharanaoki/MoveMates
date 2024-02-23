@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>ユーザー情報編集</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div>
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+	                        
+	                        <h1 class="mb-4 text-center">ユーザー情報編集</h1>
+	                        
+	                        <form method="post" th:action="@{/user/update}" th:object="${userEditForm}" enctype="multipart/form-data">
+								<!-- ユーザーID -->
+								<input type="hidden" th:field="*{id}">
+										
+								<!-- ユーザー名 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="name" class="col-form-label text-md-left fw-bold">ユーザー名</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>
+										<input type="text" th:field="*{name}" class="form-control">
+									</div>
+								</div>
+								
+								<!-- 画像 -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="imageFile" class="col-form-label text-md-left fw-bold">アイコン画像</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('imageFile')}" class="text-danger small mb-2" th:errors="*{imageFile}"></div>
+										<input type="file" th:field="*{imageFile}" class="form-control">
+									</div>
+								</div>
+								<!-- 選択された画像の表示場所 -->
+								<div class="row" id="imagePreview"></div>
+								
+								<!-- メールアドレス -->
+								<div class="row mb-3">
+									<div class="col-md-5">
+										<label for="email" class="col-form-label text-md-left fw-bold">メールアドレス</label>
+									</div>
+									<div class="col-md-7">
+										<div th:if="${#fields.hasErrors('email')}" class="text-danger small mb-2" th:errors="*{email}"></div>
+										<input type="text" th:field="*{email}" class="form-control">
+									</div>
+								</div>
+								
+								<!-- 送信ボタン -->
+								<div class="form-group d-flex justify-content-center my-4">
+									<button type="submit" class="btn movemates-btn w-50">更新</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<div th:replace="~{fragment :: footer}"></div>
+			
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:src="@{/js/preview.js}"></script>
+	</body>
+</html>

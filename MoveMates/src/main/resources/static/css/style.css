@@ -48,6 +48,11 @@ footer {
 	position: relative;
 	padding-bottom: 60px;
 	box-sizing: border-box;
+	background-color: #64C0AB;
+}
+
+.movemates-back-color {
+	background-color: #64C0AB;
 }
 
 .movemates-btn {

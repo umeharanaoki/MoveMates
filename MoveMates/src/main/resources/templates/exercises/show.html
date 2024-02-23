@@ -32,6 +32,13 @@
 							<img th:unless="${exercise.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
 						</div>
 						
+						<div th:if="${favorite == null or favorite.getStatus() eq 0}">
+                                <a id="favoriteStatus" sec:authorize="isAuthenticated()" href="javascript:void(0);" th:onclick="|toggleFavorite('__${exercise.getId()}__')|" >あ</a>
+                            </div>
+                        <div th:if="${favorite != null and favorite.getStatus() eq 1}">
+                           	<a id="favoriteStatus" sec:authorize="isAuthenticated()" href="javascript:void(0);" th:onclick="|toggleFavorite('__${exercise.getId()}__')|">い</a>
+                        </div>
+						
 						<div class="container mb-4">
                             <div class="row pb-2 mb-2 border-bottom">
                                 <div class="col-4">

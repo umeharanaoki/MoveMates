@@ -78,7 +78,7 @@ public class ExerciseController {
 	@GetMapping("/{exercise_id}")
 	public String show(Model model, @PathVariable(name = "exercise_id") Integer exerciseId, HttpServletRequest request) {
 		Exercise exercise = exerciseRepository.getReferenceById(exerciseId);
-		// パンくずリストをアクセス元によって変更するための処理を実施
+		// パンくずリストをアクセス元によって変更するための処理
 		String referer = request.getHeader("referer");
 		String breadcrumbLink = "";
 		
@@ -89,20 +89,26 @@ public class ExerciseController {
             return "exercises/show";
         }
 		
-		if(referer.contains("/exercises/purposes/")) {
-			// 目的別ページからのアクセス
-			String purposeId = request.getParameter("purpose_id");
-            String purposeName = "目的名"; // 目的名を取得する処理を追加してください
-            breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/purposes/" + purposeId + "\">" + purposeName + "</a></li>";
-		} else if(referer.contains("/exercises/body-parts")) {
-			// 部位別リストページからのアクセス
-            String bodyPartId = request.getParameter("bodyPart_id");
-            String bodyPartName = "部位名"; // 部位名を取得する処理を追加してください
-            breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/body-parts/" + bodyPartId + "\">" + bodyPartName + "</a></li>";
+		String purposeId = request.getParameter("purpose_id");
+		if (purposeId != null && !purposeId.isEmpty()) {
+		    Purpose purpose = purposeRepository.findById(Integer.parseInt(purposeId)).orElse(null);
+		    if (purpose != null) {
+		        String purposeName = purpose.getName();
+		        breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/purposes/" + purposeId + "\">" + purposeName + "</a></li>";
+		    }
+		}
+
+		if (referer.contains("/exercises/body-parts")) {
+		    String bodyPartId = request.getParameter("bodyPart_id");
+		    BodyPart bodyPart = bodyPartRepository.findById(Integer.parseInt(bodyPartId)).orElse(null);
+		    if (bodyPart != null) {
+		        String bodyPartName = bodyPart.getName();
+		        breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/body-parts/" + bodyPartId + "\">" + bodyPartName + "</a></li>";
+		    }
 		}
 		
 		model.addAttribute("exercise", exercise);
 		model.addAttribute("breadcrumbLink", breadcrumbLink);
-        return "exercises/detail";
+        return "exercises/show";
 	}
 }
