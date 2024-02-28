@@ -4,6 +4,17 @@ html {
 
 body {
 	font-family: 'Noto Sans JP', sans-serif;
+	color: #4D4399;
+}
+
+main {
+	margin-left: 40px;
+	flex-grow: 1;
+	height: 100%;
+}
+
+.main-bottom {
+	margin-bottom: 60px;
 }
 
 h1 {
@@ -33,9 +44,12 @@ footer {
 }
 
 .movemates-navbar {
-	color: white;
 	background-color: #E85299;
 	min-height: 60px;
+
+}
+.movemates-navbar a {
+	color: white;
 }
 
 .movemates-logo {
@@ -46,9 +60,19 @@ footer {
 .wrapper {
 	min-height: 100vh;
 	position: relative;
-	padding-bottom: 60px;
 	box-sizing: border-box;
 	background-color: #64C0AB;
+	display: flex;
+}
+
+#catchcopy {
+	font-weight: bold;
+	position: absolute; /* 要素を絶対配置にします */
+    top: 50%; /* 上端を親要素の中央に配置します */
+    left: 50%; /* 左端を親要素の中央に配置します */
+    transform: translate(-50%, -50%); /* 中央揃えのために要素を移動します */
+    text-align: center; /* テキストを中央揃えにします */
+    color: #4D4399; /* テキストの色を設定します */
 }
 
 .movemates-back-color {
@@ -85,10 +109,181 @@ footer {
   opacity: 0.8;   
 }
 
-/*
-@media screen and (min-width: 1400px) {
-	.responsive-container {
-		max-width: 1200px;
-	}
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
 }
-*/
+
+#my-calendar table {
+	border-collapse: collapse;
+    width: 100%;
+    color: #4D4399;
+}
+
+#my-calendar th, #my-calendar td {
+	border: 1px solid #64C0AB;
+    text-align: center;
+    padding: 8px;
+}
+
+#my-calendar th {
+	background-color: #ffffff;
+	opacity: 0.85;
+	font-size: 10px;
+}
+
+#my-calendar td {
+	background-color: #ffffff;
+	opacity: 0.7;
+	height: 80px; /* セルの高さを2倍に変更 */
+    vertical-align: top; /* 日付を上半分に配置 */
+}
+
+#consecutive-weeks {
+	width: 400px;
+	height: 120px;
+	margin-top: 40px;
+	display: flex;
+}
+
+#week-box-left {
+	height: 100%;
+	width: 120px;
+	text-align: center;
+	 background-color: rgba(255, 255, 255, 0.85); /* 白色の背景色に85%の不透明度を適用 */
+	background-color: white;
+	opacity: 0.85;
+}
+
+#week-box-right {
+	background-color: #ffffff;
+	opacity: 0.7;
+	flex-grow: 1;
+}
+
+#currentMonthYear {
+	color: #4D4399;
+	text-align: center;
+}
+
+.calendar-circle {
+    display: inline-block;
+    border-radius: 50%; /* 円形にする */
+    width: 20px;
+    height: 20px;
+    line-height: 20px; /* 円の中央に日付を配置 */
+    text-align: center;
+    position: relative; /* 相対位置指定 */
+}
+
+.today .calendar-circle {
+    background-color: #4D4399; /* 今日の日付に対応するセルの円の背景色を変更 */
+}
+
+.today .calendar-circle span {
+    position: absolute; /* 絶対位置指定 */
+    top: 50%; /* 上端の位置をセルの中央に合わせる */
+    left: 50%; /* 左端の位置をセルの中央に合わせる */
+    transform: translate(-50%, -50%); /* セルの中央に移動 */
+    color: white; /* 今日の日付に対応するセルの日付の文字色を変更 */
+}
+
+.mm-head-div1 {
+	width: 56px;
+}
+
+.mm-head-div2 {
+	height: 100%;
+	position: fixed;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    background-color: #E85299;
+}
+
+.mm-head-div3 {
+	height: 100%;
+	justify-content: space-between;
+	padding-left: 8px;
+	padding-right: 8px;
+	display: flex;
+	flex-direction: column;
+}
+
+.mm-card {
+	background-color: white;
+	opacity: 0.85;
+	color: #4D4399;
+}
+
+.mm-demo-div4 {
+	max-width: 100%;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mm-demo-h1 {
+	align-items: center;
+	align-self: stretch;
+	cursor: pointer;
+	display: flex;
+	flex-grow: 0;
+	justify-content: center;
+	max-width: 32px;
+}
+
+.mm-demo-a {
+	border-bottom-left-radius: 9999px;
+    border-bottom-right-radius: 9999px;
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px;
+    min-height: 52px;
+    max-width: 52px;
+}
+
+h1 a img {
+	max-width: 56px;
+}
+
+nav a img {
+	max-width: 32px;
+}
+
+.user-info {
+	align-self: flex-end;
+}
+
+.icon-img {
+    width: 40px; /* アイコンの幅 */
+    height: 40px; /* アイコンの高さ */
+    object-fit: contain; /* 画像をアスペクト比を保持しつつコンテナーに収まるように調整 */
+}
+
+.calendar-arrow {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.nav-icon-center {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+}
+
+.mymenu-box {
+	display: flex;
+	margin: 1rem;
+	padding: 1rem;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.card-size {
+	width: 10rem;
+	background-color: white;
+}
+

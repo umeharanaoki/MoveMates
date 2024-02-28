@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>マイメニュー</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			<main>
+				<!-- マイメニュー登録フォーム -->
+				<form method="post" th:action="@{/mymenu/update}" th:object="${MyMenuRegisterForm}">
+					<div>
+						<label for="入力フォームのid" class="form-label">メニュー名</label>
+						<input type="text" th:field="*{name}" class="form-control">
+					</div>
+					<!-- マイメニュー表示枠 -->
+					<div class="mymenu-box">
+						<div class="card card-size">
+							<img th:src="@{/storage/exercise/22652408.jpg}" class="card-img-top">
+							<div class="card-body">
+								<p class="card-text">aaaaa</p>
+							</div>
+						</div>
+					</div>
+					
+					<!-- お気に入りしたアクティビティ一覧 -->
+					<div>
+						
+					</div>
+				</form>
+			</main>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

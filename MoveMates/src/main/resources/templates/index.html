@@ -8,20 +8,23 @@
 		<title>トップページ</title>
 	</head>
 	<body>
-		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
+		<div class="wrapper flex-column">
+			<div th:replace="~{fragment :: nav-bar}"></div>
 			
-			<main>
-				<div class="movemates-back-color">
-					
+			<main class="ms-0">
 				<picture>
 					<source th:srcset="@{/images/movemates-top-sp.png}" media="(max-width: 430px)" class="w-100">
 					<img th:src="@{/images/movemates-top-pc.png}" class="img-fluid">
 				</picture>
+				<div id="catchcopy">
+					<span>運動が続かない</span>
+					<span>どんな運動をしたらいいか分からない</span>
+					<span>そんなあなたのためのサービス</span>
 				</div>
 				
 			</main>
+			<div th:replace="~{fragment :: footer}"></div>
 		</div>
-		
+		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
 </html>

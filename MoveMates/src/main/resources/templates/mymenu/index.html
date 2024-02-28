@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>マイメニュー</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<!-- ナビゲーションバーの部品化 -->
+	        <div th:replace="~{fragment :: header}"></div>
+			<main>
+				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<h1 class="mb-4 text-center">マイメニュー一覧</h1>
+							
+							<!-- マイメニューをまだ登録していないときの表示 -->
+							<div th:if="${myMenus.empty}">
+								<a th:href="@{/mymenu/register}">登録</a>
+							</div>
+							
+							<!-- マイメニューの一覧表示 -->
+							<div th:each="mymenu : ${myMenus}">
+								
+							</div>
+						</div>
+					<div>
+				</div>
+			</main>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

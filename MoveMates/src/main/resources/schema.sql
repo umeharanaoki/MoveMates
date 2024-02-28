@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS verification_tokens (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id VARCHAR(50) NOT NULL UNIQUE,
-	tokens VARCHAR(255) NOT NULL,
+	token VARCHAR(255) NOT NULL,
 	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	FOREIGN KEY (user_id) REFERENCES users (id)
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS verification_tokens (
 CREATE TABLE IF NOT EXISTS exercises (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
-	image_name VARCHAR(255) NOT NULL,
+	image_name VARCHAR(255),
 	explanation VARCHAR(255) NOT NULL,
 	set_number VARCHAR(50) NOT NULL,
 	time_required INT NOT NULL,
@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS mymenus (
 CREATE TABLE IF NOT EXISTS mymenu_exercises (
 	mymenu_id INT NOT NULL,
 	exercise_id INT NOT NULL,
+	exercise_order INT NOT NULL,
 	PRIMARY KEY (mymenu_id, exercise_id),
 	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id),
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id)

@@ -5,18 +5,18 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>管理者用エクササイズ一覧</title>
+		<title>ログイン</title>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="wrapper flex-column">
 			
-			<div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: nav-bar}"></div>
 			
-			<main>
+			<main class="ms-0">
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
 						<div class="col-xl-3 col-lg-4 col-md-5 col-sm-7">
-							<h1 class="mb-4 text-center">ログインページ</h1>
+							<h1 class="mb-4 text-center">ログイン</h1>
 							
 							<div th:if="${param.error}" class="alert alert-danger">
                                  メールアドレスまたはパスワードが正しくありません。

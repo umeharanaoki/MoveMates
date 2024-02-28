@@ -25,21 +25,71 @@
 	</head>
 	<body>
         <!-- ヘッダーの部品化 -->
-        <div th:fragment="header" th:remove="tag">
+        <div th:fragment="nav-bar" th:remove="tag">
             <nav class="navbar navbar-expand-md movemates-navbar">
                  <div class="container">
 					 <div>
                          <img class="movemates-logo me-1" th:src="@{/images/logo.png}" alt="MoveMates">                        
 					 </div>
 					 <div>
-						 <a th:href="@{/login}" class="me-2">ログイン</a>
+						 <a th:href="@{/login}" class="me-3">ログイン</a>
 						 <a th:href="@{/signup}">会員登録</a>                                                     
 					 </div>
                  </div>
              </nav>
         </div>
-         
-         
+        
+        <!-- ナビゲーションバーの部品化 -->
+        <div th:fragment="header" th:remove="tag">
+	        <header>
+				<div class="mm-head-div1">
+					<div class="mm-head-div2">
+						<div class="mm-head-div3">
+							<!-- headerの上部要素 -->
+							<div>
+								<!-- ロゴ -->
+								<div class="mm-demo-div4">
+									<h1 role="heading" class="mm-demo-h1">
+										<a th:href="@{/user}" class="mm-demo-a">
+											<img th:src="@{/images/movemates-logo-sm.png}">
+										</a>
+									</h1>
+								</div>
+								<!-- ナビ -->
+								<div>
+									<nav>
+										<!-- ホーム -->
+										<a th:href="@{/user}" class="nav-icon-center">
+											<img th:src="@{/images/home.svg}"></img>
+										</a>
+										<!-- 検索 -->
+										<a th:href="@{/exercises}" class="nav-icon-center">
+											<img th:src="@{/images/search.svg}" class="w-75"></img>
+										</a>
+										<!-- マイメニュー -->
+										<a th:href="@{/mymenu}" class="nav-icon-center">
+											<img th:src="@{/images/mymenu.svg}"></img>
+										</a>
+									</nav>
+								</div>
+							</div>
+							<!-- headerの下部要素 -->
+							<!-- アイコン -->
+							<div>
+								<div class="user-info">
+		    					<a th:href="@{/user/show}" class="nav-icon-center">
+									<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="icon-img">
+								</a>
+		    				</div>
+		    				<!-- 会社概要 -->
+		    				<div></div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</header>
+        </div>
+        
         <!-- フッターの部品化 -->
         <div th:fragment="footer" th:remove="tag">
             <footer>
@@ -53,6 +103,7 @@
         <div th:fragment="scripts" th:remove="tag">
             <!-- Bootstrap -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         </div>
     </body>
 </html>

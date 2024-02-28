@@ -9,27 +9,27 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			
-			<div th:replace="~{fragment :: header}"></div>
-			<!-- テスト -->
+			<!-- ナビゲーションバーの部品化 -->
+	        <div th:replace="~{fragment :: header}"></div>
 			<main>
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
 							<h1 class="mb-4 text-center">アクティビティ検索</h1>
 							
-							<div class="d-flex justify-content-end">
-								<form method="get" th:action="@{/admin/exercises}" class="mb-3">
-									<div class="input-group">
-										<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
-										<button type="submit" class="btn movemates-btn">検索</button>
-									</div>
-								</form>
-							</div>
-							
 							<div>
+								<!-- 検索フォーム -->
+								<div class="d-flex justify-content-end">
+									<form method="get" th:action="@{/admin/exercises}" class="mb-3">
+										<div class="input-group">
+											<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
+											<button type="submit" class="btn movemates-btn">検索</button>
+										</div>
+									</form>
+								</div>
+							
 								<!-- 目的 -->
-								<div class="row mb-4">
+								<div class="row mb-4 bg-white bg-opacity-75 rounded-1 p-3">
 									<h5 class="mb-3 text-center">目的</h5>
 									<!-- 3列に分ける -->
 									<div class="col-lg-4 col-6 text-center mb-2" th:each="purpose, iterStat : ${purposes}">
@@ -40,21 +40,25 @@
 								</div>
 								
 								<!-- 体の部位 -->
-								<div class="row">
+								<div class="row bg-white bg-opacity-75 rounded-1 p-3">
 									<h5 class="mb-3 text-center">部位</h5>
 									<!-- 3列に分ける -->
-									<div class="col-4 text-center mb-2" th:each="bodyPart, iterStat : ${bodyParts}">
+									<div class="col-lg-4 col-6 text-center mb-2" th:each="bodyPart, iterStat : ${bodyParts}">
 										<div>
 											<a th:href="@{/exercises/body-parts/__${bodyPart.getId()}__}" th:text="${bodyPart == null ? '' : bodyPart.getName()}"></a>
 										</div>
 									</div>
+								</div>
+								
+								<!-- アクティビティ一覧 -->
+								<div class="d-flex justify-content-end mt-3">
+									<a th:href="@{/exercises}">アクティビティ一覧</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</main>
-			<div th:replace="~{fragment :: footer}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
 	</body>

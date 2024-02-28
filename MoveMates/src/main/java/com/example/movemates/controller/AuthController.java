@@ -15,6 +15,7 @@ import com.example.movemates.entity.User;
 import com.example.movemates.entity.VerificationToken;
 import com.example.movemates.event.SignupEventPublisher;
 import com.example.movemates.form.SignupForm;
+import com.example.movemates.service.MyMenuService;
 import com.example.movemates.service.UserService;
 import com.example.movemates.service.VerificationTokenService;
 
@@ -25,11 +26,13 @@ public class AuthController {
 	private final UserService userService;
 	private final SignupEventPublisher signupEventPublisher;
 	private final VerificationTokenService verificationTokenService;
+	private final MyMenuService myMenuService;
 	
-	public AuthController(UserService userService, SignupEventPublisher signupEventPublisher, VerificationTokenService verificationTokenService) {
+	public AuthController(UserService userService, SignupEventPublisher signupEventPublisher, VerificationTokenService verificationTokenService, MyMenuService myMenuService) {
 		this.userService = userService;
 		this.signupEventPublisher = signupEventPublisher;
 		this.verificationTokenService = verificationTokenService;
+		this.myMenuService = myMenuService;
 	}
 	// ログイン画面を返す
 	@GetMapping("/login")
@@ -65,12 +68,15 @@ public class AuthController {
         
         User createdUser = userService.create(signupForm);
         String requestUrl = new String(httpServletRequest.getRequestURL());
+        // ユーザー作成時にマイメニューを3つ作る
+        myMenuService.createDefaultMyMenus(createdUser);
         signupEventPublisher.publishSignupEvent(createdUser, requestUrl);
         redirectAttributes.addFlashAttribute("successMessage", "ご入力いただいたメールアドレスに認証メールを送信しました。メールに記載されているリンクをクリックし、会員登録を完了してください。");
         
         return "redirect:/";
     }
 	
+	// メール認証後のページ
 	@GetMapping("/signup/verify")
     public String verify(@RequestParam(name = "token") String token, Model model) {
         VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);

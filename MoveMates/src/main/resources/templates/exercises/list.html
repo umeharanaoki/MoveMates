@@ -20,32 +20,38 @@
 
 							<div>
 								<!-- 目的のリンクを踏んだ時のみ表示 -->
-								<div class="row mb-4" th:if="${purpose != null}">
+								<div class="row" th:if="${purpose != null}">
+									<!-- アクティビティがない場合の処理 -->
+									<div th:unless="${not #lists.isEmpty(purpose.exercises)}">
+					                    <p th:text="${purpose.getName() + 'に関するアクティビティは登録されていません。'}"></p>
+					                </div>
                  					<!-- エクササイズのデータがあるか判定 -->
-									<div th:if="${not #lists.isEmpty(purpose.exercises)}" th:each="exercise : ${purpose.getExercises()}">
+									<div th:if="${not #lists.isEmpty(purpose.exercises)}" th:each="exercise : ${purpose.getExercises()}" class="mb-3">
 					                  	<a th:href="@{/exercises/__${exercise.getId()}__}" class="link-dark" data-add-origin-url>
-											<div class="card"> <!-- 高さ指定する？ -->
+											<div class="card mm-card"> <!-- 高さ指定する？ -->
 												<div class="row"> <!-- g-0付けるか確認 -->
 													<!-- カード左の画像 -->
 													<div class="col-4"> <!-- md付けるか確認 -->
 														<img th:if="${exercise.getImageName()}" th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="w-100" alt="トレーニング画像">
 														<img th:unless="${exercise.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
 													</div>
-													<div class="col-8">
+													<div class="col-8 mm-card-body">
 														<div class="card-body">
-					           				            	<h3 th:text="${exercise.getName()}"></h3>
-															<p>ターゲット部位: 
-																<span th:each="bodyPart : ${exercise.bodyParts}" th:text="${bodyPart.getName()}"></span>
-															</p>
+					           				            	<h5 th:text="${exercise.getName()}"></h5>
+					           				            	<div class="d-flex">
+																<p>ターゲット部位 : </p>
+																<span th:each="bodyPart, iterStat : ${exercise.bodyParts}">
+																	<span th:text="${bodyPart.getName()}"></span>
+																	<span th:if="${!iterStat.last}">、</span>
+																</span>
+															</div>
 												           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 秒</p>
 														</div>
 													</div>
 												</div>
 											</div>
 									    </a>
-					                <div th:unless="${not #lists.isEmpty(purpose.exercises)}">
-					                    <p th:text="${purpose.getName() + 'に関するアクティビティは登録されていません。'}"></p>
-					                </div>
+									</div>
 								</div>
 								
 								<!-- 部位のリンクを踏んだ時のみ表示 -->
@@ -69,9 +75,7 @@
 					</div>
 				</div>
 			</main>
-			<div th:replace="~{fragment :: footer}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
-		<script th:src="@{/js/get-url.js}"></script>
 	</body>
 </html>

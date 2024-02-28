@@ -3,6 +3,7 @@ package com.example.movemates.form;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Email;
@@ -26,6 +27,7 @@ public class SignupForm {
 	@NotBlank(message = "性別を選択してください。")
 	private String gender;
 	
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date birthday;
 	
 	@NotBlank(message = "パスワードを入力してください。")

@@ -27,8 +27,8 @@ public class AjaxFavoriteController {
 	}
 	
 	// Ajaxからのリクエストを受け取る
-	@PostMapping("/exercises/{id}/favorites/toggle")
-	public Integer toggleFavorite(@PathVariable(name = "id") Integer exerciseId, 
+	@PostMapping("/exercises/{exercise_id}/favorites/toggle")
+	public Integer toggleFavorite(@PathVariable(name = "exercise_id") Integer exerciseId, 
 								  @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
 	{
 		User user = userDetailsImpl.getUser();
