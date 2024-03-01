@@ -1,50 +1,33 @@
 package com.example.movemates.entity;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.Getter;
 
 @Entity
 @Table(name = "mymenu_exercises")
 @Data
-public class MyMenuExercise implements Serializable {
+public class MyMenuExercise {
 	
-	@EmbeddedId
-	private PrimaryKey pk;
-	
-	@Column(name = "exercise_order")
-	private Integer exerciseOrder;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 	
 	@ManyToOne
-	@MapsId("mymenuId")
+	@JoinColumn(name = "mymenu_id")
 	private MyMenu myMenu;
 	
 	@ManyToOne
-	@MapsId("exerciseId")
+	@JoinColumn(name = "exercise_id")
 	private Exercise exercise;
 	
-	public MyMenuExercise(MyMenu myMenu, Exercise exercise, Integer exerciseOrder) {
-		this.myMenu = myMenu;
-		this.exercise = exercise;
-		this.exerciseOrder = exerciseOrder;
-	}
-	
-	@Getter
-	@Embeddable
-	public static class PrimaryKey implements Serializable {
-		
-		@Column(name = "mymenu_id")
-		private Integer mymenuId;
-		
-		@Column(name = "exercise_id")
-		private Integer exerciseId;
-	}
+	@Column(name = "exercise_order")
+	private Integer exerciseOrder;
 }

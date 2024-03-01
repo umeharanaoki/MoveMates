@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class MyMenuExerciseForm {
 	
+	private Integer id;
+
 	private MyMenu myMenu;
 	
 	private Exercise exercise;

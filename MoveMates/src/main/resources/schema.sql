@@ -90,10 +90,10 @@ CREATE TABLE IF NOT EXISTS mymenus (
 );
 
 CREATE TABLE IF NOT EXISTS mymenu_exercises (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	mymenu_id INT NOT NULL,
 	exercise_id INT NOT NULL,
 	exercise_order INT NOT NULL,
-	PRIMARY KEY (mymenu_id, exercise_id),
 	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id),
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id)
 );

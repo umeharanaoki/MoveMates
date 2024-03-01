@@ -50,7 +50,7 @@ public class UserService {
         if (!imageFile.isEmpty()) {
             String imageName = imageFile.getOriginalFilename(); 
             String hashedImageName = generateNewFileName(imageName);
-            Path filePath = Paths.get("src/main/resources/static/storage/user/icons" + hashedImageName);
+            Path filePath = Paths.get("src/main/resources/static/storage/user/icons/" + hashedImageName);
             copyImageFile(imageFile, filePath);
             user.setImageName(hashedImageName);
         }
@@ -77,7 +77,7 @@ public class UserService {
         if (!imageFile.isEmpty()) {
             String imageName = imageFile.getOriginalFilename(); 
             String hashedImageName = generateNewFileName(imageName);
-            Path filePath = Paths.get("src/main/resources/static/storage/user/icons" + hashedImageName);
+            Path filePath = Paths.get("src/main/resources/static/storage/user/icons/" + hashedImageName);
             copyImageFile(imageFile, filePath);
             user.setImageName(hashedImageName);
         }

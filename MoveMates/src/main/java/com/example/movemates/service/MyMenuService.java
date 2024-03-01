@@ -1,23 +1,34 @@
 package com.example.movemates.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.MyMenu;
+import com.example.movemates.entity.MyMenuExercise;
 import com.example.movemates.entity.User;
+import com.example.movemates.repository.MyMenuExerciseRepository;
 import com.example.movemates.repository.MyMenuRepository;
 
 @Service
 public class MyMenuService {
 	private final MyMenuRepository myMenuRepository;
+//	private final ExerciseRepository exerciseRepository;
+	private final MyMenuExerciseRepository myMenuExerciseRepository;
 
-    public MyMenuService(MyMenuRepository myMenuRepository) {
+    public MyMenuService(MyMenuRepository myMenuRepository, MyMenuExerciseRepository myMenuExerciseRepository) {
         this.myMenuRepository = myMenuRepository;
+//        this.exerciseRepository = exerciseRepository;
+        this.myMenuExerciseRepository = myMenuExerciseRepository;
     }
-
+    
+    // ユーザー登録時にデフォルトのメニューを作成
+    @Transactional
     public void createDefaultMyMenus(User user) {
-        // ユーザーIDをもとにマイメニューを作成する
         MyMenu myMenu1 = new MyMenu();
         myMenu1.setName("メニュー1");
         myMenu1.setUser(user); // UserエンティティのコンストラクタでIDを指定する
@@ -30,7 +41,31 @@ public class MyMenuService {
         myMenu3.setName("メニュー3");
         myMenu3.setUser(user);
 
-        // 作成したマイメニューを保存する
         myMenuRepository.saveAll(Arrays.asList(myMenu1, myMenu2, myMenu3));
+    }
+    
+    // エクササイズをマイメニューに追加する
+    @Transactional
+    public MyMenu addExercisesToMyMenu(Integer mymenuId, List<Exercise> exercises) {
+    	MyMenu myMenu = myMenuRepository.findById(mymenuId)
+    		    .orElseThrow(() -> new IllegalArgumentException("指定されたIDのマイメニューが見つかりませんでした。"));
+
+        Integer exerciseOrder = myMenu.getMyMenuExercises().size() + 1;
+        
+        // マイメニューにエクササイズを追加する処理
+        List<MyMenuExercise> myMenuExercises = new ArrayList<>();
+        for (Exercise exercise : exercises) {
+            MyMenuExercise myMenuExercise = new MyMenuExercise();
+            myMenuExercise.setMyMenu(myMenu);
+            myMenuExercise.setExercise(exercise);
+            myMenuExercise.setExerciseOrder(exerciseOrder++);
+            
+            myMenuExercises.add(myMenuExercise);
+        }
+        
+        // マイメニューのエクササイズ一覧に追加
+        myMenuExerciseRepository.saveAll(myMenuExercises);
+        
+        return myMenu;
     }
 }

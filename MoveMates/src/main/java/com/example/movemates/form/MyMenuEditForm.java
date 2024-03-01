@@ -14,5 +14,5 @@ public class MyMenuEditForm {
 	@NotBlank(message = "メニュー名を入力してください")
 	private String name;
 	
-	private List<MyMenuExerciseForm> menuExercise;
+	private List<MyMenuExerciseForm> menuExerciseForms;
 }

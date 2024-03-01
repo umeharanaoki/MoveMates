@@ -287,3 +287,7 @@ nav a img {
 	background-color: white;
 }
 
+.checked {
+    background-color: lightblue; /* チェックされている時の背景色 */
+}
+
