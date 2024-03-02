@@ -17,31 +17,26 @@
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
 							<h1 class="mb-4 text-center">マイメニュー</h1>
 							
-							<!-- マイメニューをまだ登録していないときの表示 -->
-							<div th:if="${myMenus.empty}">
-								<a th:href="@{/mymenu/register}">登録</a>
-							</div>
-							
 							<!-- マイメニューの一覧表示 -->
 							<div th:each="mymenu : ${myMenus}">
 								<span th:text="${mymenu.getName()}"></span>
 								<!-- マイメニュー表示枠 -->
 								<div class="mymenu-box">
 									<!-- エクササイズが登録されていないとき（初期状態） -->
-									<div th:unless="${not #lists.isEmpty(mymenu.exercises)}">
+									<div th:unless="${not #lists.isEmpty(mymenu.myMenuExercises)}">
 										<div class="w-25">
 					                    	<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}"><img th:src="@{/images/plus-icon.svg}" class="w-100"></a>
 										</div>
 					                </div>
 					                <!-- エクササイズがあるとき -->
-									<div th:if="${not #lists.isEmpty(mymenu.exercises)}">
+									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}">
 										<!-- カード -->
 										<div>
-											<div th:each="exercise : ${mymenu.exercises}">
+											<div th:each="exercise : ${mymenu.myMenuExercises}">
 												<div class="card card-size">
-													<img th:src="@{/storage/exercise/__${exercise.getImageName()}__}}" class="card-img-top">
+<!--													<img th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="card-img-top">-->
 													<div class="card-body">
-														<p class="card-text" th:text="${exercise.getName()}"></p>
+<!--														<p class="card-text" th:text="${exercise.getName()}"></p>-->
 													</div>
 												</div>
 											</div>

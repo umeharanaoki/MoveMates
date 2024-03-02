@@ -53,3 +53,10 @@ VALUES
 	(1, 10);
 
 INSERT IGNORE INTO users (id, name, image_name, email, birthday, gender, password, role_id, enabled) VALUES ('goleiro66', 'うめしゃん', null, 'n6773938@gmail.com', '1995-06-06', '男性', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 2, 1);
+
+INSERT IGNORE INTO mymenu_exercises (id, mymenu_id, exercise_id, exercise_order) 
+VALUES 
+	(1, 4, 1, 1),
+	(2, 4, 2, 2),
+	(3, 4, 4, 3);
+	

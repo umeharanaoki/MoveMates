@@ -27,7 +27,7 @@ public class SignupForm {
 	@NotBlank(message = "性別を選択してください。")
 	private String gender;
 	
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	
 	@NotBlank(message = "パスワードを入力してください。")
