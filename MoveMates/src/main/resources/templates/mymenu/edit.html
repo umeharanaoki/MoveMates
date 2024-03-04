@@ -11,34 +11,34 @@
 		<div class="wrapper">
 			<div th:replace="~{fragment :: header}"></div>
 			<main>
-				<!-- マイメニュー登録フォーム -->
-				<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">
-					<div>
-						<label for="name" class="form-label">メニュー名</label>
-						<input type="text" th:field="*{name}" class="form-control">
-					</div>
-					<!-- マイメニュー表示枠 -->
-					<div class="mymenu-box">
-						<!-- exerciseがないとき -->
-						<div th:unless="${not #lists.isEmpty(menuExerciseForms)}">
-							<span>下のアクティビティを選択して追加してください。</span>
-						</div>
-						<!-- exerciseがあるとき -->
-						<div th:if="${not #lists.isEmpty(menuExerciseForms)}">
-						    <div class="d-flex flex-wrap">
-						        <div th:each="menuExerciseForm : ${menuExerciseForms}">
-						            <div class="card card-size h-100">
-						                <img th:src="@{/storage/exercise/__${menuExerciseForm.getExercise().getImageName()}__}" class="card-img-top">
-						                <div class="card-body">
-						                    <p class="card-text" th:text="${menuExerciseForm.getExercise().getName()}"></p>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>
-						<button type="submit" class="btn movemates-btn">確定</button>
-					</div>
-				</form>
+<!--				<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">-->
+<!--					<div>-->
+<!--						<label for="name" class="form-label">メニュー名</label>-->
+<!--						<input type="text" th:field="*{name}" class="form-control">-->
+<!--					</div>-->
+<!--					 マイメニュー表示枠 -->
+<!--					<div class="mymenu-box">-->
+<!--						 exerciseがないとき -->
+<!--						<div th:unless="${not #lists.isEmpty(myMenuEditForm)}">-->
+<!--							<span>下のアクティビティを選択して追加してください。</span>-->
+<!--						</div>-->
+<!--						 exerciseがあるとき -->
+<!--						<div th:if="${not #lists.isEmpty(myMenuEditForm)}">-->
+<!--						    <div class="d-flex flex-wrap">-->
+<!--						        <div th:each="menuExerciseForm : ${myMenuEditForm}">-->
+<!--						            <div class="card card-size h-100">-->
+<!--						                <img th:src="@{/storage/exercise/__${menuExerciseForm.getExercise().getImageName()}__}" class="card-img-top">-->
+<!--						                <div class="card-body">-->
+<!--						                    <p class="card-text" th:text="${menuExerciseForm.getExercise().getName()}"></p>-->
+<!--						                </div>-->
+<!--						            </div>-->
+<!--						        </div>-->
+<!--						    </div>-->
+<!--						</div>-->
+<!--						<button type="submit" class="btn movemates-btn">確定</button>-->
+<!--					</div>-->
+<!--				</form>-->
+				<form method="post" th:object="${AjaxAddExercisesForm}">
 					<!-- お気に入りしたアクティビティ一覧 -->
 					<div class="d-flex flex-wrap">
 						<div th:each="exercise : ${exerciseList}">
@@ -51,19 +51,12 @@
 							</div>
 						</div>
 					</div>
-					<button onclick="addSelectedExercises($(this).data('mymenu-id'))" class="btn movemates-btn" th:data-mymenu-id="${myMenuEditForm.getId()}">追加</button>
-
-
+					<button type="button" onclick="addSelectedExercises($(this).data('mymenu-id'))" class="btn movemates-btn" th:data-mymenu-id="${myMenu.getId()}">追加</button>
+				</form>
 			</main>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
-		<script>
-    		function toggleCheckbox(card) {
-        	var checkbox = card.querySelector('input[type="checkbox"]');
-        	checkbox.checked = !checkbox.checked;
-        	card.classList.toggle('checked', checkbox.checked);
-    		}
-		</script>
+		<script th:src="@{/js/toggle-checkbox.js}"></script>
 		<script th:src="@{/js/add-selected-exercises.js}"></script>
 	</body>
 </html>

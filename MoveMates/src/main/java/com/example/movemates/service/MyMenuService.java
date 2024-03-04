@@ -46,10 +46,7 @@ public class MyMenuService {
     
     // エクササイズをマイメニューに追加する
     @Transactional
-    public MyMenu addExercisesToMyMenu(Integer mymenuId, List<Exercise> exercises) {
-    	MyMenu myMenu = myMenuRepository.findById(mymenuId)
-    		    .orElseThrow(() -> new IllegalArgumentException("指定されたIDのマイメニューが見つかりませんでした。"));
-
+    public void addExercisesToMyMenu(MyMenu myMenu, List<Exercise> exercises) {
         Integer exerciseOrder = myMenu.getMyMenuExercises().size() + 1;
         
         // マイメニューにエクササイズを追加する処理
@@ -65,7 +62,5 @@ public class MyMenuService {
         
         // マイメニューのエクササイズ一覧に追加
         myMenuExerciseRepository.saveAll(myMenuExercises);
-        
-        return myMenu;
     }
 }
