@@ -1,7 +1,6 @@
 package com.example.movemates.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,9 +29,9 @@ public class ExerciseLog {
 	@ManyToOne
 	private MyMenu myMenu;
 	
-	@Column(name = "exercise_day")
-	private Date exerciseDay;
-	
 	@Column(name = "created_at", insertable = false, updatable = false)
-	private Timestamp createdAt;
+	private Timestamp exerciseDay;
+	
+	@Column(name = "exercise_duration")
+	private Integer exerciseDuration;
 }

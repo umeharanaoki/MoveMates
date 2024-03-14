@@ -15,40 +15,47 @@
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
-							<h1 class="mb-4 text-center">マイメニュー</h1>
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
+							</div>
 							
 							<!-- マイメニューの一覧表示 -->
 							<div th:each="mymenu : ${myMenus}">
-								<span th:text="${mymenu.getName()}"></span>
-								<!-- マイメニュー表示枠 -->
+								<div class="mymenu-name">
+									<span th:text="${mymenu.getName()}"></span>
+								</div>
+								<!-- 1つのマイメニュー -->
 								<div class="mymenu-box">
-									<!-- エクササイズが登録されていないとき（初期状態） -->
+									<!-- エクササイズが登録されていないときは登録ボタンを表示 -->
 									<div th:unless="${not #lists.isEmpty(mymenu.myMenuExercises)}">
 										<div class="w-25">
-					                    	<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}"><img th:src="@{/images/plus-icon.svg}" class="w-100"></a>
+							                <a th:href="@{/mymenu/__${mymenu.getId()}__/edit}"><img th:src="@{/images/plus-icon.svg}" class="w-100"></a>
 										</div>
-					                </div>
-					                <!-- エクササイズがあるとき -->
+							        </div>
+							        <!-- エクササイズがあるとき -->
 									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}">
-										<!-- カード -->
-										<div>
-											<div th:each="exercise : ${mymenu.myMenuExercises}">
-												<div class="card card-size">
-<!--													<img th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="card-img-top">-->
-													<div class="card-body">
-<!--														<p class="card-text" th:text="${exercise.getName()}"></p>-->
+<!--										<div class="d-flex">   カード一覧とボタンを横並びにする -->
+											<div class="mymenu-exercise-box">  <!-- カードを入れるボックス -->
+												<!-- カード -->
+												<div class="mm-card-box">
+													<div th:each="myMenuExercise : ${mymenu.myMenuExercises}">
+														<div class="card border-0 card-size">
+															<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text" th:text="${myMenuExercise.exercise.getName()}"></p>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<!-- ボタン -->
-										<div class="d-flex flex-column align-items-center justify-content-center">
-											<a th:href="@{/mymenu/__${mymenu.getId()}__/start}" class="btn movemates-btn m-2">スタート</a>
-											<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}" class="btn movemates-btn m-2">編集</a>
-										</div>
+											<!-- ボタン -->
+											<div class="d-flex flex-column align-items-center justify-content-center">
+												<a th:href="@{/mymenu/__${mymenu.getId()}__/start}" class="btn movemates-btn m-2">スタート</a>
+												<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}" class="btn movemates-btn m-2">編集</a>
+											</div>
+<!--										</div>-->
 									</div>
 								</div>
-										
 							</div>
 						</div>
 					<div>

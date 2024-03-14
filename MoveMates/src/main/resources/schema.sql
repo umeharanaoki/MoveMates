@@ -98,12 +98,19 @@ CREATE TABLE IF NOT EXISTS mymenu_exercises (
 	FOREIGN KEY (exercise_id) REFERENCES exercises (id)
 );
 
+
 CREATE TABLE IF NOT EXISTS exercise_logs (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id VARCHAR(50) NOT NULL,
 	mymenu_id INT NOT NULL,
-	exercise_day DATE NOT NULL,
-	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	exercise_day DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	exercise_duration INT NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users (id),
 	FOREIGN KEY (mymenu_id) REFERENCES mymenus (id)
+);
+
+CREATE TABLE IF NOT EXISTS encouraging_messages (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	consecutive_weeks INT NOT NULL,
+	message VARCHAR(255) NOT NULL
 );

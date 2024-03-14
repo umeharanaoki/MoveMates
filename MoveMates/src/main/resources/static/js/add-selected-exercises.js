@@ -12,13 +12,11 @@ function addSelectedExercises(mymenuId) {
         url: url,
         contentType: "application/json", // JSON形式でデータを送信する
         data: JSON.stringify({ "exerciseIds": selectedExercises }), 	// データをJSON形式に変換して送信
-//        data: JSON.stringify(selectedExercises), // データをJSON形式に変換して送信
+        dataType: 'json', // サーバーからのレスポンスをJSONとして解析することを指定
         // 成功時の処理
         success: function(response) {
             console.log("エクササイズが追加されました");
-            // JSON形式のレスポンスをオブジェクトに変換
-            let responseObject = JSON.parse(response);
-            console.log("サーバーからのレスポンス:", responseObject);
+            console.log("サーバーからのレスポンス:", response);
         },
         error: function(xhr, status, error) {
             // エラー時の処理

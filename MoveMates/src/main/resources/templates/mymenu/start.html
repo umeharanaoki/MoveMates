@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>マイメニュー</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<!-- ナビゲーションバーの部品化 -->
+	        <div th:replace="~{fragment :: header}"></div>
+			<main>
+				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<form method="post" th:action="@{/mymenu/record}" th:object="${exerciseLogForm}">
+								<div class="stopwatch-container">
+	  								<div id="stopwatch">00:00</div>
+	  								<input type="hidden" th:field="*{user}">
+	  								<input type="hidden" th:field="*{myMenu.id}">
+	  								<input type="hidden" th:field="*{exerciseDuration}">
+	  								<div class="w-25">
+	  									<img id="startStopButton" th:src="@{/images/start.svg}"></img>
+	  									
+									</div>
+									<div>
+										<span id="resetButton">リセット</span>
+									</div>
+									<button type="submit" id="endButton">終了</button>
+								</div>
+							</form>
+						</div>
+					<div>
+				</div>
+			</main>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:src="@{/js/timer.js}"></script>
+	</body>
+</html>

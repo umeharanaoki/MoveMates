@@ -8,9 +8,11 @@ body {
 }
 
 main {
-	margin-left: 40px;
+	margin-left: 88px;
 	flex-grow: 1;
-	height: 100%;
+	height: 100vh;
+/*	min-height: 100vh;*/
+	overflow-y: auto; /* 縦方向のオーバーフローをスクロール可能にする */
 }
 
 .main-bottom {
@@ -75,10 +77,6 @@ footer {
     color: #4D4399; /* テキストの色を設定します */
 }
 
-.movemates-back-color {
-	background-color: #64C0AB;
-}
-
 .movemates-btn {
 	color: white;
 	background-color: #4D4399 !important;
@@ -115,6 +113,8 @@ footer {
     padding: 10px 20px;
 }
 
+
+/*カレンダー*/
 #my-calendar table {
 	border-collapse: collapse;
     width: 100%;
@@ -140,6 +140,29 @@ footer {
     vertical-align: top; /* 日付を上半分に配置 */
 }
 
+.calendar-circle {
+    display: inline-block;
+    border-radius: 50%; /* 円形にする */
+    width: 20px;
+    height: 20px;
+    line-height: 20px; /* 円の中央に日付を配置 */
+    text-align: center;
+    position: relative; /* 相対位置指定 */
+}
+
+.today .calendar-circle {
+    background-color: #4D4399; /* 今日の日付に対応するセルの円の背景色を変更 */
+}
+
+.today .calendar-circle span {
+    position: absolute; /* 絶対位置指定 */
+    top: 50%; /* 上端の位置をセルの中央に合わせる */
+    left: 50%; /* 左端の位置をセルの中央に合わせる */
+    transform: translate(-50%, -50%); /* セルの中央に移動 */
+    color: white; /* 今日の日付に対応するセルの日付の文字色を変更 */
+}
+
+/*継続週数*/
 #consecutive-weeks {
 	width: 400px;
 	height: 120px;
@@ -167,34 +190,14 @@ footer {
 	text-align: center;
 }
 
-.calendar-circle {
-    display: inline-block;
-    border-radius: 50%; /* 円形にする */
-    width: 20px;
-    height: 20px;
-    line-height: 20px; /* 円の中央に日付を配置 */
-    text-align: center;
-    position: relative; /* 相対位置指定 */
-}
 
-.today .calendar-circle {
-    background-color: #4D4399; /* 今日の日付に対応するセルの円の背景色を変更 */
-}
 
-.today .calendar-circle span {
-    position: absolute; /* 絶対位置指定 */
-    top: 50%; /* 上端の位置をセルの中央に合わせる */
-    left: 50%; /* 左端の位置をセルの中央に合わせる */
-    transform: translate(-50%, -50%); /* セルの中央に移動 */
-    color: white; /* 今日の日付に対応するセルの日付の文字色を変更 */
-}
-
-.mm-head-div1 {
-	width: 56px;
-}
+/*.mm-head-div1 {*/
+/*	width: 56px;*/
+/*}*/
 
 .mm-head-div2 {
-	height: 100%;
+	height: 100vh;
 	position: fixed;
 	display: flex;
     justify-content: center;
@@ -275,19 +278,94 @@ nav a img {
     margin: 16px;
 }
 
+.mymenu-name {
+	color: #ffffff;
+	background-color: #4D4399;
+	padding: 1% 4%;
+	width: 20%;
+	clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 70%, 70% 0);
+}
+
 .mymenu-box {
 	display: flex;
-	margin: 1rem;
-	padding: 1rem;
+/*	margin: 1rem;*/
+	padding: 4%;
 	background-color: rgba(255, 255, 255, 0.7);
+	overflow-x: scroll;
+}
+
+.mymenu-exercise-box {
+	display: flex;
 }
 
 .card-size {
+	position: relative;
 	width: 10rem;
+	height: 100%;
 	background-color: white;
+	margin-right: 1rem;
+	
 }
 
 .checked {
     background-color: lightblue; /* チェックされている時の背景色 */
 }
 
+.mm-card-box {
+	display: flex;
+}
+
+.batsu {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  z-index: 10;
+}
+ 
+.batsu::before, .batsu::after { /* 共通設定 */
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 2px; /* 棒の幅（太さ） */
+  height: 16px; /* 棒の高さ */
+  background-color: #4D4399 !important;
+}
+ 
+.batsu::before {
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+ 
+.batsu::after {
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.double-line {
+  position: relative;
+  width: 100%; /* 要素の幅 */
+  height: 16px; /* 線の太さ */
+/*  background-color: black;  線の色 */
+}
+
+.double-line::before,
+.double-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 50%; /* 要素の幅の半分 */
+  height: 2px; /* 線の太さ */
+  background-color: black; /* 線の色 */
+}
+
+/*.double-line::before {*/
+/*  left: 0;*/
+/*}*/
+
+/*.double-line::after {*/
+/*  right: 0;*/
+/*}*/
+
+.menu-form {
+  background-color: #4D4399;
+}
