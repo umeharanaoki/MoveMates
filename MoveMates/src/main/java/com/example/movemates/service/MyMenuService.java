@@ -11,7 +11,6 @@ import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.MyMenu;
 import com.example.movemates.entity.MyMenuExercise;
 import com.example.movemates.entity.User;
-import com.example.movemates.form.MyMenuEditForm;
 import com.example.movemates.repository.MyMenuExerciseRepository;
 import com.example.movemates.repository.MyMenuRepository;
 
@@ -66,8 +65,8 @@ public class MyMenuService {
     }
     
     // マイメニューの内容を更新する
-    @Transactional
-    public void update(MyMenuEditForm myMenuEditForm) {
-    	MyMenu myMenu = 
-    }
+//    @Transactional
+//    public void update(MyMenuEditForm myMenuEditForm) {
+//    	MyMenu myMenu = 
+//    }
 }

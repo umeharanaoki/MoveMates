@@ -124,10 +124,10 @@ public class MyMenuController {
 	}
 	
 	// MyMenuEditFormの処理
-	@PostMapping("/update")
-	public String update(Model model) {
-		
-	}
+//	@PostMapping("/update")
+//	public String update(Model model) {
+//		
+//	}
 	
 	// 運動開始
 	@GetMapping("/{mymenu_id}/start")

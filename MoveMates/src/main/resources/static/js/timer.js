@@ -12,12 +12,12 @@ function startStop() {
     // タイマーが動いている場合、停止する
     clearInterval(timer);
     timer = null;
-    startStopButton.textContent = 'スタート';
+    startStopButton.src = '/images/start.svg';
   } else {
     // タイマーが停止している場合、開始する
     startTime = Date.now() - elapsedTime;
     timer = setInterval(updateStopwatch, 10);
-    startStopButton.textContent = 'ストップ';
+    startStopButton.src = '/images/stop.svg';
   }
 }
 
@@ -44,7 +44,7 @@ function resetStopwatch() {
   timer = null;
   elapsedTime = 0;
   stopwatchDisplay.textContent = '00:00';
-  startStopButton.textContent = 'スタート';
+//  startStopButton.textContent = 'スタート';
 }
 
 startStopButton.addEventListener('click', startStop);

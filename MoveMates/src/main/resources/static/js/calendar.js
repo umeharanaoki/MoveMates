@@ -1,6 +1,10 @@
-function generateCalendar(year, month) {
+// カレンダーを作成するメソッドを定義
+// 実行はhtml側で引数を渡しつつ行う
+function generateCalendar(year, month, exerciseDays) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = new Date(year, month, 1).getDay();
+    
+    console.log(exerciseDays);
     
     const today = new Date(); // 今日の日付を取得
 
@@ -39,7 +43,7 @@ function generateCalendar(year, month) {
                 
                 // 今日の日付と一致する場合、セルにクラスを追加してスタイルを変更
 				if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
-				cell.classList.add('today');
+					cell.classList.add('today');
 				}
 				
 				// 日付を囲む円を作成し、日付の周りに配置
@@ -47,6 +51,15 @@ function generateCalendar(year, month) {
 				circle.classList.add('calendar-circle');	
 				circle.appendChild(dateSpan);	
 				cell.appendChild(circle);
+				
+				// date型のexerciseDaysと比較できるように日付を文字列に変換
+                const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+                if (exerciseDays.includes(dateString)) {
+				    // 運動の記録がある場合、画像を表示する要素を作成し、日付セルに追加
+				    const exerciseDiv = document.createElement('div');
+				    exerciseDiv.classList.add('exercise-day');
+				    cell.appendChild(exerciseDiv);
+				}
 
                 date++;
             }
@@ -56,6 +69,8 @@ function generateCalendar(year, month) {
     calendarDiv.appendChild(table);
 }
 
+
+// 前の月に移動
 function moveToPreviousMonth() {
 	currentMonth--;
 	if (currentMonth < 0) {
@@ -65,6 +80,7 @@ function moveToPreviousMonth() {
 	generateCalendar(currentYear, currentMonth);
 }
 	
+// 次の月に移動
 function moveToNextMonth() {
 	currentMonth++;
 	if (currentMonth > 11) {
@@ -73,8 +89,3 @@ function moveToNextMonth() {
 	}
 	generateCalendar(currentYear, currentMonth);
 }
-
-const today = new Date();
-let currentYear = today.getFullYear();
-let currentMonth = today.getMonth();
-generateCalendar(currentYear, currentMonth);

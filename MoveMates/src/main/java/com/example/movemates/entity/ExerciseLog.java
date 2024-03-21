@@ -29,7 +29,7 @@ public class ExerciseLog {
 	@ManyToOne
 	private MyMenu myMenu;
 	
-	@Column(name = "created_at", insertable = false, updatable = false)
+	@Column(name = "exercise_day", insertable = false, updatable = false)
 	private Timestamp exerciseDay;
 	
 	@Column(name = "exercise_duration")

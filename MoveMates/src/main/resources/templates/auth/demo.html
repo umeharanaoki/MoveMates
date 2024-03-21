@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+		
+		
+            <!-- Bootstrap -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+             
+            <!-- Google Fonts -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+            
+            <!-- css -->
+            <link href="/css/style.css" rel="stylesheet" >
+        
+		
+		<title>マイメニュー</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<!-- ナビゲーションバーの部品化 -->
+	        
+	        <header>
+				<div class="mm-head-div1">
+					<div class="mm-head-div2">
+						<div class="mm-head-div3">
+							<!-- headerの上部要素 -->
+							<div>
+								<!-- ロゴ -->
+								<div class="mm-demo-div4">
+									<h1 role="heading" class="mm-demo-h1">
+										<a href="/user" class="mm-demo-a">
+											<img src="/images/movemates-logo-sm.png">
+										</a>
+									</h1>
+								</div>
+								<!-- ナビ -->
+								<div>
+									<nav>
+										<!-- ホーム -->
+										<a href="/user" class="nav-icon-center">
+											<img src="/images/home.svg"></img>
+										</a>
+										<!-- 検索 -->
+										<a href="/exercises" class="nav-icon-center">
+											<img src="/images/search.svg" class="w-75"></img>
+										</a>
+										<!-- マイメニュー -->
+										<a href="/mymenu" class="nav-icon-center">
+											<img src="/images/mymenu.svg"></img>
+										</a>
+									</nav>
+								</div>
+							</div>
+							<!-- headerの下部要素 -->
+							<!-- アイコン -->
+							<div>
+								<div class="user-info">
+		    					<a href="/user/show" class="nav-icon-center">
+									<img src="/storage/user/icons/52673812-4018-4b82-8861-d645f9fd5644.jpg" class="icon-img">
+								</a>
+		    				</div>
+		    				<!-- 会社概要 -->
+		    				<div></div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</header>
+        
+			<main>
+				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							
+							
+							<!-- マイメニューの一覧表示 -->
+							<div>
+								<div class="mymenu-name">
+									<span>メニュー1</span>
+								</div>
+								<!-- 1つのマイメニュー -->
+								<div class="mymenu-box">
+									<!-- エクササイズが登録されていないときは登録ボタンを表示 -->
+									
+							        <!-- エクササイズがあるとき -->
+									<div>
+<!--										<div class="d-flex">   カード一覧とボタンを横並びにする -->
+											<div class="mymenu-exercise-box">  <!-- カードを入れるボックス -->
+												<!-- カード -->
+												<div class="mm-card-box">
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/22652408.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">フロントランジ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/9e46f83b-6f84-4311-a41b-d1906b0c7d09.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">「肩甲骨をはがす」ストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/61f9002f-c53b-4ee9-a53a-f6891e8b4279.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">前ももストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/97d05d5a-182d-40d6-b6ea-fb2da770b510.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">背中・腰のストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/0c36cc60-9934-4961-ac73-f16642111930.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">大胸筋エクササイズ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/97d05d5a-182d-40d6-b6ea-fb2da770b510.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">背中・腰のストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/0c36cc60-9934-4961-ac73-f16642111930.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">大胸筋エクササイズ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/97d05d5a-182d-40d6-b6ea-fb2da770b510.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">背中・腰のストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/ece0b87e-8469-4f5c-8f5f-320ccc25c1af.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">肩甲骨をほぐすストレッチ</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/7abd001c-a1eb-45cf-a78e-bd97ac288999.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">お尻歩き</p>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="card border-0 card-size">
+															<img src="/storage/exercise/691b76e5-acd7-49d1-af43-3420e6e9ec05.jpg" class="card-img-top">
+															<div class="card-body">
+																<p class="card-text">キャットアンドカウ</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- ボタン -->
+											<div class="d-flex flex-column align-items-center justify-content-center">
+												<a href="/mymenu/4/start" class="btn movemates-btn m-2">スタート</a>
+												<a href="/mymenu/4/edit" class="btn movemates-btn m-2">編集</a>
+											</div>
+<!--										</div>-->
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="mymenu-name">
+									<span>メニュー2</span>
+								</div>
+								<!-- 1つのマイメニュー -->
+								<div class="mymenu-box">
+									<!-- エクササイズが登録されていないときは登録ボタンを表示 -->
+									<div>
+										<div class="w-25">
+							                <a href="/mymenu/5/edit"><img src="/images/plus-icon.svg" class="w-100"></a>
+										</div>
+							        </div>
+							        <!-- エクササイズがあるとき -->
+									
+								</div>
+							</div>
+							<div>
+								<div class="mymenu-name">
+									<span>メニュー3</span>
+								</div>
+								<!-- 1つのマイメニュー -->
+								<div class="mymenu-box">
+									<!-- エクササイズが登録されていないときは登録ボタンを表示 -->
+									<div>
+										<div class="w-25">
+							                <a href="/mymenu/6/edit"><img src="/images/plus-icon.svg" class="w-100"></a>
+										</div>
+							        </div>
+							        <!-- エクササイズがあるとき -->
+									
+								</div>
+							</div>
+						</div>
+					<div>
+				</div>
+			</main>
+		</div>
+		
+            <!-- Bootstrap -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+	</body>
+</html>

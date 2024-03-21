@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>マイページ</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+				
+			<main>
+				<div class="mx-5 h-100">
+					<!-- カレンダー -->
+					<table>
+					    <tr th:each="row : ${calendarData}">
+					        <td th:each="cell : ${row}">
+					            <div th:if="${cell != null}" class="calendar-cell">
+					                <span th:text="${cell}"></span>
+					                <img th:if="${cell == 1}" th:src="@{/images/exercise-log.svg}" class="exercise-mark">
+					            </div>
+					        </td>
+					    </tr>
+					</table>
+					<!-- 継続週数 -->
+					<div id="consecutive-weeks" class="my-2">
+						<div id="week-box-left" class="d-flex flex-column justify-content-center align-items-center">
+							<div>
+								<span>継続週数</span>
+								<h3>2</h3>
+							</div>
+						</div>
+						<div id="week-box-right" class="d-flex flex-column justify-content-center align-items-center">
+							<p>連続運動記録を更新中です</p>
+							<p>現在2週間継続しています。この調子！</p>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+<!--		<script th:src="@{/js/calendar.js}"></script>-->
+	</body>
+</html>

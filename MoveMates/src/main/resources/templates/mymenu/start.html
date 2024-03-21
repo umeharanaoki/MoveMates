@@ -12,25 +12,63 @@
 			<!-- ナビゲーションバーの部品化 -->
 	        <div th:replace="~{fragment :: header}"></div>
 			<main>
-				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
-					<div class="row justify-content-center">
-						<div class="col-xxl-9 col-xl-10 col-lg-11">
-							<form method="post" th:action="@{/mymenu/record}" th:object="${exerciseLogForm}">
-								<div class="stopwatch-container">
-	  								<div id="stopwatch">00:00</div>
-	  								<input type="hidden" th:field="*{user}">
-	  								<input type="hidden" th:field="*{myMenu.id}">
-	  								<input type="hidden" th:field="*{exerciseDuration}">
-	  								<div class="w-25">
-	  									<img id="startStopButton" th:src="@{/images/start.svg}"></img>
-	  									
+				<div class="container h-100"><!-- レスポンシブ用のコンテナ追加箇所 -->
+				
+					<div class="row justify-content-center h-100">
+						<div class="col-xxl-10 h-100">
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+	                            <ol class="breadcrumb mb-0">                        
+	                                <li class="breadcrumb-item"><a th:href="@{/mymenu}">マイメニュー一覧</a></li>
+	                                <li class="breadcrumb-item active" aria-current="page"><span th:text="${myMenu.getName() + '開始'}"></span></li>
+	                            </ol>
+	                        </nav>
+								<div class="row h-100">
+								<div class="col-lg-6 start-flexbox">
+									<div id="carouselExample" class="carousel slide">
+										<div class="carousel-inner">
+											<div th:if="${not #lists.isEmpty(myMenu.myMenuExercises)}">
+												<div th:each="myMenuExercise, iterStat : ${myMenu.myMenuExercises}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+													<div class="card start-card">
+														<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
+														<div class="card-body">
+															<p class="card-text" th:text="${myMenuExercise.exercise.getName()}"></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Previous</span>
+										</button>
+										<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Next</span>
+										</button>
 									</div>
-									<div>
-										<span id="resetButton">リセット</span>
-									</div>
-									<button type="submit" id="endButton">終了</button>
 								</div>
-							</form>
+								<div class="col-lg-6 start-flexbox">
+									<form method="post" th:action="@{/mymenu/record}" th:object="${exerciseLogForm}" class="stopwatch-container">
+			  							<div id="stopwatch">00:00</div>
+			  							
+				  						<div id="resetButton-circle">
+											<span id="resetButton">リセット</span>
+										</div>
+										
+				  						<div class="start-stop-button-box">
+				  							<img id="startStopButton" th:src="@{/images/start.svg}"></img>
+										</div>
+										
+										<input type="hidden" th:field="*{user}">
+				  						<input type="hidden" th:field="*{myMenu.id}">
+				  						<input type="hidden" th:field="*{exerciseDuration}">
+				  						
+										<div class="align-self-center mt-2 mb-5">
+											<button type="submit" id="endButton" class="btn movemates-btn">終了</button>
+										</div>
+									</form>
+								</div>
+							</div>
 						</div>
 					<div>
 				</div>
