@@ -34,12 +34,11 @@
 							        </div>
 							        <!-- エクササイズがあるとき -->
 									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}" class="d-flex w-100">
-<!--										<div class="d-flex">   カード一覧とボタンを横並びにする -->
 											<div class="mymenu-exercise-box">  <!-- カードを入れるボックス -->
 												<!-- カード -->
 												<div class="mm-card-box">
 													<div th:each="myMenuExercise : ${mymenu.myMenuExercises}">
-														<div class="card border-0 card-size">
+														<div class="card mm-sm-card">
 															<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
 															<div class="card-body">
 																<p class="card-text" th:text="${myMenuExercise.exercise.getName()}"></p>
@@ -49,7 +48,7 @@
 												</div>
 											</div>
 											<!-- ボタン -->
-											<div class="btn-box d-flex flex-column align-items-center justify-content-center">
+											<div class="mymenu-btn-box">
 												<a th:href="@{/mymenu/__${mymenu.getId()}__/start}" class="btn movemates-btn m-2">スタート</a>
 												<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}" class="btn movemates-btn m-2">編集</a>
 											</div>

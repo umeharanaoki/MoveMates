@@ -74,7 +74,7 @@ a:hover {
   background-color: #4D4399 !important;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   transition: 0.1s;
-  min-width: 5rem;
+  width: 72px;
   white-space: nowrap;
 }
 
@@ -440,13 +440,13 @@ footer {
 .mymenu-box {
   display: flex;
   margin-bottom: 4%;
-  padding: 4% 0 4% 4%;
+  padding: 4%;
   background-color: rgba(255, 255, 255, 0.7);
 }
 
 .mymenu-exercise-box {
-  display: flex;
-  width: 80%;
+  flex-grow: 1;
+  overflow-x: scroll;
 }
 
 #mymenu-candidate-box {
@@ -463,22 +463,25 @@ footer {
   cursor: pointer;
 }
 
-.card-size {
+.mm-sm-card {
   position: relative;
   width: 10rem;
   height: 100%;
   background-color: white;
   margin-right: 1rem;
   cursor: pointer;
+  border: none;
 }
 
 .card-repeat:last-child {
   margin-right: 0;
 }
 
-.btn-box {
-  width: 20%;
-  min-width: 6rem;
+.mymenu-btn-box {
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .checked {
@@ -487,7 +490,8 @@ footer {
 
 .mm-card-box {
   display: flex;
-  overflow-x: scroll;
+/*  overflow-x: scroll;*/
+  padding-bottom: 1%;
 }
 
 .batsu {
@@ -518,31 +522,17 @@ footer {
 
 .sort-handle {
   position: relative;
-  display: inline-block;
-  padding: 0 65px;
-  text-align: center;
-}
-
-.sort-handle:before,
-.sort-handle:after {
-	
 }
 
 .double-line {
-  position: relative;
-  width: 100%; /* 要素の幅 */
-  height: 16px; /* 線の太さ */
-/*  background-color: black;  線の色 */
-}
-
-.double-line::before,
-.double-line::after {
-  content: '';
   position: absolute;
-  top: 50%;
-  width: 50%; /* 要素の幅の半分 */
-  height: 2px; /* 線の太さ */
-  background-color: black; /* 線の色 */
+  height: 4px;
+  width: 16px;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%); /* 垂直方向に半分ずらす */
+  border-top: 1px solid black; /* 上の線 */
+  border-bottom: 1px solid black; /* 下の線 */
 }
 
 .menu-form {

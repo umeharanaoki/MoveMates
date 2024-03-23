@@ -25,7 +25,7 @@
 							<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">
 								<!-- マイメニュー名の編集フォーム -->
 								<div class="w-25">
-									<input type="text" th:field="*{myMenuName}" class="form-control menu-form">
+									<input type="text" th:field="*{myMenuName}" class="menu-form">
 								</div>
 								<!-- マイメニューに登録されているエクササイズの表示枠 -->
 								<div class="mymenu-box">
@@ -34,22 +34,26 @@
 										<span>下のアクティビティを選択して追加してください。</span>
 									</div>
 									<!-- exerciseがあるとき -->
-									<div th:if="${not #lists.isEmpty(myMenu.myMenuExercises)}">
-										<div class="d-flex flex-wrap">
-											<div class="mm-card-box row">
-												<div th:each="myMenuExercise : ${myMenu.myMenuExercises}" class="col-xxl-2">
-													<div class="card card-size col-xxl-2">
+									<div th:if="${not #lists.isEmpty(myMenu.myMenuExercises)}" class="d-flex w-100 justify-content-between">
+										<div class="mymenu-exercise-box">
+											<div class="mm-card-box">
+												<!-- exereciseを繰り返し表示 -->
+												<div th:each="myMenuExercise : ${myMenu.myMenuExercises}">
+													<div class="card mm-sm-card">
 														<span class="batsu"></span>
 														<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
 														<div class="card-body">
 															<p class="card-text" th:text="${myMenuExercise.exercise.getName()}"></p>
 														</div>
-														<span class="js-sort-handle sort-handle double-line"></span>
-			<!--											<button class="btn btn-danger delete-button" th:attr="data-exercise-id=${myMenuExercise.exercise.getId()}">×</button>-->
+														<div class="card-footer sort-handle js-sort-handle">
+															<span class="double-line"></span>
+														</div>
 													</div>
 												</div>
 											</div>
-											<!-- ボタン -->
+										</div>
+										<!-- ボタン -->
+										<div class="mymenu-btn-box">
 											<button type="submit" class="btn movemates-btn">確定</button>
 										</div>
 									</div>
