@@ -32,12 +32,11 @@
 						<div id="week-box-left" class="d-flex flex-column justify-content-center align-items-center">
 							<div>
 								<span>継続週数</span>
-								<h3>2</h3>
+								<h3 th:text="${encouragingMessage.getConsecutiveWeeks()}"></h3>
 							</div>
 						</div>
 						<div id="week-box-right" class="d-flex flex-column justify-content-center align-items-center">
-							<p>連続運動記録を更新中です</p>
-							<p>現在2週間継続しています。この調子！</p>
+							<p th:text="${encouragingMessage.getMessage()}"></p>
 						</div>
 					</div>
 				</div>
