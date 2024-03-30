@@ -2,8 +2,6 @@ package com.example.movemates.form;
 
 import java.util.List;
 
-import com.example.movemates.entity.MyMenuExercise;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,9 +16,14 @@ public class MyMenuEditForm {
 	@NotBlank(message = "メニュー名を入力してください。")
 	private String myMenuName;
 	
-	@NotNull
-	private List<MyMenuExercise> myMenuExercises;
+	// Entityのリストにすると必要ないフィールドが混ざるため修正
+	// メニューに属するエクササイズがなくても問題ない（初期状態）ので@NotNullも不要
+//	@NotNull
+//	private List<MyMenuExercise> myMenuExercises;
 	
-	@NotNull
-	private List<Integer> exerciseOrder;
+	private List<Integer> myMenuExerciseIds;
+	
+	// 順序はListから取得できるのでフィールドに定義する必要はない
+//	@NotNull
+//	private List<Integer> exerciseOrder;
 }

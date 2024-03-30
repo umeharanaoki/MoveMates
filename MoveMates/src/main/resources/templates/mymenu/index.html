@@ -14,14 +14,14 @@
 			<main>
 				<div class="container mymenu-container"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
-						<div class="col-xxl-10">
+						<div class="col-xl-10">
 							<div th:if="${successMessage}" class="alert alert-info">
 								<span th:text="${successMessage}"></span>
 							</div>
 							
 							<!-- マイメニューの一覧表示 -->
 							<div th:each="mymenu : ${myMenus}">
-								<div class="mymenu-name">
+								<div class="mymenu-name-box">
 									<span th:text="${mymenu.getName()}"></span>
 								</div>
 								<!-- 1つのマイメニュー -->

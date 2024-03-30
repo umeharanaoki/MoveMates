@@ -5,8 +5,6 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-<!--		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>-->
-		
 		<title>マイメニュー編集ページ</title>
 	</head>
 	<body>
@@ -23,7 +21,8 @@
 	                                 <li class="breadcrumb-item active" aria-current="page"><span th:text="${myMenu.getName() + '編集'}"></span></li>
 	                             </ol>
 	                        </nav>
-	                        <form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">
+	                        
+							<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">
 								<input type="hidden" th:field="*{myMenuId}">
 								<!-- マイメニュー名の編集フォーム -->
 								<div class="d-flex">
@@ -44,7 +43,7 @@
 										<div class="mymenu-exercise-box">
 											<div id="sortableArea" class="mm-card-box">
 												<!-- exereciseを繰り返し表示 -->
-												<div th:each="myMenuExercise : ${myMenu.myMenuExercises}">
+												<div th:each="exerciseId : ${myMenu.myMenuExercises}">
 													<div class="card mm-sm-card">
 														<span class="batsu" onclick="removeExercise(this)"></span>
 														<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
@@ -64,6 +63,9 @@
 										</div>
 									</div>
 								</div>
+<!--							</form>-->
+<!--							<form method="post" th:object="${AjaxAddExercisesForm}">-->
+								<!-- お気に入りしたアクティビティ一覧 -->
 								<div id="mymenu-candidate-box">
 									<div class="d-flex mb-4">
 										<button type="button" onclick="addSelectedExercises($(this).data('mymenu-id'))" class="btn movemates-btn" th:data-mymenu-id="${myMenu.getId()}">追加</button>
@@ -91,7 +93,37 @@
 		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script th:src="@{/js/toggle-checkbox.js}"></script>
-		
-		
+<!--		<script th:src="@{/js/add-selected-exercises.js}"></script>-->
+		<script type="text/javascript">
+			$(function() {
+  				$("#sortableArea").sortable({
+  					placeholder: "sortable-placeholder", // プレースホルダークラスを追加
+  					tolerance: "pointer",
+					handle: ".js-sort-handle",
+  					opacity: 0.8
+            	});
+			});
+			
+			function removeExercise(element) {
+				//element.closest('.mm-sm-card').style.display = 'none';
+				
+				// クリックされたカードの親要素を非表示にする
+    			var removedCard = element.closest('.mm-sm-card');
+    			removedCard.style.display = 'none';
+
+    			// 移動させるために削除されたカードを追加用のエクササイズ候補欄に追加する
+    			var candidateBox = document.getElementById('mymenuCandidateExerciseBox');
+    			candidateBox.appendChild(removedCard);
+			}
+		</script>
+		<script th:inline="javascript">
+			// サーバーから渡されたIDのリストをjavascriptのリストに変換
+			const myMenuExerciseIdsArray = /*[[${myMenuExerciseIds}]]*/ [];
+			const selectableExerciseIdsArray = /*[[${selectableExercises}]]*/ [];
+			
+			// JavaScriptの配列として操作できるようになった
+			console.log(myMenuExerciseIdsArray);
+			console.log(selectableExerciseIdsArray);
+		</script>
 	</body>
 </html>

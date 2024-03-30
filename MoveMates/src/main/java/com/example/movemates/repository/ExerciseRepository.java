@@ -13,5 +13,9 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer>, Jp
 
 	public List<Exercise> findByPurposes(Purpose purpose);
 	public List<Exercise> findByBodyParts(BodyPart bodyPart);
+	
+	// idのリストからexerciseを複数検索
+	// vue.jsにデータを渡す用
+	List<Exercise> findByIdIn(List<Integer> ids);
 
 }

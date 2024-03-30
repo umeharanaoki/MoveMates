@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>マイメニュー編集ページ</title>
+		
+		<!-- vueのインポート -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue-draggable-next@2.2.1/dist/vue-draggable-next.global.min.js"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			<main>
+				<div class="container">
+					<div class="row justify-content-center">
+	                    <div class="col-xl-10 col-lg-11 p-0">
+							<!-- パンくずリスト -->
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+	                             <ol class="breadcrumb mb-0">                        
+	                                 <li class="breadcrumb-item"><a th:href="@{/mymenu}">マイメニュー一覧</a></li>
+	                                 <li class="breadcrumb-item active" aria-current="page"><span th:text="${myMenu.getName() + '編集'}"></span></li>
+	                             </ol>
+	                        </nav>
+	                        <!-- vue.jsを使用するスペース -->
+							<div id="app">
+								<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}">
+									<input type="hidden" th:field="*{myMenuId}">
+									<!-- マイメニュー名の編集フォーム -->
+									<div class="d-flex">
+										<div class="mymenu-name-box">
+											<input type="text" th:field="*{myMenuName}" class="mymenu-name-form">
+										</div>
+										<div th:if="${#fields.hasErrors('myMenuName')}" class="ms-2" th:errors="*{myMenuName}"></div>
+									</div>
+									<!-- マイメニューに登録されているエクササイズの表示枠 -->
+									<div class="mymenu-box">
+<!--										<input type="hidden" th:field="*{myMenuExercises}">-->
+										<!-- exerciseがないとき -->
+										<div v-if="registeredExercises.length === 0">
+											<span>下のアクティビティを選択して追加してください。</span>
+										</div>
+										<div v-else class="d-flex w-100 justify-content-between">
+											<div class="mymenu-exercise-box">
+<!--												<div class="mm-card-box">-->
+													<draggable :list="registeredExercises" @change="sorted" handle=".sort-handle" class="mm-card-box">
+														<!-- exereciseを繰り返し表示 -->
+												        <div v-for="exercise in registeredExercises" :key="exercise.id">
+															<div class="card mm-sm-card">
+																<span class="batsu" @click="removeFromRegistered($event, exercise)"></span>
+																<img :src="getIconPath(exercise.imageName)" class="card-img-top"/>
+																<div class="card-body">
+																	<p class="card-text">{{ exercise.name }}</p>
+																</div>
+																<div class="card-footer sort-handle">
+																	<span class="double-line"></span>
+																</div>
+															</div>
+												        </div>
+													</draggable>
+<!--												</div>-->
+											</div>
+											<!-- ボタン -->
+											<div class="mymenu-btn-box">
+												<button type="submit" class="btn movemates-btn">確定</button>
+											</div>
+										</div>
+									</div>
+									<!-- マイメニューに登録する候補のexerciseを一覧表示 -->
+									<div id="mymenu-candidate-box">
+										<div class="d-flex mb-4">
+											<button type="button" @click="addToRegistered" class="btn movemates-btn">追加</button>
+											<span class="align-self-center ms-3">下のアクティビティ一を選択して追加してください。</span>							
+										</div>
+										<div id="mymenuCandidateExerciseBox" class="row row-cols-lg-6 row-cols-md-4 row-cols-2">
+									        <div v-for="exercise in candidateExercises" :key="exercise.id" class="col card-repeat">
+												<div class="card mymenu-candidate-card h-100" :class="{ 'selected-exercise-card': isExerciseSelected(exercise) }" @click="toggleCheckbox(exercise)">
+													<input type="checkbox" v-model="selectedExercises" :value="exercise" class="card-checkbox">
+													<img :src="getIconPath(exercise.imageName)" class="card-img-top"/>
+													<div class="card-body">
+														<p class="card-text">{{ exercise.name }}</p>
+													</div>
+												</div>
+									        </div>
+									    </div>
+									</div>
+								</form>
+							</div>
+	                    </div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:inline="javascript">
+        	let menuId = /*[[${menuId}]]*/menuId;
+        	console.log(menuId);
+    	</script>
+		<script>
+			
+			const app = {
+				data() {
+					return {
+						// 役割別のリストを3種作成
+						registeredExercises: [],
+						candidateExercises: [],
+						selectedExercises: []
+					}
+				},
+				mounted() {
+					// thymeleafのナチュラルテンプレートで受け取ったマイメニューのIDを取得
+					const id = menuId;
+					// 取得したIDをもとにマイメニューに属しているexereciseの情報を取得
+					axios.get('/api/edit/' + id)
+					  .then(response => {
+						console.log(response.data);
+					    this.registeredExercises = response.data.registeredExerciseDTOs;
+					    this.candidateExercises = response.data.candidateExerciseDTOs;
+					    // マイメニューのexerciseリストを処理する
+					    console.log("registeredExercises: ", this.registeredExercises);
+					    // 候補のexerciseリストを処理する
+					    console.log("Candidate Exercises: ", this.candidateExercises);
+					  })
+					  .catch(error => {
+					    console.error('Error fetching exercises: ', error);
+					  });
+				},
+				components: {
+            		draggable: window['VueDraggableNext'].VueDraggableNext
+        		},
+				methods: {
+					// vueの管轄内で画像ファイルのパスを指定する（th:srcが使えないため）
+				    getIconPath(imageName) {
+				      return `/storage/exercise/${imageName}`;
+				    },
+				    // マイメニューからexerciseを削除する
+				    removeFromRegistered(event, exercise) {
+					    // exerciseがregisteredExercisesに存在するかを確認し、インデックスを取得
+					    const index = this.registeredExercises.indexOf(exercise);
+					    if (index !== -1) {
+					        // registeredExercisesから削除
+					        this.registeredExercises.splice(index, 1);
+					        // candidateExercisesに追加
+					        this.candidateExercises.push(exercise);
+					    }
+				    },
+				    // マイメニューにexerciseを追加する
+				    addToRegistered() {
+				        // selectedExercisesにチェックが付いているexerciseをregisteredExercisesに追加し、candidateExercisesから削除
+				        this.selectedExercises.forEach(exercise => {
+				            const index = this.candidateExercises.indexOf(exercise);
+				            if (index !== -1) {
+				                this.candidateExercises.splice(index, 1);
+				                this.registeredExercises.push(exercise);
+				            }
+				        });
+				        // selectedExercisesをリセット
+				        this.selectedExercises = [];
+    				},
+    				isExerciseSelected(exercise) {
+						// exerciseがselectedExercisesリストに含まれるときtrueを返す
+        				return this.selectedExercises.includes(exercise);
+    				},
+    				sorted() {
+                		console.log(this.registeredExercises)
+		            }
+				}
+			}
+			Vue.createApp(app).mount('#app')
+		</script>
+	</body>
+</html>
