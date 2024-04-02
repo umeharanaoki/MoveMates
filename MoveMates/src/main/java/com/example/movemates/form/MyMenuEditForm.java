@@ -2,7 +2,7 @@ package com.example.movemates.form;
 
 import java.util.List;
 
-import com.example.movemates.entity.Exercise;
+import com.example.movemates.dto.ExerciseDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,8 +15,9 @@ public class MyMenuEditForm {
 	@NotNull
 	private Integer myMenuId;
 	
-	@NotBlank(message = "メニュー名を入力してください。")
+	@NotBlank	
 	private String myMenuName;
 	
-	private List<Exercise> myMenuExercises;
+	// フロントではDTOクラスとして扱っていたので受け取る際はそれに合わせる
+	private List<ExerciseDTO> myMenuExerciseDTOs;
 }

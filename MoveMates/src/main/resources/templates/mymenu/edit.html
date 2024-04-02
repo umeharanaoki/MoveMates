@@ -27,18 +27,19 @@
 	                             </ol>
 	                        </nav>
 	                        <!-- vue.jsを使用するスペース -->
-							<form method="post" th:action="@{/mymenu/update}" th:object="${myMenuEditForm}" id="app">
-								<input type="hidden" th:field="*{myMenuId}">
+	                        <!-- form要素を使う際はデフォルトのフォーム送信を止めないとvue.jsで送信できないので@submit.preventが必要 -->
+							<form @submit.prevent="myMenuEditForm" id="app">
+								<input type="hidden" name="myMenuId" v-model="myMenuId">
 								<!-- マイメニュー名の編集フォーム -->
 								<div class="d-flex">
 									<div class="mymenu-name-box">
-										<input type="text" th:field="*{myMenuName}" class="mymenu-name-form">
+										<input type="text" name="myMenuName" v-model="myMenuName" class="mymenu-name-form">
 									</div>
-									<div th:if="${#fields.hasErrors('myMenuName')}" class="ms-2" th:errors="*{myMenuName}"></div>
+									<div v-if="errors.myMenuName" class="ms-2">{{ errors.myMenuName }}</div>
 								</div>
 								<!-- マイメニューに登録されているエクササイズの表示枠 -->
 								<div class="mymenu-box">
-									<input type="hidden" th:field="*{myMenuExercises}">
+									<input type="hidden" name="myMenuExerciseDTOs" v-model="registeredExercises">
 									<!-- exerciseがないとき -->
 									<div v-if="registeredExercises.length === 0">
 										<span>下のアクティビティを選択して追加してください。</span>
@@ -63,7 +64,7 @@
 										</div>
 										<!-- ボタン -->
 										<div class="mymenu-btn-box">
-											<button type="submit" class="btn movemates-btn">確定</button>
+											<button type="button" @click="submitForm" class="btn movemates-btn">確定</button>
 										</div>
 									</div>
 								</div>
@@ -75,7 +76,7 @@
 									</div>
 									<div id="mymenuCandidateExerciseBox" class="row row-cols-lg-6 row-cols-md-4 row-cols-2">
 								        <div v-for="exercise in candidateExercises" :key="exercise.id" class="col card-repeat">
-											<div class="card mymenu-candidate-card h-100" :class="{ 'selected-exercise-card': isExerciseSelected(exercise) }" @click="toggleCheckbox(exercise)">
+											<div class="card mymenu-candidate-card h-100" :class="{ 'selected-exercise-card': isExerciseSelected(exercise) }">
 												<input type="checkbox" v-model="selectedExercises" :value="exercise" class="card-checkbox">
 												<img :src="getIconPath(exercise.imageName)" class="card-img-top"/>
 												<div class="card-body">
@@ -93,25 +94,34 @@
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
 		<script th:inline="javascript">
-        	let menuId = /*[[${myMenu.getId()}]]*/menuId;
-        	console.log(menuId);
+			// javaからjavascriptにデータを受け渡す
+        	let myMenuId = /*[[${myMenu.getId()}]]*/myMenuId;
+        	let myMenuName = /*[[${myMenu.getName()}]]*/myMenuName;
+        	console.log(myMenuId);
+        	console.log(myMenuName);
     	</script>
 		<script>
 			
 			const app = {
 				data() {
 					return {
-						// 役割別のリストを3種作成
+						// vueで使用するものは全て定義する
+						myMenuId: '',
+						myMenuName: '',
 						registeredExercises: [],
 						candidateExercises: [],
-						selectedExercises: []
+						selectedExercises: [],
+						errors: {}
 					}
 				},
 				mounted() {
-					// thymeleafのナチュラルテンプレートで受け取ったマイメニューのIDを取得
-					const id = menuId;
+					// thymeleafのナチュラルテンプレートで受け取ったマイメニューのIDとNameを取得
+					this.myMenuId = myMenuId;
+					this.myMenuName = myMenuName;
+					console.log(myMenuId);
+					console.log(myMenuName);
 					// 取得したIDをもとにマイメニューに属しているexereciseの情報を取得
-					axios.get('/api/edit/' + id)
+					axios.get('/api/edit/' + myMenuId)
 					  .then(response => {
 						console.log(response.data);
 					    this.registeredExercises = response.data.registeredExerciseDTOs;
@@ -125,6 +135,8 @@
 					    console.error('Error fetching exercises: ', error);
 					  });
 				},
+				// vueDraggableを使用するためのcomponentの定義
+				// この設定をすることでhtmlでdraggableタグを使用できる
 				components: {
             		draggable: window['VueDraggableNext'].VueDraggableNext
         		},
@@ -133,7 +145,13 @@
 				    getIconPath(imageName) {
 				      return `/storage/exercise/${imageName}`;
 				    },
-				    
+				    // validation用
+				    validateForm() {
+				        this.errors = {}; // エラーをリセット
+				        if (!this.myMenuName) {
+				            this.errors.myMenuName = "メニュー名は必須です。";
+				        }
+				    },
 				    // マイメニューからexerciseを削除する
 				    removeFromRegistered(event, exercise) {
 					    // exerciseがregisteredExercisesに存在するかを確認し、インデックスを取得
@@ -144,7 +162,6 @@
 					        // candidateExercisesに追加
 					        this.candidateExercises.push(exercise);
 					        // registeredExercisesが更新されたので、hidden inputのvalueを更新
-						    this.updateHiddenInputValue();
 					    }
 				    },
 				    // マイメニューにexerciseを追加する
@@ -160,19 +177,45 @@
 				        // selectedExercisesをリセット
 				        this.selectedExercises = [];
 				        // registeredExercisesが更新されたので、hidden inputのvalueを更新
-        				this.updateHiddenInputValue();
     				},
+    				// exerciseが選択されているかの判定
     				isExerciseSelected(exercise) {
 						// exerciseがselectedExercisesリストに含まれるときtrueを返す
         				return this.selectedExercises.includes(exercise);
     				},
+    				// 並び替えが上手くできているかの確認
     				sorted() {
                 		console.log(this.registeredExercises)
 		            },
-		            updateHiddenInputValue() {
-		                // registeredExercisesをJSON形式に変換してフォームに設定
-		                document.getElementById('myMenuExercises').value = JSON.stringify(this.registeredExercises);
-		            }
+		            // フォームを送信する
+		            submitForm() {
+				        this.validateForm(); // フォームの検証を実行
+				        // エラーがない場合はフォームの送信処理に入る
+				        if (Object.keys(this.errors).length === 0) {
+				            // 送信するデータを準備
+				            const requestData = {
+					            myMenuId: this.myMenuId,
+					            myMenuName: this.myMenuName,
+					            myMenuExerciseDTOs: this.registeredExercises
+							};
+							console.log('送信するデータ:', requestData);
+							
+				            axios.post('/api/update', requestData)
+						        .then(response => {
+						            // レスポンスの処理を記述
+						            console.log('フォームが送信されました。');
+						        })
+						        .catch(error => {
+						            // エラーレスポンスの処理を記述
+						            console.error('フォームの送信中にエラーが発生しました。', error);
+						        });
+				            
+				        } else {
+				            // エラーがある場合はフォームの送信をキャンセル
+				            console.log("フォームにエラーがあります。");
+				        }
+				    }
+		            
 				}
 			}
 			Vue.createApp(app).mount('#app')

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -68,22 +67,6 @@ public class MyMenuController {
 		model.addAttribute("myMenu", myMenu);
 		model.addAttribute("myMenuEditForm", myMenuEditForm);
 		return "mymenu/edit";
-	}
-	
-	// MyMenuEditFormの処理
-	@PostMapping("/update")
-	public String update(@RequestBody MyMenuEditForm myMenuEditForm, RedirectAttributes redirectAttributes) {
-//		if(bindingResult.hasErrors()) {
-//			return "mymenu/edit";
-//		}
-		
-		System.out.println(myMenuEditForm.getMyMenuId());
-		System.out.println(myMenuEditForm.getMyMenuName());
-		System.out.println(myMenuEditForm.getMyMenuExercises());
-		
-		redirectAttributes.addFlashAttribute("successMessage", myMenuEditForm.getMyMenuName() + "を更新しました。");
-		
-		return "redirect:/mymenu";
 	}
 	
 	// 運動開始

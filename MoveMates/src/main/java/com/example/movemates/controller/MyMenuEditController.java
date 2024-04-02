@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,19 +18,23 @@ import com.example.movemates.dto.ExerciseDTO;
 import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.MyMenu;
 import com.example.movemates.entity.MyMenuExercise;
+import com.example.movemates.form.MyMenuEditForm;
 import com.example.movemates.mapper.ExerciseMapper;
 import com.example.movemates.repository.ExerciseRepository;
 import com.example.movemates.repository.MyMenuRepository;
+import com.example.movemates.service.MyMenuService;
 
 @RestController
 @RequestMapping("/api")
 public class MyMenuEditController {
 	private ExerciseRepository exerciseRepository;
 	private MyMenuRepository myMenuRepository;
+	private MyMenuService myMenuService;
 	
-	public MyMenuEditController(ExerciseRepository exerciseRepository, MyMenuRepository myMenuRepository) {
+	public MyMenuEditController(ExerciseRepository exerciseRepository, MyMenuRepository myMenuRepository, MyMenuService myMenuService) {
 		this.exerciseRepository = exerciseRepository;
 		this.myMenuRepository = myMenuRepository;
+		this.myMenuService = myMenuService;
 	}
 	
 	@GetMapping("/edit/{mymenuId}")
@@ -64,13 +70,13 @@ public class MyMenuEditController {
 		
 	}
 	
-//	@GetMapping("/exercises")
-//	public List<ExerciseDTO> list(List<Integer> ids) {
-//		List<Exercise> exercises = exerciseRepository.findByIdIn(ids);
-//		List<ExerciseDTO> exerciseDTOs = new ArrayList<>();
-//		for(Exercise exercise : exercises) {
-//			exerciseDTOs.add(ExerciseMapper.mapToDTO(exercise));
-//		}
-//		return exerciseDTOs;
-//	}
+	@PostMapping("/update")
+	public ResponseEntity<String> update(@RequestBody MyMenuEditForm myMenuEditForm) {
+		// 成功した場合
+	    // 更新処理を行う
+		myMenuService.update(myMenuEditForm);
+	    String successMessage = myMenuEditForm.getMyMenuName() + "を更新しました。";
+	    return ResponseEntity.ok(successMessage);
+	    // エラーが発生した場合は、適切なエラーレスポンスを返す
+	}
 }
