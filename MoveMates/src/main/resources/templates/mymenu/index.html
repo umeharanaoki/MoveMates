@@ -6,6 +6,9 @@
 		<div th:replace="~{fragment :: styles}"></div>
 		
 		<title>マイメニュー</title>
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>
+		<script src="https://unpkg.com/vue-router@4"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -18,6 +21,11 @@
 							<div th:if="${successMessage}" class="alert alert-info">
 								<span th:text="${successMessage}"></span>
 							</div>
+							
+							<!-- 成功メッセージを表示するコンポーネント -->
+						    <div id="app">
+						        <div v-if="successMessage" class="alert alert-info">{{ successMessage }}</div>
+						    </div>
 							
 							<!-- マイメニューの一覧表示 -->
 							<div th:each="mymenu : ${myMenus}">
@@ -62,5 +70,37 @@
 			</main>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
+		<script>
+			// Vue Router を使用するためのルートコンポーネント
+			const Home = { template: '<div>Home</div>' };
+			
+			// ルート定義
+		    const routes = [
+		        { path: '/mymenu', component: Home }
+		    ];
+		
+		    // Vue Router インスタンスを作成
+		    const router = VueRouter.createRouter({
+		        history: VueRouter.createWebHistory(),
+		        routes
+		    });
+			
+			const app = {
+				data() {
+					return {
+						successMessage: '' // 成功メッセージを保持するデータ
+					};
+				},
+				mounted() {
+                // URL パラメーターから成功メッセージを取得
+                const params = new URLSearchParams(window.location.search);
+                this.successMessage = params.get('successMessage');
+            	}
+            	
+			}
+			const vueApp = Vue.createApp(app);
+		    vueApp.use(router);
+		    vueApp.mount('#app');
+		</script>
 	</body>
 </html>

@@ -77,7 +77,7 @@ function moveToPreviousMonth() {
 	currentMonth = 11;
 	currentYear--;
 	}
-	generateCalendar(currentYear, currentMonth);
+	generateCalendar(currentYear, currentMonth , exerciseDays);
 }
 	
 // 次の月に移動
@@ -87,5 +87,5 @@ function moveToNextMonth() {
 	currentMonth = 0;
 	currentYear++;
 	}
-	generateCalendar(currentYear, currentMonth);
+	generateCalendar(currentYear, currentMonth, exerciseDays);
 }

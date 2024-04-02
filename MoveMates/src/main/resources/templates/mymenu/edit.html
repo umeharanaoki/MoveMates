@@ -11,6 +11,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue-draggable-next@2.2.1/dist/vue-draggable-next.global.min.js"></script>
+		<script src="https://unpkg.com/vue-router@4"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -101,7 +102,6 @@
         	console.log(myMenuName);
     	</script>
 		<script>
-			
 			const app = {
 				data() {
 					return {
@@ -111,7 +111,8 @@
 						registeredExercises: [],
 						candidateExercises: [],
 						selectedExercises: [],
-						errors: {}
+						errors: {},
+						successMessage: ''
 					}
 				},
 				mounted() {
@@ -203,7 +204,10 @@
 				            axios.post('/api/update', requestData)
 						        .then(response => {
 						            // レスポンスの処理を記述
-						            console.log('フォームが送信されました。');
+								    this.successMessage = response.data; // サーバーからの成功メッセージを取得
+								    // ページのリダイレクトを行う
+								    //router.push({ path: '/mymenu', query: { successMessage: '更新が完了しました' } });
+								    window.location.href = '/mymenu?successMessage=更新が完了しました';
 						        })
 						        .catch(error => {
 						            // エラーレスポンスの処理を記述
