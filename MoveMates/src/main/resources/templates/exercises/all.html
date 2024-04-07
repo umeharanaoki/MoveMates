@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>すべてのアクティビティ</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div th:replace="~{fragment :: header-sp}"></div>
+			<div th:replace="~{fragment :: sidebar-pc}"></div>
+			<main>
+				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<!-- パンくずリスト -->
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+	                             <ol class="breadcrumb mb-0">                        
+	                                 <li class="breadcrumb-item"><a th:href="@{/exercises}">アクティビティ検索</a></li>
+	                                 <li class="breadcrumb-item active" aria-current="page">すべてのアクティビティ</li>
+	                             </ol>
+	                        </nav>
+							<div>
+								<!-- アクティビティがない場合の処理 -->
+								<div th:unless="${not #lists.isEmpty(exercisePage)}">
+					                <p>アクティビティは登録されていません。</p>
+					            </div>
+                 				<!-- エクササイズのデータがあるか判定 -->
+								<div th:if="${not #lists.isEmpty(exercisePage)}" th:each="exercise : ${exercisePage}" class="mb-3">
+					                <a th:href="@{/exercises/__${exercise.getId()}__}" class="link-dark" data-add-origin-url>
+										<div class="card mm-card"> <!-- 高さ指定する？ -->
+											<div class="row"> <!-- g-0付けるか確認 -->
+												<!-- カード左の画像 -->
+												<div class="col-4"> <!-- md付けるか確認 -->
+													<img th:if="${exercise.getImageName()}" th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="w-100" alt="トレーニング画像">
+													<img th:unless="${exercise.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+												</div>
+												<div class="col-8 card-body">
+						           			        <h5 class="card-title" th:text="${exercise.getName()}"></h5>
+						           			        <div class="d-flex">
+														<p class="card-text">ターゲット部位 : </p>
+														<span class="card-text" th:each="bodyPart, iterStat : ${exercise.bodyParts}">
+															<span th:text="${bodyPart.getName()}"></span>
+															<span th:if="${!iterStat.last}">、</span>
+														</span>
+													</div>
+												    <p class="card-text">所要時間: <span class="card-text" th:text="${exercise.getTimeRequired()}"></span> 秒</p>
+												</div>
+											</div>
+										</div>
+								    </a>
+								</div>
+							</div>
+							<!-- ページネーション -->
+                             <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center">
+								 <nav aria-label="アクティビティ一覧ページ">
+									 <ul class="pagenation">
+										 <li class="page-item">
+											 <span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
+											 <a th:unless="${exercisePage.isFirst()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() - 1})}" class="page-link">前</a>
+										 </li>
+										 <li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
+											 <span th:if="${i == exercisePage.getNumber()}" class="page-link active" th:text="${i + 1}"></span>
+											 <a th:unless="${i == exercisePage.getNumber()}" th:href="@{/exercises/all(page = ${i})}" class="page-link" th:text="${i +1}"></a>
+										 </li>
+										 <li class="page-item">
+											 <span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
+											 <a th:unless="${exercisePage.isLast()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() - 1})}" class="page-link">次</a>
+										 </li>
+									 </ul>
+								 </nav>
+								 
+						</div>
+					</div>
+				</div>
+			</main>
+			<div th:replace="~{fragment :: navbar-bottom-sp}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

@@ -9,15 +9,16 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-pc}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
 			
 			<main>
 			<!-- container -->
-				<div>
+				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-xl-5 col-lg-6 col-md-8">
 							<!-- パンくずリスト -->
-							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 	                             <ol class="breadcrumb mb-0">                        
 	                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises}">（管理者用）アクティビティ一覧</a></li>
 	                                 <li class="breadcrumb-item active" aria-current="page">アクティビティ編集</li>
@@ -83,7 +84,8 @@
 											<!-- 選択肢を繰り返しで表示 -->
 											<div th:each="purpose : ${purposes}" class="form-check form-check-inline mr-3 mb-2">
 												<!-- 持っている値のボックスにはチェックを入れる -->
-												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}" th:checked="${exerciseEditForm.purposes.contains(purpose)}">
+												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}">
+<!--												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}" th:checked="${exerciseEditForm.purposes.contains(purpose)}">-->
 												<label class="form-check-label" for="purposes" th:text="${purpose.getName()}"></label>
 											</div>
 										</div>
@@ -93,7 +95,7 @@
 								<!-- 部位 -->
 								<div class="row mb-3">
 									<div class="col-md-5">
-										<label for="bodyParts" class="col-form-label text-md-left fw-bold">体の部位</label> 
+										<label for="bodyParts" class="col-form-label text-md-left fw-bold">体の部位</label>
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('bodyParts')}" class="text-danger small mb-2" th:errors="*{bodyParts}"></div>
@@ -101,6 +103,7 @@
 											<!-- 選択肢を繰り返しで表示 -->
 											<div th:each="bodyPart : ${bodyParts}" class="form-check form-check-inline mr-3 mb-2">
 												<!-- 持っている値のボックスにはチェックを入れる -->
+<!--												<input class="form-check-input" type="checkbox" th:field="*{bodyParts}" th:value="${bodyPart.getId()}" th:checked="${exerciseEditForm.bodyParts.contains(bodyPart)}">-->
 												<input class="form-check-input" type="checkbox" th:field="*{bodyParts}" th:value="${bodyPart.getId()}" th:checked="${exerciseEditForm.bodyParts.contains(bodyPart)}">
 												<label class="form-check-label" for="bodyParts" th:text="${bodyPart.getName()}"></label>
 											</div>

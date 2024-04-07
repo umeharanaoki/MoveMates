@@ -5,74 +5,77 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>（管理者用）ユーザー詳細</title>
+		<title>管理者用ユーザー詳細</title>
 	</head>
 	<body>
-		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
+		<div class="wrapper-admin">
+			<div th:replace="~{fragment :: header-pc}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
 			
-			<main>
-				<div class="row justify-content-center">
-					<div class="col-xl-5 col-lg-6 col-md-8">
-						<!-- パンくずリスト -->
-						<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                             <ol class="breadcrumb mb-0">                        
-                                 <li class="breadcrumb-item"><a th:href="@{/admin/users}">（管理者用）ユーザー一覧</a></li>
-                                 <li class="breadcrumb-item active" aria-current="page">（管理者用）ユーザー詳細</li>
-                             </ol>
-                        </nav>
-                                                
-						<!-- 画像の表示場所 -->
-						<div class="mb-3">
-							<img th:if="${user.getImageName()}" th:src="@{/storage/user/__${user.getImageName()}__}" class="w-100" alt="アイコン画像">
-							<img th:unless="${user.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
-						</div>
-						
-						<div class="container mb-4">
-                            <div class="row pb-2 mb-2 border-bottom">
-                                <div class="col-4">
-                                    <span class="fw-bold">ユーザーID</span>          
-                                </div>                                                  
-                                <div class="col">
-                                    <span th:text="${user.getId()}"></span>
-                                </div>
-                            </div>
-                            
-                            <div class="row pb-2 mb-2 border-bottom">
-                                <div class="col-4">
-                                    <span class="fw-bold">ユーザー名</span>          
-                                </div>                                                  
-                                <div class="col">
-                                    <span th:text="${user.getName()}"></span>
-                                </div>
-                            </div>
-                            
-                            <div class="row pb-2 mb-2 border-bottom">
-                                <div class="col-4">
-                                    <span class="fw-bold">メールアドレス</span>          
-                                </div>                                                  
-                                <div class="col">
-                                    <span th:text="${user.getEmail()}"></span>
-                                </div>
-                            </div>
-                            
-                            <div class="row pb-2 mb-2 border-bottom">
-                                <div class="col-4">
-                                    <span class="fw-bold">性別</span>          
-                                </div>                                                  
-                                <div class="col">
-                                    <span th:text="${user.getGender()}"></span>
-                                </div>
-                            </div>
-                            
-                            <div class="row pb-2 mb-2 border-bottom">
-                                <div class="col-4">
-                                    <span class="fw-bold">生年月日</span>          
-                                </div>                                                  
-                                <div class="col">
-                                    <span th:text="${user.getBirthday()}"></span>
-                                </div>
-                            </div>
+			<main class="main-admin">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+							<!-- パンくずリスト -->
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+	                             <ol class="breadcrumb mb-0">                        
+	                                 <li class="breadcrumb-item"><a th:href="@{/admin/users}">管理者用ユーザー一覧</a></li>
+	                                 <li class="breadcrumb-item active" aria-current="page">管理者用ユーザー詳細</li>
+	                             </ol>
+	                        </nav>
+	                                                
+							<!-- 画像の表示場所 -->
+							<div class="mb-3">
+								<img th:if="${user.getImageName()}" th:src="@{/storage/user/icons/__${user.getImageName()}__}" class="w-100" alt="アイコン画像">
+								<img th:unless="${user.getImageName()}" th:src="@{/images/no-image.jpg}" class="w-100" alt="NO IMAGE">
+							</div>
+							
+							<div class="container mb-4">
+	                            <div class="row pb-2 mb-2 border-bottom">
+	                                <div class="col-4">
+	                                    <span class="fw-bold">ユーザーID</span>          
+	                                </div>                                                  
+	                                <div class="col">
+	                                    <span th:text="${user.getId()}"></span>
+	                                </div>
+	                            </div>
+	                            
+	                            <div class="row pb-2 mb-2 border-bottom">
+	                                <div class="col-4">
+	                                    <span class="fw-bold">ユーザー名</span>          
+	                                </div>                                                  
+	                                <div class="col">
+	                                    <span th:text="${user.getName()}"></span>
+	                                </div>
+	                            </div>
+	                            
+	                            <div class="row pb-2 mb-2 border-bottom">
+	                                <div class="col-4">
+	                                    <span class="fw-bold">メールアドレス</span>          
+	                                </div>                                                  
+	                                <div class="col">
+	                                    <span th:text="${user.getEmail()}"></span>
+	                                </div>
+	                            </div>
+	                            
+	                            <div class="row pb-2 mb-2 border-bottom">
+	                                <div class="col-4">
+	                                    <span class="fw-bold">性別</span>          
+	                                </div>                                                  
+	                                <div class="col">
+	                                    <span th:text="${user.getGender()}"></span>
+	                                </div>
+	                            </div>
+	                            
+	                            <div class="row pb-2 mb-2 border-bottom">
+	                                <div class="col-4">
+	                                    <span class="fw-bold">生年月日</span>          
+	                                </div>                                                  
+	                                <div class="col">
+	                                    <span th:text="${user.getBirthday()}"></span>
+	                                </div>
+	                            </div>
+							</div>
 						</div>
 					</div>
 				</div>

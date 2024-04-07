@@ -5,19 +5,19 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>エクササイズ登録</title>
+		<title>アクティビティ登録</title>
 	</head>
 	<body>
-		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
+		<div class="wrapper-admin">
+			<div th:replace="~{fragment :: header-pc}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
 			
-			<main>
-			<!-- container -->
-				<div>
+			<main class="main-admin">
+				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-xl-5 col-lg-6 col-md-8">
 							<!-- パンくずリスト -->
-							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 	                             <ol class="breadcrumb mb-0">                        
 	                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises}">（管理者用）アクティビティ一覧</a></li>
 	                                 <li class="breadcrumb-item active" aria-current="page">アクティビティ登録</li>

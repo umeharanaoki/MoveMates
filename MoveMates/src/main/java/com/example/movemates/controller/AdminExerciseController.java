@@ -109,7 +109,7 @@ public class AdminExerciseController {
 	@PostMapping("/update")
 	public String update(@ModelAttribute @Validated ExerciseEditForm exerciseEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
-			return "admin/exercises/register";
+			return "admin/exercises/edit";
 		}
 		
 		exerciseService.update(exerciseEditForm);

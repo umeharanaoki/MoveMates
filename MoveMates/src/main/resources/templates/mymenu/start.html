@@ -5,33 +5,36 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>マイメニュー</title>
+		<title>運動開始</title>
 	</head>
 	<body>
 		<div class="wrapper">
-			<!-- ナビゲーションバーの部品化 -->
-	        <div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
+			<div th:replace="~{fragment :: sidebar-pc}"></div>
 			<main>
 				<div class="container h-100"><!-- レスポンシブ用のコンテナ追加箇所 -->
 				
 					<div class="row justify-content-center h-100">
-						<div class="col-xxl-10 h-100">
+						<div class="col-11 h-100">
 							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 	                            <ol class="breadcrumb mb-0">                        
 	                                <li class="breadcrumb-item"><a th:href="@{/mymenu}">マイメニュー一覧</a></li>
 	                                <li class="breadcrumb-item active" aria-current="page"><span th:text="${myMenu.getName() + '開始'}"></span></li>
 	                            </ol>
 	                        </nav>
-								<div class="row h-100">
-								<div class="col-lg-6 start-flexbox">
+							<div class="row h-100 justify-content-between">
+								<div class="col-sm-6 start-flexbox">
 									<div id="carouselExample" class="carousel slide">
 										<div class="carousel-inner">
 											<div th:if="${not #lists.isEmpty(myMenu.myMenuExercises)}">
 												<div th:each="myMenuExercise, iterStat : ${myMenu.myMenuExercises}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
-													<div class="card start-card">
-														<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="card-img-top">
-														<div class="card-body">
-															<p class="card-text" th:text="${myMenuExercise.exercise.getName()}"></p>
+													<div class="card">
+														<div class="start-card-top">
+															<img th:src="@{/storage/exercise/__${myMenuExercise.exercise.getImageName()}__}" class="start-card-top-img">
+														</div>
+														<div class="card-body mm-card-body-start">
+															<h5 class="card-title" th:text="${myMenuExercise.exercise.getName()}"></h5>
+															<p class="card-text" th:text="${myMenuExercise.exercise.getExplanation()}"></p>
 														</div>
 													</div>
 												</div>
@@ -47,25 +50,21 @@
 										</button>
 									</div>
 								</div>
-								<div class="col-lg-6 start-flexbox">
+								<div class="col-xl-5 col-sm-6 start-flexbox">
 									<form method="post" th:action="@{/mymenu/record}" th:object="${exerciseLogForm}" class="stopwatch-container">
-			  							<div id="stopwatch">00:00</div>
-			  							
-				  						<div id="resetButton-circle">
-											<span id="resetButton">リセット</span>
-										</div>
-										
-				  						<div class="start-stop-button-box">
-				  							<img id="startStopButton" th:src="@{/images/start.svg}"></img>
-										</div>
-										
 										<input type="hidden" th:field="*{user}">
-				  						<input type="hidden" th:field="*{myMenu.id}">
-				  						<input type="hidden" th:field="*{exerciseDuration}">
-				  						
-										<div class="align-self-center mt-2 mb-5">
-											<button type="submit" id="endButton" class="btn movemates-btn">終了</button>
-										</div>
+					  					<input type="hidden" th:field="*{myMenu.id}">
+					  					<input type="hidden" th:field="*{exerciseDuration}">
+			  							<div id="stopwatch">00:00</div>
+										<div class="stopwatch-btn-box">
+						  					<div class="reset-btn-circle">
+												<span id="resetButton">リセット</span>
+											</div>
+					  						<div class="exercise-start-stop-btn">
+					  							<img id="startStopButton" th:src="@{/images/start.svg}"></img>
+											</div>
+											<button type="submit" id="endButton" class="btn movemates-btn exercise-end-btn">終了</button>
+									    </div>
 									</form>
 								</div>
 							</div>
@@ -73,6 +72,7 @@
 					<div>
 				</div>
 			</main>
+			<div th:replace="~{fragment :: navbar-bottom-sp}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
 		<script th:src="@{/js/timer.js}"></script>

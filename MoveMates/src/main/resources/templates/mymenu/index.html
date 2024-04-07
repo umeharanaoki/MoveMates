@@ -5,15 +5,15 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>マイメニュー</title>
+		<title>マイメニュートップ</title>
 		
 		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>
 		<script src="https://unpkg.com/vue-router@4"></script>
 	</head>
 	<body>
 		<div class="wrapper">
-			<!-- ナビゲーションバーの部品化 -->
-	        <div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
+			<div th:replace="~{fragment :: sidebar-pc}"></div>	        
 			<main>
 				<div class="container mymenu-container"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
@@ -27,8 +27,8 @@
 						        <div v-if="successMessage" class="alert alert-info">{{ successMessage }}</div>
 						    </div>
 							
-							<!-- マイメニューの一覧表示 -->
-							<div th:each="mymenu : ${myMenus}">
+							<div th:each="mymenu : ${myMenus}"><!-- マイメニューの一覧表示 -->
+								<!-- マイメニュー名を表示 -->
 								<div class="mymenu-name-box">
 									<span th:text="${mymenu.getName()}"></span>
 								</div>
@@ -39,9 +39,10 @@
 										<div class="w-25">
 							                <a th:href="@{/mymenu/__${mymenu.getId()}__/edit}"><img th:src="@{/images/plus-icon.svg}" class="w-100"></a>
 										</div>
+										<span>アクティビティを組み合わせて独自のメニューを作成してください。</span>
 							        </div>
 							        <!-- エクササイズがあるとき -->
-									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}" class="d-flex w-100">
+									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}" class="mymenu-inner-box">
 											<div class="mymenu-exercise-box">  <!-- カードを入れるボックス -->
 												<!-- カード -->
 												<div class="mm-card-box">
@@ -57,8 +58,8 @@
 											</div>
 											<!-- ボタン -->
 											<div class="mymenu-btn-box">
-												<a th:href="@{/mymenu/__${mymenu.getId()}__/start}" class="btn movemates-btn m-2">スタート</a>
-												<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}" class="btn movemates-btn m-2">編集</a>
+												<a th:href="@{/mymenu/__${mymenu.getId()}__/start}" class="btn movemates-btn movemates-btn-start">スタート</a>
+												<a th:href="@{/mymenu/__${mymenu.getId()}__/edit}" class="btn movemates-btn">編集</a>
 											</div>
 										</div>
 									</div>
@@ -68,6 +69,7 @@
 					<div>
 				</div>
 			</main>
+			<div th:replace="~{fragment :: navbar-bottom-sp}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
 		<script>

@@ -13,7 +13,8 @@ function toggleFavorite(exerciseId) {
         type: "POST",
         url: url,
         data: {}
-        }).done(function(data) {
+        })
+        .done(function(data) {
 			// Favoriteのstatusが1（お気に入り追加済み）のとき
 			if(data === 1) {
 				updateFavoriteButton("保存済み");
@@ -21,8 +22,8 @@ function toggleFavorite(exerciseId) {
 				updateFavoriteButton("保存");
 			}
         });
-    
-    // お気に入りステータスを表示するメソッド
+  
+  // お気に入りステータスを表示するメソッド
 	function updateFavoriteButton(status) {
     // 画面上の適切な要素に表示
     document.getElementById("favoriteStatus").innerText = status;

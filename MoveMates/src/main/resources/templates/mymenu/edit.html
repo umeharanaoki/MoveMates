@@ -15,11 +15,12 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
+			<div th:replace="~{fragment :: sidebar-pc}"></div>
 			<main>
 				<div class="container">
 					<div class="row justify-content-center">
-	                    <div class="col-xl-10 col-lg-11 p-0">
+	                    <div class="col-lg-11">
 							<!-- パンくずリスト -->
 							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 	                             <ol class="breadcrumb mb-0">                        
@@ -34,6 +35,7 @@
 								<!-- マイメニュー名の編集フォーム -->
 								<div class="d-flex">
 									<div class="mymenu-name-box">
+										<img :src="`/images/edit.svg`" class="mymenu-name-form-img">
 										<input type="text" name="myMenuName" v-model="myMenuName" class="mymenu-name-form">
 									</div>
 									<div v-if="errors.myMenuName" class="ms-2">{{ errors.myMenuName }}</div>
@@ -70,18 +72,18 @@
 									</div>
 								</div>
 								<!-- マイメニューに登録する候補のexerciseを一覧表示 -->
-								<div id="mymenu-candidate-box">
+								<div class="mymenu-candidate-box">
 									<div class="d-flex mb-4">
 										<button type="button" @click="addToRegistered" class="btn movemates-btn">追加</button>
 										<span class="align-self-center ms-3">下のアクティビティ一を選択して追加してください。</span>							
 									</div>
 									<div id="mymenuCandidateExerciseBox" class="row row-cols-lg-6 row-cols-md-4 row-cols-2">
-								        <div v-for="exercise in candidateExercises" :key="exercise.id" class="col card-repeat">
+								        <div v-for="exercise in candidateExercises" :key="exercise.id" class="col mb-4">
 											<div class="card mymenu-candidate-card h-100" :class="{ 'selected-exercise-card': isExerciseSelected(exercise) }">
 												<input type="checkbox" v-model="selectedExercises" :value="exercise" class="card-checkbox">
 												<img :src="getIconPath(exercise.imageName)" class="card-img-top"/>
 												<div class="card-body">
-													<p class="card-text">{{ exercise.name }}</p>
+													<p class="card-text mm-sm-card-text">{{ exercise.name }}</p>
 												</div>
 											</div>
 								        </div>
@@ -92,6 +94,7 @@
 					</div>
 				</div>
 			</main>
+			<div th:replace="~{fragment :: navbar-bottom-sp}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
 		<script th:inline="javascript">

@@ -25,20 +25,17 @@ import com.example.movemates.entity.User;
 import com.example.movemates.form.UserEditForm;
 import com.example.movemates.repository.EncouragingMessageRepository;
 import com.example.movemates.repository.ExerciseLogRepository;
-import com.example.movemates.repository.UserRepository;
 import com.example.movemates.security.UserDetailsImpl;
 import com.example.movemates.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	private final UserRepository userRepository;
 	private final UserService userService;
 	private final ExerciseLogRepository exerciseLogRepository;
 	private final EncouragingMessageRepository encouragingMessageRepository;
 	
-	public UserController(UserRepository userRepository, UserService userService, ExerciseLogRepository exerciseLogRepository, EncouragingMessageRepository encouragingMessageRepository) {
-		this.userRepository = userRepository;
+	public UserController(UserService userService, ExerciseLogRepository exerciseLogRepository, EncouragingMessageRepository encouragingMessageRepository) {
 		this.userService = userService;
 		this.exerciseLogRepository = exerciseLogRepository;
 		this.encouragingMessageRepository = encouragingMessageRepository;
@@ -101,7 +98,7 @@ public class UserController {
 	// ユーザー情報確認
 	@GetMapping("/show")
 	public String show(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
-		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+		User user = userDetailsImpl.getUser();
 		
 		model.addAttribute("user", user);
 		
@@ -111,9 +108,12 @@ public class UserController {
 	// ユーザー情報編集ページ
 	@GetMapping("/edit")
 	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
-		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+		User user = userDetailsImpl.getUser();
 		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(), null, user.getEmail());
+		
+		model.addAttribute("user", user);
 		model.addAttribute("userEditForm", userEditForm);
+		
 		return "user/edit";
 	}
 	

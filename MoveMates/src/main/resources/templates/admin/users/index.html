@@ -8,11 +8,12 @@
 		<title>管理者用ユーザー一覧</title>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="wrapper-admin">
 			
-			<div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-pc}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
 			
-			<main>
+			<main class="main-admin">
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
 						<div class="col-xxl-9 col-xl-10 col-lg-11">

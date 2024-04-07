@@ -9,17 +9,17 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<!-- ナビゲーションバーの部品化 -->
-	        <div th:replace="~{fragment :: header}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
+			<div th:replace="~{fragment :: sidebar-pc}"></div>
 			<main>
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
-						<div class="col-xxl-9 col-xl-10 col-lg-11 p-0">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
 							<h1 class="mb-4 text-center">アクティビティ検索</h1>
 							
 							<div>
 								<!-- 検索フォーム -->
-								<div class="d-flex justify-content-end">
+								<div class="exercise-search-box">
 									<form method="get" th:action="@{/admin/exercises}" class="mb-3">
 										<div class="input-group">
 											<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
@@ -29,37 +29,54 @@
 								</div>
 							
 								<!-- 目的 -->
-								<div class="row mb-4 bg-white bg-opacity-75 rounded-1 p-3 mx-0">
-									<h5 class="exercise-h5">目的別</h5>
-									<!-- 3列に分ける -->
-									<div class="col-lg-4 col-6 px-3 my-2" th:each="purpose, iterStat : ${purposes}">
-										<div class="exercise-tag">
-											<a th:href="@{/exercises/purposes/__${purpose.getId()}__}" th:text="${purpose == null ? '' : purpose.getName()}"></a>
+								<div class="exercise-container mb-4 p-3 mx-0">
+									<div class="mm-flexbox-center">
+										<h5 class="exercise-h5">目的別</h5>
+									</div>
+									<div class="row w-100 mx-0">
+										<!-- 3列に分ける -->
+										<div class="col-lg-4 col-6 px-3 my-2" th:each="purpose, iterStat : ${purposes}">
+											<div class="exercise-tag" onclick="extendedClickRange(event)">
+												<a th:href="@{/exercises/purposes/__${purpose.getId()}__}" th:text="${purpose == null ? '' : purpose.getName()}"></a>
+											</div>
 										</div>
 									</div>
 								</div>
 								
 								<!-- 体の部位 -->
-								<div class="row bg-white bg-opacity-75 rounded-1 p-3">
-									<h5 class="exercise-h5">部位別</h5>
-									<!-- 3列に分ける -->
-									<div class="col-lg-4 col-6 text-center mb-4" th:each="bodyPart, iterStat : ${bodyParts}">
-										<div>
-											<a th:href="@{/exercises/body-parts/__${bodyPart.getId()}__}" th:text="${bodyPart == null ? '' : bodyPart.getName()}"></a>
+								<div class="exercise-container mb-4 p-3 mx-0">
+									<div class="mm-flexbox-center">
+										<h5 class="exercise-h5">部位別</h5>
+									</div>
+									<div class="row w-100 mx-0">
+										<!-- 3列に分ける -->
+										<div class="col-lg-4 col-6 px-3 my-2" th:each="bodyPart, iterStat : ${bodyParts}">
+											<div class="exercise-tag">
+												<a th:href="@{/exercises/body-parts/__${bodyPart.getId()}__}" th:text="${bodyPart == null ? '' : bodyPart.getName()}"></a>
+											</div>
 										</div>
 									</div>
 								</div>
 								
 								<!-- アクティビティ一覧 -->
 								<div class="d-flex justify-content-end mt-3">
-									<a th:href="@{/exercises}">アクティビティ一覧</a>
+									<a th:href="@{/exercises/all}">すべてのアクティビティを見る</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</main>
+			<div th:replace="~{fragment :: navbar-bottom-sp}"></div>
 		</div>
 		<div th:replace="~{fragment :: scripts}"></div>
+		<script>
+			function extendedClickRange(event) {
+        // デフォルトのイベント処理を停止
+        event.preventDefault();
+        // 親要素のクリックイベントをトリガー
+        window.location.href = event.currentTarget.querySelector('a').getAttribute('href');
+			}
+		</script>
 	</body>
 </html>

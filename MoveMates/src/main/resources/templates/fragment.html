@@ -24,83 +24,301 @@
         <title>部品化用のHTMLファイル</title>
 	</head>
 	<body>
-        <!-- ヘッダーの部品化 -->
-        <div th:fragment="nav-bar" th:remove="tag">
-            <nav class="navbar navbar-expand-md movemates-navbar">
-                 <div class="container">
-					 <div>
-                         <img class="movemates-logo me-1" th:src="@{/images/logo.png}" alt="MoveMates">                        
-					 </div>
-					 <div>
-						 <a th:href="@{/login}" class="me-3">ログイン</a>
-						 <a th:href="@{/signup}">会員登録</a>                                                     
-					 </div>
-                 </div>
-             </nav>
+        <!-- ヘッダー(PC)の部品化 -->
+        <!-- 未ログイン時と管理者用 -->
+        <div th:fragment="header-pc" th:remove="tag">
+	        <header class="navbar navbar-expand-md mm-header header-pc">
+	            <nav class="container">
+				    <a th:href="@{/}">
+	                    <img class="movemates-logo me-1" th:src="@{/images/movemates-logo-lg.png}" alt="MoveMates">                        
+				    </a>
+				    <!-- 未ログイン時 -->
+				    <div sec:authorize="isAnonymous()">
+					    <a th:href="@{/login}" class="me-3">ログイン</a>
+					    <a th:href="@{/signup}">会員登録</a>                                                     
+				    </div>
+				    <!-- 管理者 -->
+				    <div class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+					    <a id="navbarDropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            管理者メニュー
+                        </a>
+         
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAdmin">                                                                                            
+                            <a class="dropdown-item mm-dropdown-item" th:href="@{/admin/exercises}">アクティビティ一覧</a>                                                                                                     
+                            <a class="dropdown-item mm-dropdown-item" th:href="@{/admin/users}">ユーザー一覧</a>                                                                                                     
+                                                      
+                            <div class="dropdown-divider"></div>
+                            
+                            <a class="dropdown-item mm-dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                ログアウト
+                            </a>
+                            <form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form> 
+                        </div>                                                   
+				    </div>
+	            </nav>
+	        </header>
         </div>
         
-        <!-- ナビゲーションバーの部品化 -->
-        <div th:fragment="header" th:remove="tag">
-	        <header>
-				<div class="mm-head-div1">
-					<div class="mm-head-div2">
-						<div class="mm-head-div3">
-							<!-- headerの上部要素 -->
-							<div>
-								<!-- ロゴ -->
-								<div class="mm-demo-div4">
-									<h1 role="heading" class="mm-demo-h1">
-										<a th:href="@{/user}" class="mm-demo-a">
-											<img th:src="@{/images/movemates-logo-sm.png}">
-										</a>
-									</h1>
-								</div>
-								<!-- ナビ -->
-								<div>
-									<nav>
-										<!-- ホーム -->
-										<a th:href="@{/user}" class="nav-icon-center">
-											<img th:src="@{/images/home.svg}" class="nav-img"></img>
-										</a>
-										<!-- 検索 -->
-										<a th:href="@{/exercises}" class="nav-icon-center">
-											<img th:src="@{/images/search.svg}" class="w-75"></img>
-										</a>
-										<!-- マイメニュー -->
-										<a th:href="@{/mymenu}" class="nav-icon-center">
-											<img th:src="@{/images/mymenu.svg}"></img>
-										</a>
-									</nav>
-								</div>
-							</div>
-							<!-- headerの下部要素 -->
-							<!-- アイコン -->
-							<div>
-								<div class="user-info">
-		    					<a th:href="@{/user/show}" class="nav-icon-center">
-									<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="icon-img">
-								</a>
-		    				</div>
-		    				<!-- 会社概要 -->
-		    				<div></div>
-						</div>
+        <!-- トップページ用のヘッダー(PC)の部品化 -->
+        <!-- デザインを少し変えたいので別で準備 -->
+        <div th:fragment="header-pc-top" th:remove="tag">
+			<header class="navbar navbar-expand-md mm-header-toppage header-pc-top">
+	            <nav class="container">
+				    <a th:href="@{/}">
+	                    <img class="movemates-logo me-1" th:src="@{/images/movemates-logo-lg.png}" alt="MoveMates">                        
+				    </a>
+				    <div>
+					    <a th:href="@{/login}" class="me-3">ログイン</a>
+					    <a th:href="@{/signup}">会員登録</a>                                                     
+				    </div>
+	            </nav>
+	        </header>
+        </div>
+        
+        <!-- トップページ用のヘッダー(SP)の部品化 -->
+        <!-- デザインを少し変えたいので別で準備 -->
+        <div th:fragment="header-sp-top" th:remove="tag">
+			<header class="navbar navbar-expand-md mm-header-toppage header-sp-top">
+				<!-- ログインしてからは表示されないので未ログイン時のもののみ準備 -->
+		        <nav class="d-flex w-100 justify-content-between align-items-center" sec:authorize="isAnonymous()">
+					<div class="empty-box ms-3"></div>
+			        <div class="mm-logo-sm">
+						<h1 role="heading" class="mm-logo-sm-sp-h1">
+							<a th:href="@{/}">
+								<img th:src="@{/images/movemates-logo-sm.png}">
+							</a>
+						</h1>
 					</div>
+			        <div class="d-flex align-items-center me-3">
+    					<a href="#" class="navbar-toggler nav-icon nav-link hamburger-menu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContentAnonymous" aria-controls="navbarToggleExternalContentAnonymous" aria-expanded="false" aria-label="Toggle navigation">
+							<img th:src="@{/images/hamburger-menu.svg}">
+    					</a>
+			        </div>
+			    </nav>
+			</header>
+	        <!-- ハンバーガーメニューをクリック時に出てくる拡張部分 -->
+	        <div class="collapse" id="navbarToggleExternalContentAnonymous">
+				<div class="hamburger-tab">
+    				<a th:href="@{/login}" class="me-3">ログイン</a>
+					<a th:href="@{/signup}">会員登録</a>
 				</div>
+			</div>
+        </div>
+        
+        <!-- ヘッダー(SP)の部品化 -->
+        <div th:fragment="header-sp" th:remove="tag">
+			<header class="navbar navbar-expand-md mm-header header-sp">
+				<!-- ログイン前の表示 -->
+		        <nav class="d-flex w-100 justify-content-between align-items-center" sec:authorize="isAnonymous()">
+					<div class="empty-box ms-3"></div>
+			        <div class="mm-logo-sm">
+						<h1 role="heading" class="mm-logo-sm-sp-h1">
+							<a th:href="@{/}">
+								<img th:src="@{/images/movemates-logo-sm.png}">
+							</a>
+						</h1>
+					</div>
+			        <div class="d-flex align-items-center me-3">
+    					<a href="#" class="navbar-toggler nav-icon nav-link hamburger-menu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContentAnonymous" aria-controls="navbarToggleExternalContentAnonymous" aria-expanded="false" aria-label="Toggle navigation">
+							<img th:src="@{/images/hamburger-menu.svg}">
+    					</a>
+			        </div>
+			    </nav>
+				<!-- ログインユーザー用の表示 -->
+		        <nav class="d-flex w-100 justify-content-between align-items-center" sec:authorize="hasRole('ROLE_GENERAL')">
+					<div class="d-flex align-items-center ms-3">
+			            <a th:href="@{/user/show}" class="user-icon">
+							<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="user-icon-img-sp">
+						</a>
+			        </div>
+			        <div class="mm-logo-sm">
+						<h1 role="heading" class="mm-logo-sm-sp-h1">
+							<a th:href="@{/user}">
+								<img th:src="@{/images/movemates-logo-sm.png}">
+							</a>
+						</h1>
+					</div>
+			        <div class="d-flex align-items-center me-3">
+    					<a href="#" class="navbar-toggler nav-icon nav-link hamburger-menu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContentGeneral" aria-controls="navbarToggleExternalContentGeneral" aria-expanded="false" aria-label="Toggle navigation">
+							<img th:src="@{/images/hamburger-menu.svg}">
+    					</a>
+			        </div>
+			    </nav>
+				<!-- 管理者用の表示 -->
+		        <nav class="d-flex w-100 justify-content-between align-items-center" sec:authorize="hasRole('ROLE_ADMIN')">
+					<div class="empty-box ms-3"></div>
+			        <div class="mm-logo-sm">
+						<h1 role="heading" class="mm-logo-sm-sp-h1">
+							<a th:href="@{/user}">
+								<img th:src="@{/images/movemates-logo-sm.png}">
+							</a>
+						</h1>
+					</div>
+			        <div class="d-flex align-items-center me-3">
+    					<a href="#" class="navbar-toggler nav-icon nav-link hamburger-menu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContentAdmin" aria-controls="navbarToggleExternalContentAdmin" aria-expanded="false" aria-label="Toggle navigation">
+							<img th:src="@{/images/hamburger-menu.svg}">
+    					</a>
+			        </div>
+			    </nav>
+	        </header>
+	        <!-- ハンバーガーメニューをクリック時に出てくる拡張部分 -->
+	        <!-- 未ログイン時 -->
+	        <div class="collapse" id="navbarToggleExternalContentAnonymous">
+				<div class="hamburger-tab">
+    				<a th:href="@{/login}" class="me-3">ログイン</a>
+					<a th:href="@{/signup}">会員登録</a>
+				</div>
+			</div>
+			<!-- 一般ユーザーログイン時 -->
+	        <div class="collapse" id="navbarToggleExternalContentGeneral">
+				<div class="hamburger-tab">
+    				<a th:href="@{/user/show}">ユーザー情報確認</a>
+					<a class="dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        ログアウト
+                    </a>
+                    <form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>
+				</div>
+			</div>
+			<!-- 管理者ユーザー -->
+	        <div class="collapse" id="navbarToggleExternalContentAdmin">
+				<div class="hamburger-tab">
+    				<a class="dropdown-item" th:href="@{/admin/exercises}">アクティビティ一覧</a>                                                                                                     
+                    <a class="dropdown-item" th:href="@{/admin/users}">ユーザー一覧</a> 
+					<a class="dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        ログアウト
+                    </a>
+                    <form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>
+				</div>
+			</div>
+			
+		</div>
+        
+        <!-- サイドバー(PC)の部品化 -->
+        <div th:fragment="sidebar-pc" th:remove="tag">
+	        <header class="sidebar-pc">
+				<div class="mm-sidebar-framework-pc">
+					<div class="mm-sidebar-box">
+						<!-- navbarの上のまとまり -->
+						<div>
+							<!-- ロゴ -->
+							<div class="mm-logo-sm">
+								<h1 role="heading" class="mm-logo-sm-pc-h1">
+									<a th:href="@{/user}">
+										<img th:src="@{/images/movemates-logo-sm.png}">
+									</a>
+								</h1>
+							</div>
+							<!-- ナビ -->
+							<div>
+								<nav>
+									<!-- ホーム -->
+									<a th:href="@{/user}" class="nav-icon">
+										<img th:src="@{/images/home.svg}" id="nav-icon-img-home-pc"/>
+										<p>ホーム</p>
+									</a>
+									<!-- 検索 -->
+									<a th:href="@{/exercises}" class="nav-icon">
+										<img th:src="@{/images/search.svg}" id="nav-icon-img-search-pc"/>
+										<p>検索</p>
+									</a>
+									<!-- マイメニュー -->
+									<a th:href="@{/mymenu}" class="nav-icon">
+										<img th:src="@{/images/mymenu.svg}" id="nav-icon-img-mymenu-pc"/>
+										<p>運動開始</p>
+									</a>
+								</nav>
+							</div>
+						</div>
+						<!-- navbarの下のまとまり -->
+						<!-- 一般ユーザー -->
+						<div sec:authorize="hasRole('ROLE_GENERAL')">
+							<!-- ユーザーアイコン -->
+			    			<a th:href="@{/user/show}" class="user-icon">
+								<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="user-icon-img-pc">
+							</a>
+				    		<!-- その他 -->
+				    		<div class="dropdown">
+								<a href="#" class="nav-icon nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<img th:src="@{/images/three-point-leader.svg}" class="sidebar-img">
+								</a>
+								<ul class="dropdown-menu" style="z-index: 1000;">
+									<li><a class="dropdown-item" th:href="@{/user/show}">ユーザー情報確認</a></li>
+<!--									<li><a class="dropdown-item" th:href="@{/user/show}">お気に入り一覧</a></li>-->
+									<div class="dropdown-divider"></div>
+									<li>
+                                    	<a class="dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        	ログアウト
+                                    	</a>
+                                    	<form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>                                     
+									</li>                                                                  
+								</ul>
+							</div>
+			    		</div>
+			    		<!-- 管理者ユーザー -->
+						<div sec:authorize="hasRole('ROLE_ADMIN')">
+							<!-- ユーザーアイコン -->
+<!--			    			<a th:href="@{/user/show}" class="user-icon">-->
+<!--								<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="user-icon-img-pc">-->
+<!--							</a>-->
+				    		<!-- その他 -->
+				    		<div class="dropdown">
+								<a href="#" class="nav-icon nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<img th:src="@{/images/three-point-leader.svg}" class="sidebar-img">
+								</a>
+								<ul class="dropdown-menu" style="z-index: 1000;">
+									<li><a class="dropdown-item mm-dropdown-item" th:href="@{/admin/exercises}">アクティビティ一覧</a></li>                                                                                                   
+                            		<li><a class="dropdown-item mm-dropdown-item" th:href="@{/admin/users}">ユーザー一覧</a></li> 
+									<div class="dropdown-divider"></div>
+									<li>
+                                    	<a class="dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        	ログアウト
+                                    	</a>
+                                    	<form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>                                     
+									</li>                                                                  
+								</ul>
+							</div>
+			    		</div>
+					</div>
 				</div>
 			</header>
         </div>
         
-        <!-- フッターの部品化 -->
+        
+        
+        <!-- 下部ナビゲーションバー(SP)の部品化 -->
+        <div th:fragment="navbar-bottom-sp" th:remove="tag">
+            <nav class="navbar-bottom-sp">
+                <!-- ホーム -->
+				<a th:href="@{/user}" class="nav-icon">
+					<img th:src="@{/images/home.svg}" id="nav-icon-img-home-sp" class="nav-icon-img-home-sp"/>
+					<p>ホーム</p>
+				</a>
+				<!-- 検索 -->
+				<a th:href="@{/exercises}" class="nav-icon">
+					<img th:src="@{/images/search.svg}" id="nav-icon-img-search-sp" class="nav-icon-img-search-sp"/>
+					<p>検索</p>
+				</a>
+				<!-- マイメニュー -->
+				<a th:href="@{/mymenu}" class="nav-icon">
+					<img th:src="@{/images/mymenu.svg}" id="nav-icon-img-mymenu-sp" class="nav-icon-img-mymenu-sp"/>
+					<p>運動開始</p>
+				</a>                 
+            </nav>
+		</div>
+        
+        <!-- フッター(PC)の部品化 -->
         <div th:fragment="footer" th:remove="tag">
-            <footer>
+			<footer>
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <p class="text-center small mb-0">&copy; MoveMates All rights reserved.</p>      
                 </div>                 
             </footer>
         </div>
+        
      
         <!-- script要素の部品化 -->
         <div th:fragment="scripts" th:remove="tag">
+			<script th:src="@{/js/icon-switching.js}"></script>
             <!-- Bootstrap -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

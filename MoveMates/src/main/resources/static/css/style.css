@@ -1,16 +1,30 @@
-/* ===========================================
- * 共通ここから
- * ======================================== */
+/* ========================================
+ * ========================================
+   共通ここから
+   ======================================== *
+   ======================================== */
+   
 :root {
-  --opacity-color: rgba(255, 255, 255, 0.7);
+  --opacity-color: #D8EFEA;
   --main-color: #E85299;
   --base-color: #64C0AB;
   --point-color: #4D4399;
+  --white-color: #ffffff;
 }
 
 html {
   font-size: 14px;
 }
+
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  html {
+    font-size: 11px;
+  }
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
 
 body {
   font-family: 'Noto Sans JP', sans-serif;
@@ -21,58 +35,74 @@ h1 {
   font-size: 1.5rem;
 }
 
-/* スクロールバーここから */
-/* ======================================== */
-/*::-webkit-scrollbar{*/
-/*   width: 10px;*/
-/*}*/
-/*::-webkit-scrollbar-track{*/
-/*   background-color: #ccc;*/
-/*}*/
-/*::-webkit-scrollbar-thumb{*/
-/*   background-color: var(--point-color);*/
-/*}*/
-/* スクロールバーここまで */
-/* ======================================== */
-
-.exercise-h5 {
-  position: relative;
-  padding: 1.5rem 2rem;
-  margin-bottom: 3rem;
-  text-align: center;
-  border-bottom: 3px solid var(--point-color);
-  border-radius: 10px;
-/*  background: #f9f9f9;	*/
-}
-
-.exercise-h5::before {
-  position: absolute;
-  bottom: -14px;
-  left: 1em;
-  width: 0;
-  height: 0;
-  content: '';
-  border-width: 14px 12px 0 12px;
-  border-style: solid;
-  border-color: var(--point-color) transparent transparent transparent;
-}
-
-.exercise-h5::after {
-  position: absolute;
-  bottom: -10px;
-  left: 1em;
-  width: 0;
-  height: 0;
-  content: '';
-  border-width: 14px 12px 0 12px;
-  border-style: solid;
-  border-color: #f9f9f9 transparent transparent transparent;
-}
-
 p {
   white-space: pre-wrap;  /* 改行を保存 */
 }
 
+.wrapper {
+  min-height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--base-color);
+  display: flex;
+}
+
+.wrapper-admin {
+  min-height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--base-color);
+}
+
+main {
+  margin-left: 80px;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto; /* 縦方向のオーバーフローをスクロール可能にする */
+  z-index: 1;
+}
+
+.main-admin {
+  margin-left: 0 !important;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto; /* 縦方向のオーバーフローをスクロール可能にする */
+  z-index: 1;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .wrapper {
+	flex-direction: column;
+  }
+  .wrapper-admin {
+	margin: 0;
+  }
+  main {
+	margin-top: 60px;
+    margin-left: 0;
+    margin-bottom: 60px;
+  }
+  
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+
+.main-bottom {
+  margin-bottom: 60px;
+}
+
+.mm-flexbox-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* リンクここから */
+/* ======================================== */
 a {
   color: var(--point-color);
   text-decoration: none !important;
@@ -82,8 +112,20 @@ a:hover {
   color: #7A6FCC;
 }
 
+.movemates-link-danger {
+  color: #f2594b;
+}
+
+.movemates-link-danger:hover {
+  color: #a63c3c;
+}
+/* リンクここまで */
+/* ======================================== */
+
+/* buttonここから */
+/* ======================================== */
 .movemates-btn {
-  color: white;
+  color: var(--white-color);
   background-color: var(--point-color) !important;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   transition: 0.1s;
@@ -95,16 +137,8 @@ a:hover {
   opacity: 0.8;
 }
 
-.movemates-link-danger {
-  color: #f2594b;
-}
-
-.movemates-link-danger:hover {
-  color: #a63c3c;
-}
-
 .movemates-btn-danger {
-  color: white;
+  color: var(--white-color);
   background-color: #f2594b !important;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   transition: 0.1s;
@@ -113,45 +147,165 @@ a:hover {
 .movemates-btn-danger:hover {
   opacity: 0.8;   
 }
+/* buttonここまで↑ */
+/* ======================================== */
 
-video {
-  width: 100%; /* 動画をレスポンシブ化 */
-  max-width: 400px; /* 動画の最大幅 */
+
+/* ===========================================
+ * ナビゲーション関連ここから↓
+ * ======================================== */
+
+/* ナビゲーション共通ここから↓ */
+/* ======================================== */
+.empty-box {
+  width: 30px;
 }
 
-.wrapper {
-  min-height: 100vh;
-  position: relative;
-  box-sizing: border-box;
-  background-color: #64C0AB;
+.mm-dropdown-item {
+  color: var(--point-color) !important;
+}
+
+/* ロゴここから↓
+  ----------------------------------------- */
+.mm-logo-sm {
+  max-width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* mainここから */
-/* ======================================== */
-main {
-  margin-left: 88px;
-  flex-grow: 1;
-  height: 100vh;
-  overflow-y: auto; /* 縦方向のオーバーフローをスクロール可能にする */
+.mm-logo-sm-pc-h1 {
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  margin: 24px 0;
 }
 
-.main-bottom {
-  margin-bottom: 60px;
+.mm-logo-sm-sp-h1 {
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  margin: 0;
 }
-/* mainここまで */
+
+.mm-logo-sm-pc-h1 a img,
+.mm-logo-sm-sp-h1 a img {
+  max-width: 56px;
+}
+/* ロゴここまで↑
+  ----------------------------------------- */
+  
+/* ハンバーガーメニューここから↓
+  ----------------------------------------- */
+.hamburger-menu {
+  width: 32px;
+  height: 32px;
+}
+
+.hamburger-tab {
+  background-color: var(--white-color);
+  padding: 8px;
+}
+
+.hamburger-tab a {
+  color: var(--main-color);
+  margin: 8px;
+}
+/* ハンバーガーメニューここまで↑
+  ----------------------------------------- */
+  
+/* リンクのアイコンここから↓ */
+/* ---------------------------------------- */
+.nav-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.nav-icon img {
+  max-width: 32px;
+}
+
+.nav-icon p {
+  color: var(--white-color);
+}
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .nav-icon {
+	margin: 8px 0 0 0;
+  }
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+
+/* リンクのアイコンここまで↑ */
+/* ---------------------------------------- */
+  
+/* ユーザーのアイコンここから↓
+  ----------------------------------------- */
+.user-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-icon-img-pc {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-icon-img-sp {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ユーザーのアイコンここまで↑
+  ----------------------------------------- */
+
+/* ナビゲーション共通ここまで↑ */
 /* ======================================== */
 
-
-/* navここから */
+/* header(PC)ここから↓ */
 /* ======================================== */
-.movemates-navbar {
-  background-color: #E85299;
+.header-sp-top {
+  display: none;
+}
+
+.mm-header {
+  background-color: var(--main-color);
   min-height: 60px;
+  border-bottom: 4px solid var(--white-color);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
 }
 
-.movemates-navbar a {
-  color: white;
+.mm-header-toppage {
+  background-color: var(--main-color);
+  min-height: 60px;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+}
+
+.mm-header a,
+.mm-header-toppage a {
+  color: var(--white-color);
 }
 
 .movemates-logo {
@@ -160,23 +314,62 @@ main {
 }
 
 .nav-bar a {
-  color: white;
+  color: var(--white-color);
   text-decoration: none;
   padding: 10px 20px;
 }
+/* header(PC)ここまで↑ */
+/* ======================================== */
 
-.mm-head-div2 {
+/* header(SP)ここから↓ */
+/* ======================================== */
+.header-sp {
+  display: none;
+}
+
+.mm-sidebar-framework-pc {
   height: 100vh;
+  width: 80px;
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  background-color: #E85299;
-  box-shadow: 4px rgba(0, 0, 0, 0.075);
+  background-color: var(--main-color);
+  border-right: 4px solid var(--white-color);
 }
 
-.mm-head-div3 {
+.mm-sidebar-box {
+  height: 100%;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: column;
+}
+/* header(SP)ここまで↑ */
+/* ======================================== */
+
+
+/* sidebar(PC)ここから↓ */
+/* ======================================== */
+.sidebar-pc {
+  display: block;
+}
+
+.mm-sidebar-framework-pc {
+  height: 100vh;
+  width: 80px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background-color: var(--main-color);
+  border-right: 4px solid  var(--white-color);
+}
+
+.mm-sidebar-box {
   height: 100%;
   justify-content: space-between;
   padding-left: 8px;
@@ -185,110 +378,453 @@ main {
   flex-direction: column;
 }
 
-.mm-demo-div4 {
-  max-width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.mm-demo-h1 {
-  align-items: center;
-  align-self: stretch;
-  cursor: pointer;
-  display: flex;
-  flex-grow: 0;
-  justify-content: center;
-  max-width: 32px;
-}
-
-.mm-demo-a {
-  border-bottom-left-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-  border-top-left-radius: 9999px;
-  border-top-right-radius: 9999px;
-  min-height: 52px;
-  max-width: 52px;
-}
-
-h1 a img {
-  max-width: 56px;
-}
-
-nav a img {
-  max-width: 32px;
-}
-.user-info {
-  align-self: flex-end;
-}
-
-.icon-img {
-  width: 40px; /* アイコンの幅 */
-  height: 40px; /* アイコンの高さ */
-  object-fit: contain; /* 画像をアスペクト比を保持しつつコンテナーに収まるように調整 */
-}
-
-.nav-icon-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 16px;
-}
-/* navここまで */
+/* sidebar(PC)ここまで↑ */
 /* ======================================== */
 
 
-/* footerここから */
+/* 下部ナビゲーションバー(SP)ここから↓ */
+/* ======================================== */
+.navbar-bottom-sp {
+  background-color: var(--main-color);
+  display: none;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 10;
+}
+
+.nav-icon-img-home-sp {
+  width: 28px;
+  margin-top: 3px;
+}
+.nav-icon-img-search-sp {
+  width: 24px;
+  margin: 7px 0 0 2px;
+}
+
+/*.nav-icon-img-mymenu-sp {*/
+/*  margin-top: -5px;*/
+/*}*/
+/* 下部ナビゲーションバー(SP)ここまで↑ */
+/* ======================================== */
+
+/* footer(PC)ここから↓ */
 /* ======================================== */
 footer {
   width: 100%;
   height: 60px;
   position: absolute;
   bottom: 0;
-  color: white;
-  background-color: #E85299;
+  color: var(--white-color);
+  background-color: var(--main-color);
+  border-top: 4px solid var(--white-color);
 }
-/* footerここまで */
+/* footer(PC)ここまで↑ */
 /* ======================================== */
+
+/* 表示切替指定ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .header-pc {
+    display: none;
+  }
+  
+  .header-pc-top {
+	display: none;
+  }
+  
+  .header-sp-top {
+	display: flex;
+  }
+  
+  .header-sp {
+	display: flex;
+  }
+  
+  .sidebar-pc {
+	display: none;
+  }
+  
+  .navbar-bottom-sp {
+    display: flex;
+  }
+
+}
+/* 表示切替指定ここまで↑
+  ----------------------------------------- */
+
+/* ===========================================
+ * ナビゲーション関連ここまで
+ * ======================================== */
 
 
 /* パンくずリストここから */
 /* ======================================== */
 .breadcrumb-trail {
-  margin: 2% 0;
-
+  margin: 4% 0;
 }
+
+/*li span {*/
+/*  color: var(--white-color);*/
+/*}*/
+
 /* パンくずリストここまで */
 /* ======================================== */
 
 /* ===========================================
- * 共通ここまで
- * ======================================== */
- 
- 
- 
-/* ===========================================
- * トップページここから
- * ======================================== */
+ * ===========================================
+   共通ここまで↑
+============================================ *
+============================================ */
 
-#catchcopy {
-  font-weight: bold;
-  position: absolute; /* 要素を絶対配置にします */
-  top: 50%; /* 上端を親要素の中央に配置します */
-  left: 50%; /* 左端を親要素の中央に配置します */
-  transform: translate(-50%, -50%); /* 中央揃えのために要素を移動します */
-  text-align: center; /* テキストを中央揃えにします */
-  color: var(--point-color); /* テキストの色を設定します */
+
+
+
+/* ===========================================
+ * ===========================================
+   トップページここから↓
+============================================ *
+============================================ */
+ 
+/* メインビジュアルここから↓
+/* ======================================== */
+
+/* 大枠 */
+.main-visual {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 640px;
+  margin-top: 60px;
 }
+
+/* トップ画像 */
+.main-visual-img-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-image: url('/images/movemates-top-pc.jpg');
+}
+
+/* キャッチコピー関連ここから↓
+  ----------------------------------------- */
+.main-visual-copy-area {
+  padding: 120px 160px 160px;
+  text-align: right;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-copy {
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.main-copy-en {
+  font-size: 4rem;
+}
+
+.main-copy-jp {
+  margin-right: -24px;
+  font-size: 3rem;
+}
+
+.sub-copy-area {
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+}
+.sub-copy {
+  height: auto;
+  font-size: 1.5rem;
+  color: var(--white-color);
+  margin-bottom: 0;
+}
+/* キャッチコピー関連ここまで↑
+  ----------------------------------------- */
+  
+/* メインビジュアルここまで↑
+/* ======================================== */
+
+
+/* コンテンツ説明ここから↓
+/* ======================================== */
+
+/* 大枠 */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 0;
+  margin-bottom: 60px; /* footer用 */
+  position: relative;
+}
+
+/* 各説明のcontainerここから↓
+  ----------------------------------------- */
+.toppage-concept-container,
+.toppage-concept-container-reverse {
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+  
+.toppage-concept-container {
+  margin-bottom: 32px;
+}
+
+.toppage-concept-container-reverse-bottom {
+  margin-bottom: 40px;
+}
+/* 各説明のcontainerここまで↑
+  ----------------------------------------- */
+
+/* 各説明のtext関連ここから↓
+  ----------------------------------------- */
+/* 画像が右のtextbox */
+.toppage-concept-text-reverse {
+  padding: 16px;
+  width: 100%;
+}
+
+/* 画像が左のtextbox */
+.toppage-concept-text {
+  padding: 16px;
+  width: 80%;
+  align-self: end !important;
+}
+
+/* 英語のインデックス */
+.toppage-concept-index-en {
+  font-size: 3rem;
+}
+  
+/* 日本語のインデックス */
+.toppage-concept-index-jp {
+  margin-bottom: 4%;
+  background: linear-gradient(transparent 40%, var(--white-color));
+  display: inline-block; /* これでマーカーの長さが文字列の長さと一致する */
+/*  padding-right: 12px;*/
+}
+/* 青背景と被る日本語インデックスの文字色変更 */
+.index-color-white {
+  color: var(--white-color);
+}
+
+/* 画像が右のtextboxの説明文の枠 */
+.toppage-concept-body-reverse {
+  text-align: start;
+}
+
+/* 画像が右のtextboxの説明文 */
+.toppage-concept-body-reverse p {
+  text-align: start;
+}
+
+/* 画像が左のtextboxの説明文 */
+.toppage-concept-body p {
+  text-align: start;
+  white-space: normal !important;
+}
+/* 各説明のtext関連ここまで↑
+  ----------------------------------------- */
+/* 各説明のimg関連ここから↓
+  ----------------------------------------- */
+/* 各説明のimgの枠 */
+.toppage-concept-img,
+.toppage-concept-img-reverse {
+  display: flex;
+}
+
+/* 画像が左の説明のimgの枠 */
+.toppage-concept-img {
+  width: 400px;
+}
+
+/* 画像が右の説明のimgの枠 */
+.toppage-concept-img-reverse {
+  width: 500px;
+}
+
+/* 各説明のimg */
+.toppage-concept-img img,
+.toppage-concept-img-reverse img {
+  width: 80%;
+  border-radius: 24px;
+}
+
+/* 段落をレスポンシブ対応させる */
+.responsive-br {
+  display: none;
+}
+
+/* 背景図形 */
+.topppage-background-polygon {
+  width: 100%;
+  height: 560px;
+  position: absolute;
+  top: 320px;
+  z-index: 0;
+  clip-path: polygon(0% 20%, 0% 80%, 100% 100%, 100% 0%);
+  background-color: var(--point-color);
+}
+
+/* 説明の背景 */
+.background-frosted-glass {
+  background-color: rgb(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  border: none;
+  border-radius: 8px;
+  border-right: 1px solid rgb(255, 255, 255, 0.5);
+  border-bottom: 1px solid #ffffff;
+}
+/* コンテンツ説明ここまで↑
+/* ======================================== */
+
+  
+/* スマホここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  /* メインビジュアルここから↓
+  /* ======================================== */
+  /* 大枠 */
+  .main-visual {
+	height: 600px;
+  }
+  
+  /* トップ画像 */
+  .main-visual-img-area {
+	background-image: url('/images/movemates-top-sp.jpg');
+  }
+  
+  /* キャッチコピー関連ここから↓
+  ----------------------------------------- */
+  .main-visual-copy-area {
+    padding: 28px 28px 60px 28px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sub-copy {
+    white-space: normal;
+    text-align: right;
+  }
+  /* キャッチコピー関連ここまで↑
+  ----------------------------------------- */
+  
+  /* メインビジュアルここまで↑
+  /* ======================================== */
+
+
+  /* コンテンツ説明ここから↓
+  /* ======================================== */
+  /* 大枠 */
+  .content-area {
+	margin-top: 0;
+  } 
+  /* 各説明のcontainerここから↓
+  ----------------------------------------- */
+  .toppage-concept-container {
+    flex-direction: column;
+  }
+  
+  .toppage-concept-container-reverse {
+    flex-direction: column-reverse;
+  }
+  /* 各説明のcontainerここまで↑
+  ----------------------------------------- */
+  /* 各説明のtext関連ここから↓
+  ----------------------------------------- */
+  .toppage-concept-text {
+	margin-top: -112px;
+  }
+  
+  .toppage-concept-index-en {
+	font-size: 2rem;
+	margin-bottom: 0;
+  }
+  /* レスポンシブデザインでは青背景と被らないので文字色もどす */
+  .index-color-white {
+	color: var(--point-color);
+  }
+  
+  .toppage-concept-index-jp {
+	font-size: 2rem;
+  }
+  
+  .toppage-concept-body p {
+	text-align: start;
+	white-space: normal !important;
+  }
+  /* 各説明のtext関連ここまで↑
+  ----------------------------------------- */
+  
+  /* 各説明のimg関連ここから↓
+  ----------------------------------------- */
+  .toppage-concept-img,
+  .toppage-concept-img-reverse {
+    margin: 4%;
+    width: 320px;
+    display: flex;
+  }
+  
+  .toppage-concept-img-reverse {
+    justify-content: end;
+  }
+  /* 各説明のimg関連ここまで↑
+  ----------------------------------------- */
+  
+  /* 段落の位置をレスポンシブ対応する */
+  br.responsive-br {
+    display: block;
+  }
+  /* 背景図形 */
+  .topppage-background-polygon {
+    width: 100%;
+    height: 560px;
+    position: absolute;
+    top: 440px;
+    z-index: 0;
+    clip-path: polygon(0% 20%, 0% 80%, 100% 100%, 100% 0%);
+    background-color: var(--point-color);
+  }
+  
+  /* 説明の背景 */
+  .background-frosted-glass {
+    background-color: rgb(255, 255, 255, 0.7);
+    backdrop-filter: blur(2px);
+    border: none;
+    border-radius: 8px;
+    border-right: 1px solid rgb(255, 255, 255, 0.5);
+    border-bottom: 1px solid #ffffff;
+  }
+  /* コンテンツ説明ここまで↑
+  /* ======================================== */ 
+}
+/* スマホここまで↑
+  ----------------------------------------- */
+
 /* ===========================================
- * トップページここまで
- * ======================================== */
+ * ===========================================
+   トップページここまで↑
+============================================ *
+============================================ */
 
 
 
 /* ===========================================
- * マイページここから
- * ======================================== */
+ * ===========================================
+   マイページここから↓
+============================================ *
+============================================ */
  
 /* カレンダーここから */
 /* ======================================== */
@@ -299,20 +835,19 @@ footer {
 }
 
 #my-calendar th, #my-calendar td {
-  border: 1px solid #64C0AB;
+  border: 1px solid var(--base-color);
   text-align: center;
   padding: 8px;
 }
 
 #my-calendar th {
-  background-color: #ffffff;
+  background-color: var(--white-color);
   opacity: 0.85;
   font-size: 10px;
 }
 
 #my-calendar td {
-  background-color: #ffffff;
-  opacity: 0.7;
+  background-color: var(--opacity-color);
   height: 80px; /* セルの高さを2倍に変更 */
   vertical-align: top; /* 日付を上半分に配置 */
 }
@@ -342,7 +877,7 @@ footer {
   top: 50%; /* 上端の位置をセルの中央に合わせる */
   left: 50%; /* 左端の位置をセルの中央に合わせる */
   transform: translate(-50%, -50%); /* セルの中央に移動 */
-  color: white; /* 今日の日付に対応するセルの日付の文字色を変更 */
+  color: var(--white-color); /* 今日の日付に対応するセルの日付の文字色を変更 */
 }
 
 /*運動した日にアイコンを表示*/
@@ -351,150 +886,257 @@ footer {
   height: 24px;
   content: url('../images/exercise-log.svg');
 }
+
+/* スマホここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  #my-calendar td {
+    height: 62px;
+  }
+
+}
+/* スマホここまで↑
+  ----------------------------------------- */
 /* カレンダーここまで */
 /* ======================================== */
 
 
-/* 継続週数ここから */
+/* 継続週数ここから↓ */
 /* ======================================== */
-#consecutive-weeks {
-  width: 400px;
+/* PC版ここから↓
+  ----------------------------------------- */
+.consecutive-weeks-container {
+  width: 50%;
   height: 120px;
-  margin-top: 40px;
   display: flex;
+  margin: 24px 0;
 }
 
-#week-box-left {
+.consecutive-weeks-box-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 120px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.85); /* 白色の背景色に85%の不透明度を適用 */
-  background-color: white;
+  background-color: var(--white-color);
   opacity: 0.85;
 }
 
-#week-box-right {
-  background-color: #ffffff;
-  opacity: 0.7;
+.consecutive-weeks-box-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white-color);
   flex-grow: 1;
+  padding: 4%;
 }
-
-#currentMonthYear {
-  color: var(--point-color);
-  text-align: center;
+/* PC版ここまで↑
+  ----------------------------------------- */
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .consecutive-weeks-container {
+	width: 100%;
+	margin: 12px 0;
+  }
 }
-/* 継続週数ここまで */
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+/* 継続週数ここまで↑ */
 /* ======================================== */
 
 /* ===========================================
- * マイページここまで
+ * マイページここまで↑
  * ======================================== */
 
 
 
 /* ===========================================
- * エクササイズ一覧ここから
+ * エクササイズ検索関連ここから↓
  * ======================================== */
+ 
+/* エクササイズ検索トップここから↓ */
+/* ======================================== */
+.exercise-search-box {
+  display: flex;
+  justify-content: end;
+}
+
+.exercise-container {
+  background-color: var(--opacity-color);
+  border-radius: 4px;
+}
+
+.exercise-h5 {
+  position: relative;
+  padding: 1%;
+  margin-bottom: 4%;
+  text-align: center;
+  border-bottom: 5px solid var(--point-color);
+  width: 30%;
+}
+
+.exercise-h5::before,
+.exercise-h5::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  content: "";
+  height: 0;
+  width: 0;
+}
+
+.exercise-h5::before {
+  border: 16px solid;
+  border-color: transparent;
+  border-top-color: var(--point-color);
+  margin-left: -16px;
+}
+
+.exercise-h5::after {
+	border: 10px solid;
+    border-color: transparent;
+    border-top-color: var(--opacity-color);
+    margin-left: -10px;
+}
+
+/* 目的と部位を一覧表示する時のタグ */
 .exercise-tag {
-/*  position: relative;*/
-/*  height: 64px;*/
-/*  margin-left: 30px;*/
+  position: relative;
   padding: 1rem 1rem 1rem 3rem;
-/*  color: #fff;*/
-  background-color: #ffffff;
+  background-color: var(--point-color);
   border: solid;
   border-color: var(--point-color);
   border-radius: 2em 0 0 2em;
+  cursor: pointer;
 }
 
 .exercise-tag::before {
-  content: '○';
-  font-weight: bold;
+  content: '';
   margin-right: .5em;
-  color: var(--point-color);
-/*  position: absolute;*/
-/*  top: 0;*/
-/*  left: -30px;*/
-/*  content: '';*/
-/*  border-width: 32px 30px 32px 0;*/
-/*  border-style: solid;*/
-/*  border-color: transparent #fa4141 transparent transparent;*/
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 17px;
+  left: 18px;
+  background-color: var(--opacity-color);
+  border-radius: 50%;  /* widthとheightが同じ場合、常に丸になる */
 }
 
+.exercise-tag a {
+  color: var(--white-color);
+}
+
+.exercise-tag:hover {
+  opacity: 0.7;
+}
+
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .exercise-search-box {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .exercise-h5::after {
+	margin-top: -1px;
+  }
+  
+  .exercise-tag::before {
+    top: 12px;
+    left: 12px;
+  }
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+/* エクササイズ検索トップここまで↑ */
+/* ======================================== */
+
+/* エクササイズ検索（部位・目的別）ここから */
+/* ======================================== */
+.mm-card-body {
+  background-color: var(--opacity-color);
+}
+
+/* エクササイズ検索（部位・目的別）ここまで */
+/* ======================================== */
+
+/* エクササイズ詳細ここから */
+/* ======================================== */
+
+.favorite-container {
+  display: flex;
+  justify-content: end;
+  margin: 16px 0 16px 16px;
+  	
+}
+
+.favorite-box-unsaved {
+  padding: 4px;
+  border: 1.5px solid var(--point-color);
+  border-radius: 4px;
+/*  display: flex;*/
+}
+
+.favorite-box-saved {
+  padding: 4px;
+  border: 1.5px solid var(--point-color);
+  border-radius: 4px;
+  background-color: var(--point-color);
+/*  display: flex;*/
+}
+
+.favorite-box-saved a {
+  color: var(--white-color);
+}
+
+/* エクササイズ詳細ここまで */
+/* ======================================== */
+
 /* ===========================================
- * エクササイズ一覧ここまで
+ * エクササイズ検索関連ここまで
  * ======================================== */
  
  
 
-.mm-card {
-  background-color: white;
-  opacity: 0.85;
-  color: var(--point-color);
-}
 
 /* ===========================================
- * マイメニュー関連ここから
+ * マイメニュー関連ここから↓
  * ======================================== */
-
+ 
+/* マイメニュー共通ここから↓ */
+/* ======================================== */
 .mymenu-container {
   padding: 4% 0;
 }
 
 .mymenu-name-box {
-  color: #ffffff;
+  color: var(--white-color);
   background-color: var(--point-color);
   padding: 1% 4%;
   width: 30%;
   clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 70%, 70% 0);
-  white-space: nowrap;
 }
 
 .mymenu-box {
   display: flex;
   margin-bottom: 4%;
   padding: 4%;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--opacity-color);
+}
+
+.mymenu-inner-box {
+  display: flex;
+  width: 100%;
 }
 
 .mymenu-exercise-box {
   flex-grow: 1;
   overflow-x: scroll;
-}
-
-#mymenu-candidate-box {
-  display: flex;
-  flex-direction: column;
-/*  background-color: #7A6FCC;*/
-  padding: 4%;
-}
-
-.mymenu-candidate-card {
-  position: relative;
-  height: 100%;
-  background-color: white;
-  cursor: pointer;
-  
-}
-
-.card-checkbox {
-  position: absolute;
-  top: 1%;
-  right: 1%;
-}
-
-.mm-sm-card {
-  position: relative;
-  width: 10rem;
-  height: 100%;
-  background-color: white;
-  margin-right: 1rem;
-/*  cursor: pointer;*/
-  border: none;
-}
-
-.card-repeat:last-child {
-  margin-right: 0;
 }
 
 .mymenu-btn-box {
@@ -504,8 +1146,8 @@ footer {
   justify-content: center;
 }
 
-.selected-exercise-card {
-  background-color: lightblue; /* チェックされている時の背景色 */
+.mymenu-btn-box a {
+  margin: 0.5rem;
 }
 
 .mm-card-box {
@@ -513,6 +1155,130 @@ footer {
   padding-bottom: 2%;
 }
 
+.mm-sm-card {
+  position: relative;
+  width: 10rem;
+  height: 100%;
+  background-color: var(--white-color);
+  margin-right: 1rem;
+  border: none;
+}
+
+.plus-icon-box {
+  width: 25%;
+  cursor: pointer;
+}
+
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .mymenu-container {
+    padding: 24px 24px 0 24px;
+  }
+  .mymenu-name-box {
+    padding: 1% 4%;
+    width: 100%;
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 50%, 85% 0);
+  }
+  
+  .mymenu-box {
+    margin-bottom: 24px;
+  }
+  
+  .mymenu-inner-box {
+	flex-direction: column;
+/*	justify-content: center;*/
+  }
+  
+  .mymenu-btn-box {
+	margin-left: 0;
+	flex-direction: row;
+  }
+  
+  .mymenu-btn-box a {
+    margin: 0.5rem 0.5rem 0 0.5rem;
+  }
+  
+  .mm-sm-card {
+    width: 15rem;
+  }
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+/* マイメニュー共通ここまで↑ */
+/* ======================================== */
+
+/* マイメニュートップここから↓ */
+/* ======================================== */
+.movemates-btn-start {
+  background-color: var(--main-color) !important;
+}
+/* マイメニュートップここまで↑ */
+/* ======================================== */
+
+/* マイメニュー編集ここから↓ */
+/* ======================================== */
+
+.mymenu-name-form {
+  color: var(--white-color);
+  background-color: var(--point-color);
+  border: none;
+}
+
+.mymenu-name-form:focus {
+  outline: none;
+}
+
+.mymenu-name-form-img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mymenu-candidate-box {
+  display: flex;
+  flex-direction: column;
+  padding: 4%;
+}
+
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .mymenu-candidate-box {
+	margin-top: -24px;
+  }
+}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
+
+.mymenu-candidate-card {
+  position: relative;
+  height: 100%;
+  background-color: var(--white-color);
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+/*.mm-sm-card-text {*/
+/*  font-size: 0.8rem;	*/
+/*}*/
+
+.card-checkbox {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+
+.card-repeat:last-child {
+  margin-right: 0;
+}
+
+.selected-exercise-card {
+  background-color: lightblue; /* チェックされている時の背景色 */
+}
+
+/* ×(削除)マークここから↓
+  ----------------------------------------- */
 .batsu {
   display: block;
   position: absolute;
@@ -522,7 +1288,8 @@ footer {
   cursor: pointer;
 }
  
-.batsu::before, .batsu::after {
+.batsu::before,
+.batsu::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -543,7 +1310,8 @@ footer {
 .batsu:hover {
   opacity: 0.8;
 }
-
+/* ×(削除)マークここまで↑
+  ----------------------------------------- */
 .sort-handle {
   position: relative;
   cursor: pointer;
@@ -559,25 +1327,19 @@ footer {
   border-top: 1px solid var(--point-color); /* 上の線 */
   border-bottom: 1px solid var(--point-color); /* 下の線 */
 }
+/* マイメニュー編集ここまで↑ */
+/* ======================================== */
 
-.mymenu-name-form {
-  color: #ffffff;
-  background-color: var(--point-color);
-  border: none;
-}
-
-.mymenu-name-form:focus {
-  outline: none;
-}
-
-/*jqueryのsortで使用*/
-.sortable-placeholder {
-  margin: 10px; /* マージンの指定 */
-  transition: all 0.3s ease;
-}
 
 /* 運動開始ページここから */
 /* ======================================== */
+.start-flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 span.carousel-control-next-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%234D4399' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e");
 }
@@ -586,65 +1348,90 @@ span.carousel-control-prev-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%234D4399' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5L4.25 4l2.5-2.5L5.25 0z'/%3e%3c/svg%3e");
 }
 
-.start-flexbox {
+.start-card-top {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  justify-content: center;  
+}
+
+.start-card-top-img {
+  height: 224px;
+  width: auto;
+  margin-top: 16px;
+}
+
+.mm-card-body-start {
+  padding: 4%;
 }
 
 .stopwatch-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4%;
   background-color: var(--opacity-color);
-/*  width: 100%;*/
+  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   flex-grow: 1;
-  align-self: center;
-  border-radius: 0.25rem;
 }
 
 #stopwatch {
-  font-size: 8rem;
+  font-size: 500%;
   text-align: center;
+/*  margin-top: 4%;*/
 }
 
-#resetButton-circle {
+.stopwatch-btn-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.exercise-start-stop-btn {
+  width: 30%;
+  align-self: center;
+  margin-bottom: 4%;
+  cursor: pointer;
+}
+
+#resetButton {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+.reset-btn-circle {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
 	border-radius: 50%;
-	border: solid  var(--main-color);
+	border: solid var(--main-color);
 	width: 4rem;
-	align-self: flex-end;
-	margin-right: 4rem;
-/*	height: 10%;*/
-/*	padding-top: 15%;*/
-	
-/*	background-color: var(--point-color);*/
+	position: absolute;
+	top: 0;
+	right: 20%;
 }
 
-#resetButton-circle::before {
+.reset-btn-circle::before {
   display: block;
   content: '';
   padding-top: 100%;
 }
-
-#resetButton {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--main-color);
+/* スマホ版ここから↓
+  ----------------------------------------- */
+@media screen and (max-width: 578px) {
+  .stopwatch-container {
+    margin-top: 2%;
+  }
   
+  #stopwatch {
+    font-size: 600%;
+  }
 }
-
-.start-stop-button-box {
-  width: 50%;
-  align-self: center;
-  margin-top: -4%;
-  margin-bottom: 4%;
-}
+/* スマホ版ここまで↑
+  ----------------------------------------- */
 
 /* 運動開始ページここまで */
 /* ======================================== */

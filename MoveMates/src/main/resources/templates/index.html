@@ -9,19 +9,77 @@
 	</head>
 	<body>
 		<div class="wrapper flex-column">
-			<div th:replace="~{fragment :: nav-bar}"></div>
-			
-			<main class="ms-0">
-				<picture>
-					<source th:srcset="@{/images/movemates-top-sp.png}" media="(max-width: 430px)" class="w-100">
-					<img th:src="@{/images/movemates-top-pc.png}" class="img-fluid">
-				</picture>
-				<div id="catchcopy">
-					<span>運動が続かない</span>
-					<span>どんな運動をしたらいいか分からない</span>
-					<span>そんなあなたのためのサービス</span>
+			<div th:replace="~{fragment :: header-pc-top}"></div>
+			<div th:replace="~{fragment :: header-sp-top}"></div>
+			<section class="main-visual">
+				<div class="main-visual-img-area">
+					<div class="main-visual-copy-area">
+						<div class="main-copy-area">
+							<h2 class="main-copy-en">
+								Move forward.
+							</h2>
+							<h2 class="main-copy-jp">
+								一歩ずつ前に。
+							</h2>
+						</div>
+						<div class="sub-copy-area">
+							<p class="sub-copy">
+								家トレから始めよう<br class="responsive-br">
+								運動の継続をサポートするMOVEMATES
+							</p>
+						</div>
+					</div>
 				</div>
-				
+			</section>
+			<main class="content-area">
+				<section class="toppage-concept-container-reverse">
+					<div class="toppage-concept-text-reverse">
+						<p class="toppage-concept-index-en">DATABASE</p>
+						<h4 class="toppage-concept-index-jp">家でできるアクティビティ</h4>
+						<div class="toppage-concept-body">
+							<p>
+								家でできるトレーニングやストレッチが満載<br>
+								運動の目的や体の部位から探せるから<br>
+								簡単に希望のアクティビティが見つけられる
+							</p>
+						</div>
+					</div>
+					<div class="toppage-concept-img-reverse">
+						<img th:src="@{/images/toppage-concept-stratch.jpg}">
+					</div>
+				</section>
+				<div class="topppage-background-polygon"></div>
+				<section class="toppage-concept-container">
+					<div class="toppage-concept-img">
+						<img th:src="@{/images/toppage-concept-smartphone.png}">
+					</div>
+					<div class="toppage-concept-text background-frosted-glass">
+						<p class="toppage-concept-index-en">RECORD</p>
+						<h4 class="toppage-concept-index-jp">頑張りが一目で見える</h4>
+						<div class="toppage-concept-body">
+							<p>
+								運動した記録がカレンダーに自動で表示<br>
+								努力が見えるので継続しやすい<br>
+							</p>
+						</div>
+					</div>
+				</section>
+				<section class="toppage-concept-container-reverse toppage-concept-container-reverse-bottom">
+					<div class="toppage-concept-text-reverse">
+						<p class="toppage-concept-index-en index-color-white">MY MENU</p>
+						<h4 class="toppage-concept-index-jp">独自の運動メニュー</h4>
+						<div class="toppage-concept-body">
+							<p>
+								一度メニューを作ればすぐに<br>
+								運動を始められるので<br>
+								ルーティンを組みやすい<br>
+							</p>
+						</div>
+					</div>
+					<div class="toppage-concept-img-reverse">
+						<img th:src="@{/images/toppage-concept-stopwatch2.jpg}">
+					</div>
+				</section>
 			</main>
 			<div th:replace="~{fragment :: footer}"></div>
 		</div>

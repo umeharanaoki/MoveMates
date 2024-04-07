@@ -2,6 +2,8 @@ package com.example.movemates.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,13 +59,13 @@ public class ExerciseController {
 	
 	// アクティビティ一覧（目的別）
 	@GetMapping("/purposes/{purpose_id}")
-	public String purposeExercisesList(Model model, @PathVariable(name = "purpose_id") Integer purposeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+	public String purposeExercisesList(Model model, Pageable pageable, @PathVariable(name = "purpose_id") Integer purposeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		Purpose purpose = purposeRepository.getReferenceById(purposeId);
 		User user = userDetailsImpl.getUser();
 		
-		List<Exercise> exercises = exerciseRepository.findByPurposes(purpose);
+		Page<Exercise> exercisePage = exerciseRepository.findByPurposes(purpose, pageable);
 		
-		model.addAttribute("exercises", exercises);
+		model.addAttribute("exercisePage", exercisePage);
 		model.addAttribute("title", purpose.getName());
 		model.addAttribute("purpose", purpose);
 		model.addAttribute("user", user);
@@ -73,18 +75,31 @@ public class ExerciseController {
 	
 	// アクティビティ一覧（部位別）
 	@GetMapping("/body-parts/{bodyPart_id}")
-	public String bodyPartExercisesList(Model model, @PathVariable(name = "bodyPart_id") Integer bodyPartId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+	public String bodyPartExercisesList(Model model, Pageable pageable, @PathVariable(name = "bodyPart_id") Integer bodyPartId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		BodyPart bodyPart = bodyPartRepository.getReferenceById(bodyPartId);
 		User user = userDetailsImpl.getUser();
 		
-		List<Exercise> exercises = exerciseRepository.findByBodyParts(bodyPart);
+		Page<Exercise> exercisePage = exerciseRepository.findByBodyParts(bodyPart, pageable);
 		
-		model.addAttribute("exercises", exercises);
+		model.addAttribute("exercisePage", exercisePage);
 		model.addAttribute("title", bodyPart.getName());
 		model.addAttribute("bodyPart", bodyPart);
 		model.addAttribute("user", user);
 		
 		return "exercises/list";
+	}
+	
+	// アクティビティ一覧（すべて）
+	@GetMapping("/all")
+	public String all(Model model, Pageable pageable, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+		User user = userDetailsImpl.getUser();
+		
+		Page<Exercise> exercisePage = exerciseRepository.findAll(pageable);
+		
+		model.addAttribute("exercisePage", exercisePage);
+		model.addAttribute("user", user);
+		
+		return "exercises/all";
 	}
 	
 	// アクティビティ詳細ページ
@@ -93,39 +108,10 @@ public class ExerciseController {
 		Exercise exercise = exerciseRepository.getReferenceById(exerciseId);
 		User user = userDetailsImpl.getUser();
 		Favorite favorite = favoriteRepository.findByUserAndExercise(user, exercise);
-		// パンくずリストをアクセス元によって変更するための処理
-//		String referer = request.getHeader("referer");
-//		String breadcrumbLink = "";
-		
-		// リファラがない場合そのまま返す
-//		if (referer == null) {
-//			model.addAttribute("exercise", exercise);
-//            model.addAttribute("breadcrumbLink", breadcrumbLink);
-//            return "exercises/show";
-//        }
-		
-//		String purposeId = request.getParameter("purpose_id");
-//		if (purposeId != null && !purposeId.isEmpty()) {
-//		    Purpose purpose = purposeRepository.findById(Integer.parseInt(purposeId)).orElse(null);
-//		    if (purpose != null) {
-//		        String purposeName = purpose.getName();
-//		        breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/purposes/" + purposeId + "\">" + purposeName + "</a></li>";
-//		    }
-//		}
-//
-//		if (referer.contains("/exercises/body-parts")) {
-//		    String bodyPartId = request.getParameter("bodyPart_id");
-//		    BodyPart bodyPart = bodyPartRepository.findById(Integer.parseInt(bodyPartId)).orElse(null);
-//		    if (bodyPart != null) {
-//		        String bodyPartName = bodyPart.getName();
-//		        breadcrumbLink = "<li class=\"breadcrumb-item\"><a href=\"/exercises/body-parts/" + bodyPartId + "\">" + bodyPartName + "</a></li>";
-//		    }
-//		}
 		
 		model.addAttribute("exercise", exercise);
 		model.addAttribute("user", user);
 		model.addAttribute("favorite", favorite);
-//		model.addAttribute("breadcrumbLink", breadcrumbLink);
 		
         return "exercises/show";
 	}

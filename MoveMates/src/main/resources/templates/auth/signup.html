@@ -11,13 +11,13 @@
 
 <body>
 	<div class="wrapper flex-column">
-		<div th:replace="~{fragment :: nav-bar}"></div>
-
+		<div th:replace="~{fragment :: header-pc}"></div>
+		<div th:replace="~{fragment :: header-sp}"></div>
 		<main class="ms-0 main-bottom">
 			<!-- container -->
-			<div>
+			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-xl-5 col-lg-6 col-md-8">
+					<div class="col-lg-6 col-md-8">
 
 						<h1 class="my-3 text-center">ユーザー登録</h1>
 
@@ -177,8 +177,8 @@
 		<div th:replace="~{fragment :: footer}"></div>
 
 	</div>
-<!--	<div th:replace="~{fragment :: scripts}"></div>-->
-<!--			<script th:src="@{/js/preview.js}"></script>-->
+	<div th:replace="~{fragment :: scripts}"></div>
+	<script th:src="@{/js/preview.js}"></script>
 </body>
 
 </html>

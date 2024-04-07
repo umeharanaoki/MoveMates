@@ -10,9 +10,10 @@
 	<body>
 		<div class="wrapper flex-column">
 			
-			<div th:replace="~{fragment :: nav-bar}"></div>
+			<div th:replace="~{fragment :: header-pc}"></div>
+			<div th:replace="~{fragment :: header-sp}"></div>
 			
-			<main class="ms-0">
+			<main class="main-admin">
 				<div class="container pt-4 pb-5"><!-- レスポンシブ用のコンテナ追加箇所 -->
 					<div class="row justify-content-center">
 						<div class="col-xl-3 col-lg-4 col-md-5 col-sm-7">
