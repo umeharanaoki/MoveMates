@@ -7,6 +7,23 @@
 		
 		<title>管理者用エクササイズ一覧</title>
 	</head>
+		<div th:each="exercise : ${exercisePage}">
+		    <div class="modal fade" th:id="'deleteExerciseModal' + ${exercise.id}" tabindex="-1" th:aria-labelledby="'deleteExerciseModalLabel' + ${exercise.id}">
+		        <div class="modal-dialog">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <h5 class="modal-title" th:id="'deleteExerciseModalLabel' + ${exercise.id}" th:text="${exercise.name + 'を削除してもよろしいですか？'}"></h5>
+		                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+		                </div>
+		                <div class="modal-footer">
+		                    <form method="post" th:action="@{/admin/exercises/__${exercise.id}__/delete}">
+		                        <button type="submit" class="btn movemates-btn-danger">削除</button>
+		                    </form>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	<body>
 		<div class="wrapper-admin">
 			<div th:replace="~{fragment :: header-pc}"></div>
@@ -46,7 +63,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="exercise : ${exercises}">
+									<tr th:each="exercise : ${exercisePage}">
 										<td th:text="${exercise.getId()}"></td>
 										<td th:text="${exercise.getName()}"></td>
 										<td>
@@ -66,32 +83,39 @@
 										<td th:text="${exercise.getType()}"></td>
 										<td><a th:href="@{/admin/exercises/__${exercise.getId()}__}">詳細</a></td>
 										<td><a href="#" class="movemates-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteExerciseModal' + exercise.getId()}">削除</a></td>
-										
-										<!-- 削除用モーダル -->
-										<div class="modal fade" th:id="${'deleteExerciseModal' + exercise.getId()}" tabindex="-1" th:aria-labelledby="${'deleteExerciseModalLabel' + exercise.getId()}">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" th:id="${'deleteExerciseModalLabel' + exercise.getId()}" th:text="${exercise.getName() + 'を削除してもよろしいですか？'}"></h5>
-														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-													</div>
-													<div class="modal-footer">
-														<form method="post" th:action="@{/admin/exercises/__${exercise.getId()}__/delete}">
-															<button type="submit" class="btn movemates-btn-danger">削除</button>
-														</form>
-													</div>
-												</div>
-											</div>
-										</div>
 									</tr>
 								</tbody>
 							</table>
+							<!-- ページネーション -->
+		                    <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center mt-4">
+								<nav aria-label="管理者用アクティビティ一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${exercisePage.isFirst()}" th:href="@{/admin/exercises(page = ${exercisePage.getNumber() - 1}, keyword = ${keyword})}" class="page-link mm-page-link">前</a>
+										</li>
+										<li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
+											<span th:if="${i == exercisePage.getNumber()}" class="page-link active mm-page-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == exercisePage.getNumber()}" th:href="@{/admin/exercises(page = ${i}, keyword = ${keyword})}" class="page-link mm-page-link" th:text="${i +1}"></a>
+										</li>
+										<li class="page-item">
+											<span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
+											<a th:unless="${exercisePage.isLast()}" th:href="@{/admin/exercises(page = ${exercisePage.getNumber() + 1}, keyword = ${keyword})}" class="page-link mm-page-link">次</a>
+										</li>
+									</ul>
+								</nav>
+		                    </div>
 						</div>
 					</div>
 				</div>
+			
 			</main>
 			<div th:replace="~{fragment :: footer}"></div>
 		</div>
+		<!-- バックドロップ -->
+<!--    <div class="modal-backdrop fade show"></div>-->
+			<!-- 削除用モーダル -->
+										
 		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
 </html>

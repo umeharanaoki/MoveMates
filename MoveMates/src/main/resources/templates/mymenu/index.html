@@ -35,11 +35,13 @@
 								<!-- 1つのマイメニュー -->
 								<div class="mymenu-box">
 									<!-- エクササイズが登録されていないときは登録ボタンを表示 -->
-									<div th:unless="${not #lists.isEmpty(mymenu.myMenuExercises)}">
-										<div class="w-25">
+									<div th:unless="${not #lists.isEmpty(mymenu.myMenuExercises)}" class="d-flex justify-align">
+										<div class="mm-plus-icon-box">
 							                <a th:href="@{/mymenu/__${mymenu.getId()}__/edit}"><img th:src="@{/images/plus-icon.svg}" class="w-100"></a>
 										</div>
-										<span>アクティビティを組み合わせて独自のメニューを作成してください。</span>
+										<div class="d-flex align-items-center">
+											<span>アクティビティを組み合わせて独自のメニューを作成してください。</span>
+										</div>
 							        </div>
 							        <!-- エクササイズがあるとき -->
 									<div th:if="${not #lists.isEmpty(mymenu.myMenuExercises)}" class="mymenu-inner-box">

@@ -8,26 +8,27 @@
 		<title>アクティビティ編集</title>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="wrapper-admin">
 			<div th:replace="~{fragment :: header-pc}"></div>
 			<div th:replace="~{fragment :: header-sp}"></div>
 			
-			<main>
+			<main class="main-admin">
 			<!-- container -->
 				<div class="container">
 					<div class="row justify-content-center">
-						<div class="col-xl-5 col-lg-6 col-md-8">
+						<div class="col-lg-8 col-md-10">
 							<!-- パンくずリスト -->
 							<nav class="breadcrumb-trail" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 	                             <ol class="breadcrumb mb-0">                        
 	                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises}">（管理者用）アクティビティ一覧</a></li>
-	                                 <li class="breadcrumb-item active" aria-current="page">アクティビティ編集</li>
+	                                 <li class="breadcrumb-item"><a th:href="@{/admin/exercises/__${exerciseEditForm.getId()}__}" th:text="${exerciseEditForm.getName()}"></a></li>
+	                                 <li class="breadcrumb-item active" aria-current="page" th:text="${exerciseEditForm.getName() + '編集'}"></li>
 	                             </ol>
 	                        </nav>
 	                        
 	                        <h1 class="mb-4 text-center">アクティビティ編集</h1>
 	                        
-	                        <form method="post" th:action="@{/admin/exercises/update}" th:object="${exerciseEditForm}" enctype="multipart/form-data">
+	                        <form method="post" th:action="@{/admin/exercises/update}" th:object="${exerciseEditForm}" enctype="multipart/form-data" class="mm-highlight-box">
 								<!-- ID -->
 								<input type="hidden" th:field="*{id}">
 							
@@ -53,7 +54,8 @@
 									</div>
 								</div>
 								<!-- 選択された画像の表示場所 -->
-								<div class="row" id="imagePreview"></div>
+								<div th:if="${imageName}" class="row mm-flexbox-center" id="imagePreview"><img th:src="@{/storage/exercise/__${imageName}__}" class="mb-3 w-75"></div>	
+                                <div th:unless="${imageName}" class="row" id="imagePreview"></div>  
 								
 								<!-- 筋トレかストレッチか -->
 								<div class="row mb-3">
@@ -75,41 +77,40 @@
 								
 								<!-- 目的 -->
 								<div class="row mb-3">
-									<div class="col-md-5">
-										<label for="purposes" class="col-form-label text-md-left fw-bold">目的</label> 
-									</div>
-									<div class="col-md-7">
-										<div th:if="${#fields.hasErrors('purposes')}" class="text-danger small mb-2" th:errors="*{purposes}"></div>
-										<div class="d-flex flex-wrap">
-											<!-- 選択肢を繰り返しで表示 -->
-											<div th:each="purpose : ${purposes}" class="form-check form-check-inline mr-3 mb-2">
-												<!-- 持っている値のボックスにはチェックを入れる -->
-												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}">
-<!--												<input class="form-check-input" type="checkbox" th:field="*{purposes}" th:value="${purpose.getId()}" th:checked="${exerciseEditForm.purposes.contains(purpose)}">-->
-												<label class="form-check-label" for="purposes" th:text="${purpose.getName()}"></label>
-											</div>
-										</div>
-									</div>
+								    <div class="col-md-5">
+								        <label for="purposeNames" class="col-form-label text-md-left fw-bold">目的</label>
+								    </div>
+								    <div class="col-md-7">
+								        <div th:if="${#fields.hasErrors('purposeNames')}" class="text-danger small mb-2" th:errors="*{purposeNames}"></div>
+								        <div class="d-flex flex-wrap">
+								            <!-- すべての選択肢を繰り返しで表示 -->
+								            <div th:each="purpose : ${purposes}" class="form-check form-check-inline mr-3 mb-2">
+								                <!-- 持っている値のボックスにはチェックを入れる -->
+								                <input class="form-check-input" type="checkbox" th:field="*{purposeNames}" th:value="${purpose.getName()}" th:checked="${exerciseEditForm.purposeNames != null and exerciseEditForm.purposeNames.contains(purpose.getName())}">
+								                <label class="form-check-label" for="purposeNames" th:text="${purpose.getName()}"></label>
+								            </div>
+								        </div>
+								    </div>
 								</div>
 								
 								<!-- 部位 -->
 								<div class="row mb-3">
-									<div class="col-md-5">
-										<label for="bodyParts" class="col-form-label text-md-left fw-bold">体の部位</label>
-									</div>
-									<div class="col-md-7">
-										<div th:if="${#fields.hasErrors('bodyParts')}" class="text-danger small mb-2" th:errors="*{bodyParts}"></div>
-										<div class="d-flex flex-wrap">
-											<!-- 選択肢を繰り返しで表示 -->
-											<div th:each="bodyPart : ${bodyParts}" class="form-check form-check-inline mr-3 mb-2">
-												<!-- 持っている値のボックスにはチェックを入れる -->
-<!--												<input class="form-check-input" type="checkbox" th:field="*{bodyParts}" th:value="${bodyPart.getId()}" th:checked="${exerciseEditForm.bodyParts.contains(bodyPart)}">-->
-												<input class="form-check-input" type="checkbox" th:field="*{bodyParts}" th:value="${bodyPart.getId()}" th:checked="${exerciseEditForm.bodyParts.contains(bodyPart)}">
-												<label class="form-check-label" for="bodyParts" th:text="${bodyPart.getName()}"></label>
-											</div>
-										</div>
-									</div>
+								    <div class="col-md-5">
+								        <label for="bodyPartNames" class="col-form-label text-md-left fw-bold">体の部位</label>
+								    </div>
+								    <div class="col-md-7">
+								        <div th:if="${#fields.hasErrors('bodyPartNames')}" class="text-danger small mb-2" th:errors="*{bodyPartNames}"></div>
+								        <div class="d-flex flex-wrap">
+								            <!-- 選択肢を繰り返しで表示 -->
+								            <div th:each="bodyPart : ${bodyParts}" class="form-check form-check-inline mr-3 mb-2">
+								                <!-- 持っている値のボックスにはチェックを入れる -->
+								                <input class="form-check-input" type="checkbox" th:field="*{bodyPartNames}" th:value="${bodyPart.getName()}" th:checked="${exerciseEditForm.bodyPartNames != null and exerciseEditForm.bodyPartNames.contains(bodyPart.getName())}">
+								                <label class="form-check-label" for="bodyPartNames" th:text="${bodyPart.getName()}"></label>
+								            </div>
+								        </div>
+								    </div>
 								</div>
+
 								
 								<!-- 説明 -->
 								<div class="form-group row mb-3">

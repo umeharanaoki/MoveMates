@@ -8,10 +8,13 @@
 		<title>トップページ</title>
 	</head>
 	<body>
-		<div class="wrapper flex-column">
+		<div class="wrapper-admin">
 			<div th:replace="~{fragment :: header-pc-top}"></div>
 			<div th:replace="~{fragment :: header-sp-top}"></div>
 			<section class="main-visual">
+				<div th:if="${successMessage}" class="alert alert-info">
+                    <span th:text="${successMessage}"></span>
+                </div> 
 				<div class="main-visual-img-area">
 					<div class="main-visual-copy-area">
 						<div class="main-copy-area">
@@ -71,8 +74,7 @@
 						<div class="toppage-concept-body">
 							<p>
 								一度メニューを作ればすぐに<br>
-								運動を始められるので<br>
-								ルーティンを組みやすい<br>
+								好きな運動を始められる<br>
 							</p>
 						</div>
 					</div>

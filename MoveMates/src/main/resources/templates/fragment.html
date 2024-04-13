@@ -81,11 +81,10 @@
 			<header class="navbar navbar-expand-md mm-header-toppage header-sp-top">
 				<!-- ログインしてからは表示されないので未ログイン時のもののみ準備 -->
 		        <nav class="d-flex w-100 justify-content-between align-items-center" sec:authorize="isAnonymous()">
-					<div class="empty-box ms-3"></div>
-			        <div class="mm-logo-sm">
-						<h1 role="heading" class="mm-logo-sm-sp-h1">
+			        <div class="movemates-logo-sp">
+						<h1 role="heading" class="mm-logo-lg-sp-h1">
 							<a th:href="@{/}">
-								<img th:src="@{/images/movemates-logo-sm.png}">
+								<img th:src="@{/images/movemates-logo-lg.png}" class="mm-logo-lg-sp-img">
 							</a>
 						</h1>
 					</div>
@@ -234,7 +233,7 @@
 						<div sec:authorize="hasRole('ROLE_GENERAL')">
 							<!-- ユーザーアイコン -->
 			    			<a th:href="@{/user/show}" class="user-icon">
-								<img th:src="@{/storage/user/icons/__${user?.getImageName()}__}" class="user-icon-img-pc">
+								<img th:src="@{'/storage/user/icons/' + ${user.getImageName()} + '?version=' + ${imageVersion}}" class="user-icon-img-pc">
 							</a>
 				    		<!-- その他 -->
 				    		<div class="dropdown">

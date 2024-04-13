@@ -22,6 +22,15 @@
 	                                 <li class="breadcrumb-item active" aria-current="page">すべてのアクティビティ</li>
 	                             </ol>
 	                        </nav>
+	                        <!-- 検索フォーム -->
+								<div class="exercise-search-box">
+									<form method="get" th:action="@{/exercises/all}" class="mb-3">
+										<div class="input-group">
+											<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
+											<button type="submit" class="btn movemates-btn">検索</button>
+										</div>
+									</form>
+								</div>
 							<div>
 								<!-- アクティビティがない場合の処理 -->
 								<div th:unless="${not #lists.isEmpty(exercisePage)}">
@@ -54,24 +63,24 @@
 								</div>
 							</div>
 							<!-- ページネーション -->
-                             <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center">
-								 <nav aria-label="アクティビティ一覧ページ">
-									 <ul class="pagenation">
-										 <li class="page-item">
-											 <span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
-											 <a th:unless="${exercisePage.isFirst()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() - 1})}" class="page-link">前</a>
-										 </li>
-										 <li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
-											 <span th:if="${i == exercisePage.getNumber()}" class="page-link active" th:text="${i + 1}"></span>
-											 <a th:unless="${i == exercisePage.getNumber()}" th:href="@{/exercises/all(page = ${i})}" class="page-link" th:text="${i +1}"></a>
-										 </li>
-										 <li class="page-item">
-											 <span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
-											 <a th:unless="${exercisePage.isLast()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() - 1})}" class="page-link">次</a>
-										 </li>
-									 </ul>
-								 </nav>
-								 
+                            <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center mt-4">
+								<nav aria-label="アクティビティ一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${exercisePage.isFirst()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() - 1}, keyword = ${keyword})}" class="page-link mm-page-link">前</a>
+										</li>
+										<li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
+											<span th:if="${i == exercisePage.getNumber()}" class="page-link active mm-page-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == exercisePage.getNumber()}" th:href="@{/exercises/all(page = ${i}, keyword = ${keyword})}" class="page-link mm-page-link" th:text="${i +1}"></a>
+										</li>
+										<li class="page-item">
+											<span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
+											<a th:unless="${exercisePage.isLast()}" th:href="@{/exercises/all(page = ${exercisePage.getNumber() + 1}, keyword = ${keyword})}" class="page-link mm-page-link">次</a>
+										</li>
+									</ul>
+								</nav>
+                            </div>
 						</div>
 					</div>
 				</div>

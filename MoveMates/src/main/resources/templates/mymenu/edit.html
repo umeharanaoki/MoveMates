@@ -8,7 +8,8 @@
 		<title>マイメニュー編集ページ</title>
 		
 		<!-- vueのインポート -->
-		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>
+<!--		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21"></script>-->
+		<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script><!-- 本番用のビルド -->
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue-draggable-next@2.2.1/dist/vue-draggable-next.global.min.js"></script>
 		<script src="https://unpkg.com/vue-router@4"></script>
@@ -47,7 +48,7 @@
 									<div v-if="registeredExercises.length === 0">
 										<span>下のアクティビティを選択して追加してください。</span>
 									</div>
-									<div v-else class="d-flex w-100 justify-content-between">
+									<div v-else class="mymenu-inner-box">
 										<div class="mymenu-exercise-box">
 											<draggable :list="registeredExercises" @change="sorted" handle=".sort-handle" class="mm-card-box">
 												<!-- exereciseを繰り返し表示 -->

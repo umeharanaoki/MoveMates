@@ -73,8 +73,14 @@ public class AuthController {
         signupEventPublisher.publishSignupEvent(createdUser, requestUrl);
         redirectAttributes.addFlashAttribute("successMessage", "ご入力いただいたメールアドレスに認証メールを送信しました。メールに記載されているリンクをクリックし、会員登録を完了してください。");
         
-        return "redirect:/";
+        return "redirect:/signup/email-sent";
     }
+	
+	// 認証メールを送信したことを示すページ
+	@GetMapping("/signup/email-sent")
+	public String mailsent(Model model) {
+		return "auth/email-sent";
+	}
 	
 	// メール認証後のページ
 	@GetMapping("/signup/verify")

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,14 +24,20 @@ import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.Purpose;
 import com.example.movemates.form.ExerciseEditForm;
 import com.example.movemates.form.ExerciseRegisterForm;
+import com.example.movemates.repository.BodyPartRepository;
 import com.example.movemates.repository.ExerciseRepository;
+import com.example.movemates.repository.PurposeRepository;
 
 @Service
 public class ExerciseService {
 	private final ExerciseRepository exerciseRepository;
+	private final PurposeRepository purposeRepository;
+	private final BodyPartRepository bodyPartRepository;
 	
-	public ExerciseService(ExerciseRepository exerciseRepository) {
+	public ExerciseService(ExerciseRepository exerciseRepository, PurposeRepository purposeRepository, BodyPartRepository bodyPartRepository) {
 		this.exerciseRepository = exerciseRepository;
+		this.purposeRepository = purposeRepository;
+		this.bodyPartRepository = bodyPartRepository;
 	}
 	
 	// 登録処理
@@ -73,10 +80,13 @@ public class ExerciseService {
 			exercise.setImageName(hashedImageName);
 		}
 		
+		List<Purpose> purposes = convertToPurposeList(exerciseEditForm.getPurposeNames());
+		List<BodyPart> bodyParts = convertToBodyPartList(exerciseEditForm.getBodyPartNames());
+		
 		exercise.setName(exerciseEditForm.getName());
 		exercise.setType(exerciseEditForm.getType());
-		exercise.setPurposes(exerciseEditForm.getPurposes());
-		exercise.setBodyParts(exerciseEditForm.getBodyParts());
+		exercise.setPurposes(purposes);
+		exercise.setBodyParts(bodyParts);
 		exercise.setExplanation(exerciseEditForm.getExplanation());
 		exercise.setSetNumber(exerciseEditForm.getSetNumber());
 		exercise.setTimeRequired(exerciseEditForm.getTimeRequired());
@@ -103,12 +113,38 @@ public class ExerciseService {
 		}
 	}
 	
-	// 管理者用エクササイズ一覧の検索機能
-	public Page<Exercise> findAdminExercises(String keyword, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
+	// エクササイズのキーワード検索機能
+	public Page<Exercise> getSearchedExercises(String keyword, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 		Specification<Exercise> spec = Specification
-			.where(nameContains(keyword));
-//			.or(bodyPartEqual(keyword));
-		Page<Exercise> adminRestaurantPage = exerciseRepository.findAll(spec, pageable);
-		return adminRestaurantPage;
+			.where(nameContains(keyword))
+			.or(purposeNameEqual(keyword))
+			.or(bodyPartNameEqual(keyword));
+		Page<Exercise> searchedExercisePage = exerciseRepository.findAll(spec, pageable);
+		return searchedExercisePage;
 	}
+	
+	// 編集フォームから受け取ったList<String>をList<Purpose>に変換
+	private List<Purpose> convertToPurposeList(List<String> purposeNames) {
+	    List<Purpose> purposes = new ArrayList<>();
+	    for (String purposeName : purposeNames) {
+	        Purpose purpose = purposeRepository.findByName(purposeName);
+	        if (purpose != null) {
+	            purposes.add(purpose);
+	        }
+	    }
+	    return purposes;
+	}
+	
+	// 編集フォームから受け取ったList<String>をList<BodyPart>に変換
+	private List<BodyPart> convertToBodyPartList(List<String> bodyPartNames) {
+		List<BodyPart> bodyParts = new ArrayList<>();
+		for (String bodyPartName : bodyPartNames) {
+			BodyPart bodyPart = bodyPartRepository.findByName(bodyPartName);
+			if (bodyPart != null) {
+				bodyParts.add(bodyPart);
+			}
+		}
+		return bodyParts;
+	}
+
 }

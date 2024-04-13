@@ -28,6 +28,16 @@
 							<div>
 								<!-- 目的のリンクを踏んだ時のみ表示 -->
 								<div class="row" th:if="${purpose != null}">
+									<!-- 検索ボックス -->
+<!--									<div class="d-flex justify-content-end">-->
+<!--										<form method="get" th:action="@{/exercises/purposes/__${purpose.getId()}__}" class="mb-3">-->
+<!--											<div class="input-group">-->
+<!--												<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">-->
+<!--												<button type="submit" class="btn movemates-btn">検索</button>-->
+<!--											</div>-->
+<!--										</form>-->
+<!--									</div>-->
+									
 									<!-- アクティビティがない場合の処理 -->
 									<div th:unless="${not #lists.isEmpty(purpose.exercises)}">
 					                    <p th:text="${purpose.getName() + 'に関するアクティビティは登録されていません。'}"></p>
@@ -57,23 +67,77 @@
 											</div>
 									    </a>
 									</div>
+									<!-- ページネーション -->
+		                            <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center mt-4">
+										<nav aria-label="目的別アクティビティ一覧ページ">
+											<ul class="pagination">
+												<li class="page-item">
+													<span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
+													<a th:unless="${exercisePage.isFirst()}" th:href="@{/exercises/purposes/__${purpose.getId()}__(page = ${exercisePage.getNumber() - 1})}" class="page-link mm-page-link">前</a>
+												</li>
+												<li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
+													<span th:if="${i == exercisePage.getNumber()}" class="page-link active mm-page-active" th:text="${i + 1}"></span>
+													<a th:unless="${i == exercisePage.getNumber()}" th:href="@{/exercises/purposes/__${purpose.getId()}__(page = ${i})}" class="page-link mm-page-link" th:text="${i +1}"></a>
+												</li>
+												<li class="page-item">
+													<span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
+													<a th:unless="${exercisePage.isLast()}" th:href="@{/exercises/purposes/__${purpose.getId()}__(page = ${exercisePage.getNumber() + 1})}" class="page-link mm-page-link">次</a>
+												</li>
+											</ul>
+										</nav>
+		                            </div>
 								</div>
 								
 								<!-- 部位のリンクを踏んだ時のみ表示 -->
 								<div class="row mb-4" th:if="${bodyPart != null}">
-                 					<!-- エクササイズのデータがあるか判定 -->
-									<div th:if="${not #lists.isEmpty(bodyPart.exercises)}" th:each="exercise : ${bodyPart.getExercises()}">
-					                  	<div>
-					                        <h3 th:text="${exercise.getName()}"></h3>
-									           	<p th:text="${exercise.getExplanation()}"></p>
-									           	<p>セット数: <span th:text="${exercise.getSetNumber()}"></span></p>
-									           	<p>所要時間: <span th:text="${exercise.getTimeRequired()}"></span> 分</p>
-									           	<!-- その他の運動情報を表示 -->
-									       	</div>
-									    </div>
-					                <div th:unless="${not #lists.isEmpty(bodyPart.exercises)}">
+                 					<!-- アクティビティがない場合の処理 -->
+									<div th:unless="${not #lists.isEmpty(bodyPart.exercises)}">
 					                    <p th:text="${bodyPart.getName() + 'に関するアクティビティは登録されていません。'}"></p>
 					                </div>
+                 					<!-- エクササイズのデータがあるか判定 -->
+									<div th:if="${not #lists.isEmpty(bodyPart.exercises)}" th:each="exercise : ${bodyPart.getExercises()}" class="mb-3">
+					                  	<a th:href="@{/exercises/__${exercise.getId()}__}" class="link-dark" data-add-origin-url>
+											<div class="card mm-card"> <!-- 高さ指定する？ -->
+												<div class="row"> <!-- g-0付けるか確認 -->
+													<!-- カード左の画像 -->
+													<div class="col-4"> <!-- md付けるか確認 -->
+														<img th:if="${exercise.getImageName()}" th:src="@{/storage/exercise/__${exercise.getImageName()}__}" class="w-100" alt="トレーニング画像">
+														<img th:unless="${exercise.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+													</div>
+													<div class="col-8 card-body">
+						           				        <h5 class="card-title" th:text="${exercise.getName()}"></h5>
+						           				        <div class="d-flex">
+															<p class="card-text">ターゲット部位 : </p>
+															<span class="card-text" th:each="bodyPart, iterStat : ${exercise.bodyParts}">
+																<span th:text="${bodyPart.getName()}"></span>
+																<span th:if="${!iterStat.last}">、</span>
+															</span>
+														</div>
+													    <p class="card-text">所要時間: <span class="card-text" th:text="${exercise.getTimeRequired()}"></span> 秒</p>
+													</div>
+												</div>
+											</div>
+									    </a>
+									</div>
+									<!-- ページネーション -->
+		                            <div th:if="${exercisePage.getTotalPages() > 1}" class="d-flex justify-content-center mt-4">
+										<nav aria-label="部位別アクティビティ一覧ページ">
+											<ul class="pagination">
+												<li class="page-item">
+													<span th:if="${exercisePage.isFirst()}" class="page-link disabled">前</span>
+													<a th:unless="${exercisePage.isFirst()}" th:href="@{/exercises/body-parts/__${bodyPart.getId()}__(page = ${exercisePage.getNumber() - 1}, keyword = ${keyword})}" class="page-link mm-page-link">前</a>
+												</li>
+												<li th:each="i : ${#numbers.sequence(0, exercisePage.getTotalPages() - 1)}" class="page-item">
+													<span th:if="${i == exercisePage.getNumber()}" class="page-link active mm-page-active" th:text="${i + 1}"></span>
+													<a th:unless="${i == exercisePage.getNumber()}" th:href="@{/exercises/body-parts/__${bodyPart.getId()}__(page = ${i}, keyword = ${keyword})}" class="page-link mm-page-link" th:text="${i +1}"></a>
+												</li>
+												<li class="page-item">
+													<span th:if="${exercisePage.isLast()}" class="page-link disabled">次</span>
+													<a th:unless="${exercisePage.isLast()}" th:href="@{/exercises/body-parts/__${bodyPart.getId()}__(page = ${exercisePage.getNumber() + 1}, keyword = ${keyword})}" class="page-link mm-page-link">次</a>
+												</li>
+											</ul>
+										</nav>
+		                            </div>
 								</div>
 							</div>
 						</div>

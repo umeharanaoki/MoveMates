@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.movemates.entity.BodyPart;
-import com.example.movemates.entity.Purpose;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,10 +24,12 @@ public class ExerciseEditForm {
 	private String type;
 	
 	@NotNull(message = "最低1つ選択してください。")
-	private List<Purpose> purposes;
+//	private List<Purpose> purposes;
+	private List<String> purposeNames;  // オブジェクトリストを渡すとthymeleafが上手く処理してくれなかったのでNameリストを渡す
 	
 	@NotNull(message = "最低1つ選択してください。")
-	private List<BodyPart> bodyParts;
+//	private List<BodyPart> bodyParts;
+	private List<String> bodyPartNames;  // 同上
 	
 	@NotBlank(message = "アクティビティの手順を入力してください。")
 	private String explanation;

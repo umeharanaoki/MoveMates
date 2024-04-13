@@ -29,7 +29,7 @@ public class ExerciseMapper {
 	}
 	
 	// PurposeオブジェクトのリストをPurposeのnameのリストに変換する
-	private static List<String> mapPurposesToStrings(List<Purpose> purposes) {
+	public static List<String> mapPurposesToStrings(List<Purpose> purposes) {
         List<String> purposeNames = new ArrayList<>();
         for (Purpose purpose : purposes) {
             purposeNames.add(purpose.getName());
@@ -38,7 +38,7 @@ public class ExerciseMapper {
     }
 	
 	// PurposeオブジェクトのリストをPurposeのnameのリストに変換する
-	private static List<String> mapBodyPartsToStrings(List<BodyPart> bodyParts) {
+	public static List<String> mapBodyPartsToStrings(List<BodyPart> bodyParts) {
 	    List<String> bodyPartNames = new ArrayList<>();
 	    for (BodyPart bodyPart : bodyParts) {
 	        bodyPartNames.add(bodyPart.getName());

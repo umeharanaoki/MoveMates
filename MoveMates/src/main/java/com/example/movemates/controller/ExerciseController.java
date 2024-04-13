@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.movemates.entity.BodyPart;
 import com.example.movemates.entity.Exercise;
@@ -21,6 +24,7 @@ import com.example.movemates.repository.ExerciseRepository;
 import com.example.movemates.repository.FavoriteRepository;
 import com.example.movemates.repository.PurposeRepository;
 import com.example.movemates.security.UserDetailsImpl;
+import com.example.movemates.service.ExerciseService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,12 +35,14 @@ public class ExerciseController {
 	private final PurposeRepository purposeRepository;
 	private final BodyPartRepository bodyPartRepository;
 	private final FavoriteRepository favoriteRepository;
+	private final ExerciseService exerciseService;
 	
-	public ExerciseController(ExerciseRepository exerciseRepository, PurposeRepository purposeRepository, BodyPartRepository bodyPartRepository, FavoriteRepository favoriteRepository) {
+	public ExerciseController(ExerciseRepository exerciseRepository, PurposeRepository purposeRepository, BodyPartRepository bodyPartRepository, FavoriteRepository favoriteRepository, ExerciseService exerciseService) {
 		this.exerciseRepository = exerciseRepository;
 		this.purposeRepository = purposeRepository;
 		this.bodyPartRepository = bodyPartRepository;
 		this.favoriteRepository = favoriteRepository;
+		this.exerciseService = exerciseService;
 	}
 	
 	// アクティビティ検索トップページ
@@ -59,7 +65,7 @@ public class ExerciseController {
 	
 	// アクティビティ一覧（目的別）
 	@GetMapping("/purposes/{purpose_id}")
-	public String purposeExercisesList(Model model, Pageable pageable, @PathVariable(name = "purpose_id") Integer purposeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+	public String purposeExercisesList(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @PathVariable(name = "purpose_id") Integer purposeId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		Purpose purpose = purposeRepository.getReferenceById(purposeId);
 		User user = userDetailsImpl.getUser();
 		
@@ -75,7 +81,7 @@ public class ExerciseController {
 	
 	// アクティビティ一覧（部位別）
 	@GetMapping("/body-parts/{bodyPart_id}")
-	public String bodyPartExercisesList(Model model, Pageable pageable, @PathVariable(name = "bodyPart_id") Integer bodyPartId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+	public String bodyPartExercisesList(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @PathVariable(name = "bodyPart_id") Integer bodyPartId, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		BodyPart bodyPart = bodyPartRepository.getReferenceById(bodyPartId);
 		User user = userDetailsImpl.getUser();
 		
@@ -91,13 +97,14 @@ public class ExerciseController {
 	
 	// アクティビティ一覧（すべて）
 	@GetMapping("/all")
-	public String all(Model model, Pageable pageable, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+	public String all(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @RequestParam(name = "keyword", required = false) String keyword, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		User user = userDetailsImpl.getUser();
 		
-		Page<Exercise> exercisePage = exerciseRepository.findAll(pageable);
+		Page<Exercise> exercisePage = exerciseService.getSearchedExercises(keyword, pageable);
 		
 		model.addAttribute("exercisePage", exercisePage);
 		model.addAttribute("user", user);
+		model.addAttribute("keyword", keyword);
 		
 		return "exercises/all";
 	}

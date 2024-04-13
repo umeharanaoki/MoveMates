@@ -100,7 +100,12 @@ public class UserController {
 	public String show(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userDetailsImpl.getUser();
 		
+		// 画像の更新情報（例: タイムスタンプまたはUUID）
+		// 画像更新時にキャッシュによって更新前の画像が表示されるのを防ぐ
+	    String imageVersion = String.valueOf(System.currentTimeMillis());
+		
 		model.addAttribute("user", user);
+		model.addAttribute("imageVersion", imageVersion);
 		
 		return "user/show";
 	}
@@ -109,9 +114,11 @@ public class UserController {
 	@GetMapping("/edit")
 	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userDetailsImpl.getUser();
+		String imageName = user.getImageName();
 		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(), null, user.getEmail());
 		
 		model.addAttribute("user", user);
+		model.addAttribute("imageName", imageName);
 		model.addAttribute("userEditForm", userEditForm);
 		
 		return "user/edit";

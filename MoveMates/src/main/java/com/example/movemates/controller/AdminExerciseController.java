@@ -2,6 +2,10 @@ package com.example.movemates.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.movemates.entity.BodyPart;
@@ -18,6 +23,7 @@ import com.example.movemates.entity.Exercise;
 import com.example.movemates.entity.Purpose;
 import com.example.movemates.form.ExerciseEditForm;
 import com.example.movemates.form.ExerciseRegisterForm;
+import com.example.movemates.mapper.ExerciseMapper;
 import com.example.movemates.repository.BodyPartRepository;
 import com.example.movemates.repository.ExerciseRepository;
 import com.example.movemates.repository.PurposeRepository;
@@ -40,10 +46,11 @@ public class AdminExerciseController {
 	
 	// 管理者用アクティビティ一覧ページ
 	@GetMapping
-	public String index(Model model) {
-		List<Exercise> exercises = exerciseRepository.findAll();
+	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @RequestParam(name = "keyword", required = false) String keyword) {
+		Page<Exercise> exercisePage = exerciseService.getSearchedExercises(keyword, pageable);
 		
-		model.addAttribute("exercises", exercises);
+		model.addAttribute("exercisePage", exercisePage);
+		model.addAttribute("keyword", keyword);
 		
 		return "admin/exercises/index";
 	}
@@ -94,8 +101,11 @@ public class AdminExerciseController {
 		
 		Exercise exercise = exerciseRepository.getReferenceById(exerciseId);
 		String imageName = exercise.getImageName();
+		// オブジェクトリストをそのまま渡すとpurposeやbodyPartはexerciseと多対多の関係のためにループしておかしくなるので名前だけ渡す
+		List<String> purposeNames = ExerciseMapper.mapPurposesToStrings(exercise.getPurposes());
+		List<String> bodyPartNames = ExerciseMapper.mapBodyPartsToStrings(exercise.getBodyParts());
 		
-		ExerciseEditForm exerciseEditForm = new ExerciseEditForm(exercise.getId(), exercise.getName(), null, exercise.getType(), exercise.getPurposes(), exercise.getBodyParts(), exercise.getExplanation(), exercise.getSetNumber(), exercise.getTimeRequired());
+		ExerciseEditForm exerciseEditForm = new ExerciseEditForm(exercise.getId(), exercise.getName(), null, exercise.getType(), purposeNames, bodyPartNames, exercise.getExplanation(), exercise.getSetNumber(), exercise.getTimeRequired());
 		
 		model.addAttribute("exerciseEditForm", exerciseEditForm);
 		model.addAttribute("imageName", imageName);

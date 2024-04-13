@@ -46,6 +46,26 @@
 									</tr>
 								</tbody>
 							</table>
+							
+							<!-- ページネーション -->
+		                    <div th:if="${userPage.getTotalPages() > 1}" class="d-flex justify-content-center mt-4">
+								<nav aria-label="管理者用ユーザー一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${userPage.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${userPage.isFirst()}" th:href="@{/admin/users(page = ${userPage.getNumber() - 1}, keyword = ${keyword})}" class="page-link mm-page-link">前</a>
+										</li>
+										<li th:each="i : ${#numbers.sequence(0, userPage.getTotalPages() - 1)}" class="page-item">
+											<span th:if="${i == userPage.getNumber()}" class="page-link active mm-page-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == userPage.getNumber()}" th:href="@{/admin/users(page = ${i}, keyword = ${keyword})}" class="page-link mm-page-link" th:text="${i +1}"></a>
+										</li>
+										<li class="page-item">
+											<span th:if="${userPage.isLast()}" class="page-link disabled">次</span>
+											<a th:unless="${userPage.isLast()}" th:href="@{/admin/users(page = ${userPage.getNumber() + 1}, keyword = ${keyword})}" class="page-link mm-page-link">次</a>
+										</li>
+									</ul>
+								</nav>
+		                    </div>
 						</div>
 					</div>
 				</div>

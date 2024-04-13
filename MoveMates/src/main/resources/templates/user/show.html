@@ -35,10 +35,10 @@
 								</div>
 							</div>
 							
-	                        <div class="p-4 bg-white bg-opacity-75">                        
+	                        <div class="mm-highlight-box">                        
 								<!-- 画像の表示場所 -->
 								<div class="mb-3">
-									<img th:if="${user.getImageName()}" th:src="@{/storage/user/icons/__${user.getImageName()}__}" class="w-100" alt="アイコン画像">
+									<img th:if="${user.getImageName()}" th:src="@{'/storage/user/icons/' + ${user.imageName} + '?version=' + ${imageVersion}}" class="w-100" alt="アイコン画像">
 									<img th:unless="${user.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
 								</div>
 								
